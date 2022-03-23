@@ -7,9 +7,9 @@
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
  * You may obtain a copy of the License at
- * 
+ *
  *      http://www.apache.org/licenses/LICENSE-2.0
- * 
+ *
  * Unless required by applicable law or agreed to in writing, software
  * distributed under the License is distributed on an "AS IS" BASIS,
  * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
@@ -17,16 +17,19 @@
  * limitations under the License.
  * #L%
  */
-package com.flowingcode.vaadin.addons.template.test;
+package com.flowingcode.vaadin.addons.gridhelpers.test;
 
 import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
-import com.flowingcode.vaadin.addons.template.TemplateAddon;
+
 import org.junit.Assert;
 import org.junit.Test;
+
+import com.flowingcode.vaadin.addons.gridhelpers.GridHelper;
+import com.vaadin.flow.component.grid.Grid;
 
 public class SerializationTest {
 
@@ -44,7 +47,9 @@ public class SerializationTest {
   @Test
   public void testSerialization() throws ClassNotFoundException, IOException {
     try {
-      testSerializationOf(new TemplateAddon());
+      Grid<?> grid = new Grid<>();
+      GridHelper.setColumnToggleVisible(grid, false);
+      testSerializationOf(grid);
     } catch (Exception e) {
       Assert.fail("Problem while testing serialization: " + e.getMessage());
     }

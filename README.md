@@ -1,22 +1,28 @@
-[![Published on Vaadin Directory](https://img.shields.io/badge/Vaadin%20Directory-published-00b4f0.svg)](https://vaadin.com/directory/component/template-addon)
-[![Stars on vaadin.com/directory](https://img.shields.io/vaadin-directory/star/app-layout-addon.svg)](https://vaadin.com/directory/component/template-addon)
-[![Build Status](https://jenkins.flowingcode.com/job/template-addon/badge/icon)](https://jenkins.flowingcode.com/job/template-addon)
+[![Published on Vaadin Directory](https://img.shields.io/badge/Vaadin%20Directory-published-00b4f0.svg)](https://vaadin.com/directory/component/grid-helpers-addon)
+[![Stars on vaadin.com/directory](https://img.shields.io/vaadin-directory/star/GridHelpers-addon.svg)](https://vaadin.com/directory/component/grid-helpers-addon)
+[![Build Status](https://jenkins.flowingcode.com/job/GridHelpers-addon/badge/icon)](https://jenkins.flowingcode.com/job/GridHelpers-addon)
 
-# Template Add-on
+# Grid Helpers Add-on
 
-This is a template project for building new Vaadin 14 addons
+Several grid recipes for Vaadin 23+ (and 22), ready to use. DOES NOT require extending `Grid`.
 
 ## Features
 
-* List the features of your addon in here
+- Remove multiselect selection column
+- Freeze a grid's selection (checkbox) column
+- Create multiselect Grid with conditional selection
+- Select Grid rows automatically using up/down arrow keys
+- Show a Vaadin Grid with compact row styling
+- Show a meaningful message instead of an empty Grid
+- Show a menu to toggle the visibility of grid columns
 
 ## Online demo
 
-[Online demo here](http://addonsv14.flowingcode.com/template)
+[Online demo here](http://addonsv22-staging.flowingcode.com/grid-helpers)
 
 ## Download release
 
-[Available in Vaadin Directory](https://vaadin.com/directory/component/template-addon)
+[Available in Vaadin Directory](https://vaadin.com/directory/component/grid-helpers-addon)
 
 ## Building and running demo
 
@@ -27,7 +33,7 @@ To see the demo, navigate to http://localhost:8080/
 
 ## Release notes
 
-See [here](https://github.com/FlowingCode/TemplateAddon/releases)
+See [here](https://github.com/FlowingCode/GridHelpers/releases)
 
 ## Issue tracking
 
@@ -48,7 +54,7 @@ Contributions are welcome, but there are no guarantees that they are accepted as
 
 Add-on is distributed under Apache License 2.0. For license terms, see LICENSE.txt.
 
-TEMPLATE_ADDON is written by Flowing Code S.A.
+Grid Helpers Add-on is written by Flowing Code S.A.
 
 # Developer Guide
 

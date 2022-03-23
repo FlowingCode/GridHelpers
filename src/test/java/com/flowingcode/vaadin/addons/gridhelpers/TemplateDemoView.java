@@ -7,9 +7,9 @@
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
  * You may obtain a copy of the License at
- * 
+ *
  *      http://www.apache.org/licenses/LICENSE-2.0
- * 
+ *
  * Unless required by applicable law or agreed to in writing, software
  * distributed under the License is distributed on an "AS IS" BASIS,
  * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
@@ -17,20 +17,23 @@
  * limitations under the License.
  * #L%
  */
+package com.flowingcode.vaadin.addons.gridhelpers;
 
-package com.flowingcode.vaadin.addons.template;
-
-import com.vaadin.flow.component.orderedlayout.VerticalLayout;
-import com.vaadin.flow.router.BeforeEnterEvent;
-import com.vaadin.flow.router.BeforeEnterObserver;
+import com.flowingcode.vaadin.addons.DemoLayout;
+import com.flowingcode.vaadin.addons.GithubLink;
+import com.flowingcode.vaadin.addons.demo.TabbedDemo;
+import com.vaadin.flow.component.dependency.StyleSheet;
 import com.vaadin.flow.router.Route;
 
 @SuppressWarnings("serial")
-@Route("")
-public class DemoView extends VerticalLayout implements BeforeEnterObserver {
+@Route(value = "grid-helpers", layout = DemoLayout.class)
+@GithubLink("https://github.com/FlowingCode/GridHelpers")
+@StyleSheet("context://gridhelpers/styles.css")
+public class TemplateDemoView extends TabbedDemo {
 
-  @Override
-  public void beforeEnter(BeforeEnterEvent event) {
-    event.forwardTo(TemplateDemoView.class);
+  public TemplateDemoView() {
+    setSizeFull();
+    add(new TemplateDemo());
   }
+
 }

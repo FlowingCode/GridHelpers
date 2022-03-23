@@ -13,3 +13,9 @@ drivers
 tsconfig.json
 .idea
 types.d.ts
+/.npmrc
+/frontend/generated/index.ts
+/frontend/generated/vaadin.ts
+/frontend/index.html
+/pnpm-lock.yaml
+/pnpmfile.js

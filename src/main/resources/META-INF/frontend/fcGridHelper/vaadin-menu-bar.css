@@ -1,0 +1,11 @@
+:host([theme~="gridHelperToggle"]) {
+  position: absolute;
+  right: -8px;
+  top: 0;
+  height: 100%;
+}
+
+:host([theme~="gridHelperToggle"]) [part="container"] {
+  vertical-align: middle;
+  height: 100%;
+}

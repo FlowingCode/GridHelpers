@@ -5,13 +5,13 @@
 	<modelVersion>4.0.0</modelVersion>
 
 	<groupId>org.vaadin.addons.flowingcode</groupId>
-	<artifactId>template-addon</artifactId>
-	<version>1.0.0-SNAPSHOT</version>
+	<artifactId>grid-helpers</artifactId>
+	<version>0.1.0-SNAPSHOT</version>
 	<name>Template Add-on</name>
 	<description>Template Add-on for Vaadin Flow</description>
 
 	<properties>
-		<vaadin.version>14.7.8</vaadin.version>
+		<vaadin.version>22.0.9</vaadin.version>
 		<maven.compiler.source>1.8</maven.compiler.source>
 		<maven.compiler.target>1.8</maven.compiler.target>
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
@@ -53,7 +53,7 @@
             <dependency>
             	<groupId>com.flowingcode.vaadin.addons.demo</groupId>
             	<artifactId>commons-demo</artifactId>
-            	<version>3.2.0</version>
+            	<version>3.3.0</version>
             </dependency>
 		</dependencies>
 	</dependencyManagement>
@@ -108,6 +108,13 @@
     </pluginRepositories>
 
 	<dependencies>
+	    <dependency>
+			<groupId>org.projectlombok</groupId>
+			<artifactId>lombok</artifactId>
+			<version>1.18.22</version>
+			<scope>provided</scope>
+		</dependency>
+
 		<dependency>
 			<groupId>com.vaadin</groupId>
 			<artifactId>vaadin-core</artifactId>
@@ -145,7 +152,14 @@
 			<artifactId>webdrivermanager</artifactId>
 			<version>3.8.1</version>
 			<scope>test</scope>
+		</dependency>		
+		<dependency>
+    		<groupId>com.github.javafaker</groupId>
+    		<artifactId>javafaker</artifactId>
+    		<version>1.0.2</version>
+    		<scope>test</scope>
 		</dependency>
+		
 	</dependencies>
 
 	<build>
@@ -295,7 +309,8 @@
 						</executions>
 						<configuration>
 							<quiet>true</quiet>
-							<additionalparam>-Xdoclint:none</additionalparam>
+							<doclint>none</doclint>
+                                                        <additionalparam>-Xdoclint:none</additionalparam>
 						</configuration>
 					</plugin>
 					<plugin>
