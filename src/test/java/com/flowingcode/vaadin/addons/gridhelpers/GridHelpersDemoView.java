@@ -29,11 +29,19 @@ import com.vaadin.flow.router.Route;
 @Route(value = "grid-helpers", layout = DemoLayout.class)
 @GithubLink("https://github.com/FlowingCode/GridHelpers")
 @StyleSheet("context://gridhelpers/styles.css")
-public class TemplateDemoView extends TabbedDemo {
+public class GridHelpersDemoView extends TabbedDemo {
 
-  public TemplateDemoView() {
+  public GridHelpersDemoView() {
     setSizeFull();
-    add(new TemplateDemo());
+    addDemo(new AllFeaturesDemo());
+    addDemo(new ColumnToggleMenuDemo());
+    addDemo(new HideSelectionColumnDemo());
+    addDemo(new FreezeSelectionColumnDemo());
+    addDemo(new EnableArrowSelectionDemo());
+    addDemo(new EnableSelectionOnClickDemo());
+    addDemo(new SelectionFilterDemo());
+    addDemo(new DenseThemeDemo());
+    addDemo(new LombokDemo());
   }
 
 }

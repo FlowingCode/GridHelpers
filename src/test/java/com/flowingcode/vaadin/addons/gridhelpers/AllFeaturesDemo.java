@@ -31,15 +31,17 @@ import com.vaadin.flow.component.orderedlayout.VerticalLayout;
 import com.vaadin.flow.component.select.Select;
 import com.vaadin.flow.component.splitlayout.SplitLayout;
 import com.vaadin.flow.data.binder.Binder;
+import com.vaadin.flow.router.PageTitle;
 import lombok.experimental.ExtensionMethod;
 
 @SuppressWarnings("serial")
+@PageTitle("All Features")
 @GithubLink("https://github.com/FlowingCode/GridHelpers")
 @StyleSheet("context://gridhelpers/styles.css")
 @ExtensionMethod(GridHelper.class)
-public class TemplateDemo extends Div {
+public class AllFeaturesDemo extends Div {
 
-  public TemplateDemo() {
+  public AllFeaturesDemo() {
     setSizeFull();
 
     Grid<Person> grid = new Grid<>();
