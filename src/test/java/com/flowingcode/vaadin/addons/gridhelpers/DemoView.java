@@ -31,6 +31,6 @@ public class DemoView extends VerticalLayout implements BeforeEnterObserver {
 
   @Override
   public void beforeEnter(BeforeEnterEvent event) {
-    event.forwardTo(TemplateDemoView.class);
+    event.forwardTo(GridHelpersDemoView.class);
   }
 }
