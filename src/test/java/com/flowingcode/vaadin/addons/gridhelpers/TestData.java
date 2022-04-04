@@ -14,7 +14,7 @@ public class TestData {
         .active(faker.random().nextBoolean())
         .firstName(faker.name().firstName())
         .lastName(faker.name().lastName())
-        .country(faker.address().country())
+        .country(generateCountry())
         .city(faker.address().city())
         .streetAddress(faker.address().streetAddress())
         .phoneNumber(faker.phoneNumber().cellPhone())
@@ -24,6 +24,15 @@ public class TestData {
   }
   static List<Person> initializeData() {
     return Stream.generate(TestData::newPerson).limit(40).collect(Collectors.toList());
+  }
+
+  private static String generateCountry() {
+    String country = faker.address().country();
+    if (country.contains("South Georgia") || country.contains("Falkland")) {
+      return "Argentina";
+    } else {
+      return country;
+    }
   }
 
 }
