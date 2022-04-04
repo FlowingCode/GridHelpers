@@ -13,3 +13,11 @@
   border-top: 0;
   min-height: calc(var(--lumo-size-xxs) - var(--_lumo-grid-border-width));
 }
+
+:host {
+  --fcgh-toggle-right: 0;
+}
+
+:host([overflow~="right"]), :host([overflow~="left"]) {
+  --fcgh-toggle-right: 24px;
+}

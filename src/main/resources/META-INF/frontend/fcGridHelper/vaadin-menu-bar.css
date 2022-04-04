@@ -1,7 +1,7 @@
 :host([theme~="gridHelperToggle"]) {
   position: absolute;
-  right: -8px;
   top: 0;
+  right: var(--fcgh-toggle-right);
   height: 100%;
 }
 

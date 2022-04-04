@@ -45,7 +45,7 @@ class ColumnToggleHelper implements Serializable {
     createMenuToggle().ifPresent(toggle -> {
       Grid<?> grid = helper.getGrid();
       if (menuToggleColumn == null) {
-        menuToggleColumn = grid.addColumn(t -> "").setWidth("0").setFlexGrow(0);
+        menuToggleColumn = grid.addColumn(t -> "").setWidth("auto").setFlexGrow(0);
       } else {
         menuToggleColumn.setVisible(true);
       }
