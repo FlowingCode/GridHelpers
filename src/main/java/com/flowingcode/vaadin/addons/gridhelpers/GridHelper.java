@@ -39,11 +39,17 @@ public final class GridHelper<T> implements Serializable {
 
   private final GridHelperClassNameGenerator<T> helperClassNameGenerator;
 
+  protected void setHelperClassNameGenerator(Class<?> clazz,
+      SerializableFunction<T, String> generator) {
+    getHelper(grid).helperClassNameGenerator.setHelperClassNameGenerator(clazz, generator);
+  }
+
   private boolean selectOnClick;
 
   private GridHelper(Grid<T> grid) {
     this.grid = grid;
     this.helperClassNameGenerator = new GridHelperClassNameGenerator<>();
+    setClassNameGenerator(grid.getClassNameGenerator());
     grid.addItemClickListener(this::onItemClick);
     grid.addAttachListener(this::onAttach);
   }

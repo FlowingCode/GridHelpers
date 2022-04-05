@@ -14,7 +14,8 @@ import org.apache.commons.lang3.StringUtils;
 @SuppressWarnings("serial")
 final class GridHelperClassNameGenerator<T> implements SerializableFunction<T, String> {
 
-  private Map<String, SerializableFunction<T, String>> helperClassNameGenerators = new HashMap<>();
+  private Map<Class<?>, SerializableFunction<T, String>> helperClassNameGenerators =
+      new HashMap<>();
 
   @Getter
   @Setter
@@ -22,12 +23,12 @@ final class GridHelperClassNameGenerator<T> implements SerializableFunction<T, S
 
   private transient boolean invoked;
 
-  void removeHelperClassNameGenerator(String name) {
-    helperClassNameGenerators.remove(name);
-  }
-
-  void setHelperClassNameGenerator(String name, SerializableFunction<T, String> generator) {
-    helperClassNameGenerators.put(name, generator);
+  void setHelperClassNameGenerator(Class<?> clazz, SerializableFunction<T, String> generator) {
+    if (generator != null) {
+      helperClassNameGenerators.put(clazz, generator);
+    } else {
+      helperClassNameGenerators.remove(clazz);
+    }
   }
 
   private Stream<SerializableFunction<T, String>> generators() {
