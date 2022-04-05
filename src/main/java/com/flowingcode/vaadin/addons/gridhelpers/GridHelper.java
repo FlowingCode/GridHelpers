@@ -144,6 +144,7 @@ public final class GridHelper<T> implements Serializable {
 
   /** Allows Grid rows to be selected using up/down arrow keys. */
   public static void setArrowSelectionEnabled(Grid<?> grid, boolean value) {
+    getHelper(grid);
     grid.getElement().setProperty(ARROW_SELECTION_PROPERTY, value);
   }
 
