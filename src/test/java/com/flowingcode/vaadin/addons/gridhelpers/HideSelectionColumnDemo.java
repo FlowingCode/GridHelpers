@@ -10,22 +10,21 @@ import com.vaadin.flow.router.PageTitle;
 @DemoSource(
     "https://github.com/FlowingCode/GridHelpers/blob/master/src/test/java/com/flowingcode/vaadin/addons/gridhelpers/HideSelectionColumnDemo.java")
 public class HideSelectionColumnDemo extends Div {
-  
+
   public HideSelectionColumnDemo() {
     setSizeFull();
-    
+
     Grid<Person> grid = new Grid<>();
     grid.setItems(TestData.initializeData());
-    
+
     grid.setSelectionMode(SelectionMode.MULTI);
 
     grid.addColumn(Person::getFirstName).setHeader("First name");
     grid.addColumn(Person::getLastName).setHeader("Last name");
     grid.addColumn(p -> p.isActive() ? "Yes" : "No").setHeader("Active");
-    
-    GridHelper.setSelectionColumnHidden(grid, true);    
-    
-    add(grid);    
-  }
 
+    GridHelper.setSelectionColumnHidden(grid, true);
+
+    add(grid);
+  }
 }

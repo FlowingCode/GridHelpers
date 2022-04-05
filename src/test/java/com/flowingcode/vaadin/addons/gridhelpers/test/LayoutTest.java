@@ -21,6 +21,7 @@ package com.flowingcode.vaadin.addons.gridhelpers.test;
 
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNotEquals;
+
 import com.flowingcode.vaadin.addons.DemoLayout;
 import com.flowingcode.vaadin.addons.gridhelpers.GridHelpersDemoView;
 import com.vaadin.flow.router.Route;

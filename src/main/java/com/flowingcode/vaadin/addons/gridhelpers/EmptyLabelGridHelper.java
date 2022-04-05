@@ -33,14 +33,16 @@ class EmptyLabelGridHelper implements Serializable {
 
     if (component != null) {
       emptyLabel = component;
-      registration = grid.getDataProvider().addDataProviderListener(ev -> {
-        component.setVisible(grid.getDataProvider().size(new Query<>()) == 0);
-      });
+      registration =
+          grid.getDataProvider()
+              .addDataProviderListener(
+                  ev -> {
+                    component.setVisible(grid.getDataProvider().size(new Query<>()) == 0);
+                  });
     }
   }
 
   Component getEmptyGridLabel() {
     return emptyLabel;
   }
-
 }

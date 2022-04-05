@@ -22,6 +22,7 @@ public class TestData {
         .title(faker.name().title())
         .build();
   }
+
   static List<Person> initializeData() {
     return Stream.generate(TestData::newPerson).limit(40).collect(Collectors.toList());
   }
@@ -34,5 +35,4 @@ public class TestData {
       return country;
     }
   }
-
 }

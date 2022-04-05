@@ -47,14 +47,24 @@ public class AllFeaturesDemo extends Div {
     Grid<Person> grid = new Grid<>();
 
     grid.addColumn(Person::getLastName).setHeader("Last name").setHidingToggleCaption("Last name");
-    grid.addColumn(Person::getFirstName).setHeader("First name").setHidingToggleCaption("First name");
-    grid.addColumn(p -> p.isActive() ? "Yes" : "No").setHeader("Active").setHidingToggleCaption("Active");
+    grid.addColumn(Person::getFirstName)
+        .setHeader("First name")
+        .setHidingToggleCaption("First name");
+    grid.addColumn(p -> p.isActive() ? "Yes" : "No")
+        .setHeader("Active")
+        .setHidingToggleCaption("Active");
     grid.addColumn(Person::getTitle).setHeader("Title").setHidingToggleCaption("Title");
     grid.addColumn(Person::getCountry).setHeader("Country").setHidingToggleCaption("Country");
     grid.addColumn(Person::getCity).setHeader("City").setHidingToggleCaption("City");
-    grid.addColumn(Person::getStreetAddress).setHeader("Street Address").setHidingToggleCaption("Street Address");
-    grid.addColumn(Person::getPhoneNumber).setHeader("Phone Number").setHidingToggleCaption("Phone Number");
-    grid.addColumn(Person::getEmailAddress).setHeader("Email Address").setHidingToggleCaption("Email Address");
+    grid.addColumn(Person::getStreetAddress)
+        .setHeader("Street Address")
+        .setHidingToggleCaption("Street Address");
+    grid.addColumn(Person::getPhoneNumber)
+        .setHeader("Phone Number")
+        .setHidingToggleCaption("Phone Number");
+    grid.addColumn(Person::getEmailAddress)
+        .setHeader("Email Address")
+        .setHidingToggleCaption("Email Address");
     grid.getColumns().forEach(c -> c.setAutoWidth(true));
 
     grid.setItems(TestData.initializeData());
@@ -83,15 +93,20 @@ public class AllFeaturesDemo extends Div {
     select.setLabel("Selection mode");
     binder.forField(select).bind(GridHelper::getSelectionMode, Grid::setSelectionMode);
 
-    binder.forField(new Checkbox("Hide selection column"))
-    	.bind(GridHelper::isSelectionColumnHidden, GridHelper::setSelectionColumnHidden);
-    binder.forField(new Checkbox("Freeze selection column"))
+    binder
+        .forField(new Checkbox("Hide selection column"))
+        .bind(GridHelper::isSelectionColumnHidden, GridHelper::setSelectionColumnHidden);
+    binder
+        .forField(new Checkbox("Freeze selection column"))
         .bind(GridHelper::isSelectionColumnFrozen, GridHelper::setSelectionColumnFrozen);
-    binder.forField(new Checkbox("Arrow selection enabled"))
+    binder
+        .forField(new Checkbox("Arrow selection enabled"))
         .bind(GridHelper::isArrowSelectionEnabled, GridHelper::setArrowSelectionEnabled);
-    binder.forField(new Checkbox("Enable selection by clicking row"))
+    binder
+        .forField(new Checkbox("Enable selection by clicking row"))
         .bind(GridHelper::isSelectOnClick, GridHelper::setSelectOnClick);
-    binder.forField(new Checkbox("Disallow selection of 'inactive' records"))
+    binder
+        .forField(new Checkbox("Disallow selection of 'inactive' records"))
         .bind(this::hasSelectionFilter, this::setSelectionFilter);
     binder.forField(new Checkbox("Dense Theme")).bind(this::hasDenseTheme, this::setDenseTheme);
 
@@ -102,15 +117,14 @@ public class AllFeaturesDemo extends Div {
     features.addComponentAtIndex(1, label);
   }
 
-
   private void setSelectionFilter(Grid<Person> grid, boolean value) {
-	//https://github.com/projectlombok/lombok/issues/3153
-	//grid.setSelectionFilter(value?Person::isActive:null);
+    // https://github.com/projectlombok/lombok/issues/3153
+    // grid.setSelectionFilter(value?Person::isActive:null);
 
     if (value) {
-    	grid.setSelectionFilter(Person::isActive);
+      grid.setSelectionFilter(Person::isActive);
     } else {
-    	grid.setSelectionFilter(null);
+      grid.setSelectionFilter(null);
     }
   }
 
@@ -129,5 +143,4 @@ public class AllFeaturesDemo extends Div {
   private boolean hasDenseTheme(Grid<Person> grid) {
     return grid.hasThemeName(GridHelper.DENSE_THEME);
   }
-
 }

@@ -43,5 +43,4 @@ public class GridHelpersDemoView extends TabbedDemo {
     addDemo(new DenseThemeDemo());
     addDemo(new LombokDemo());
   }
-
 }

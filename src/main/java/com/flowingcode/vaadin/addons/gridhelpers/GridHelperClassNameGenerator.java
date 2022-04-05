@@ -17,9 +17,7 @@ final class GridHelperClassNameGenerator<T> implements SerializableFunction<T, S
   private Map<Class<?>, SerializableFunction<T, String>> helperClassNameGenerators =
       new HashMap<>();
 
-  @Getter
-  @Setter
-  private SerializableFunction<T, String> gridClassNameGenerator;
+  @Getter @Setter private SerializableFunction<T, String> gridClassNameGenerator;
 
   private transient boolean invoked;
 
@@ -45,15 +43,16 @@ final class GridHelperClassNameGenerator<T> implements SerializableFunction<T, S
 
     invoked = true;
     try {
-      return StringUtils.trimToNull(generators().map(generator -> generator.apply(t))
-          .map(StringUtils::trimToNull)
-          .filter(Objects::nonNull)
-          .flatMap(s->Stream.of(s.trim().split("\\s+")))
-          .distinct()
-          .collect(Collectors.joining(" ")));
+      return StringUtils.trimToNull(
+          generators()
+              .map(generator -> generator.apply(t))
+              .map(StringUtils::trimToNull)
+              .filter(Objects::nonNull)
+              .flatMap(s -> Stream.of(s.trim().split("\\s+")))
+              .distinct()
+              .collect(Collectors.joining(" ")));
     } finally {
       invoked = false;
     }
   }
-
 }

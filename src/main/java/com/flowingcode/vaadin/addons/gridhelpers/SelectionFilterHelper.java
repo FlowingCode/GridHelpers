@@ -13,15 +13,14 @@ class SelectionFilterHelper<T> implements Serializable {
 
   private final GridHelper<T> helper;
 
-  @Getter
-  private SerializablePredicate<T> selectionFilter;
+  @Getter private SerializablePredicate<T> selectionFilter;
 
   public void setSelectionFilter(SerializablePredicate<T> predicate) {
     this.selectionFilter = predicate;
     if (predicate != null) {
       deselectIf(predicate.negate());
-      helper.setHelperClassNameGenerator(this.getClass(),
-          row -> predicate.test(row) ? null : "fcGh-noselect");
+      helper.setHelperClassNameGenerator(
+          this.getClass(), row -> predicate.test(row) ? null : "fcGh-noselect");
     } else {
       helper.setHelperClassNameGenerator(this.getClass(), null);
     }
@@ -35,16 +34,20 @@ class SelectionFilterHelper<T> implements Serializable {
     Grid<T> grid = helper.getGrid();
     switch (GridHelper.getSelectionMode(grid)) {
       case MULTI:
-        grid.asMultiSelect().deselect(grid.asMultiSelect().getSelectedItems().stream()
-            .filter(predicate).collect(Collectors.toList()));
+        grid.asMultiSelect()
+            .deselect(
+                grid.asMultiSelect().getSelectedItems().stream()
+                    .filter(predicate)
+                    .collect(Collectors.toList()));
         break;
       case SINGLE:
-        grid.asSingleSelect().getOptionalValue().filter(predicate)
+        grid.asSingleSelect()
+            .getOptionalValue()
+            .filter(predicate)
             .ifPresent(x -> grid.asSingleSelect().clear());
         break;
       default:
         break;
     }
   }
-
 }

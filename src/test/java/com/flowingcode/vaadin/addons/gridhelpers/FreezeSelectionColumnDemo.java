@@ -10,13 +10,13 @@ import com.vaadin.flow.router.PageTitle;
 @DemoSource(
     "https://github.com/FlowingCode/GridHelpers/blob/master/src/test/java/com/flowingcode/vaadin/addons/gridhelpers/FreezeSelectionColumnDemo.java")
 public class FreezeSelectionColumnDemo extends Div {
-  
+
   public FreezeSelectionColumnDemo() {
     setSizeFull();
-    
+
     Grid<Person> grid = new Grid<>();
     grid.setItems(TestData.initializeData());
-    
+
     grid.setSelectionMode(SelectionMode.MULTI);
 
     grid.addColumn(Person::getFirstName).setHeader("First name");
@@ -28,10 +28,9 @@ public class FreezeSelectionColumnDemo extends Div {
     grid.addColumn(Person::getStreetAddress).setHeader("Street Address");
     grid.addColumn(Person::getPhoneNumber).setHeader("Phone Number");
     grid.getColumns().forEach(c -> c.setAutoWidth(true));
-    
-    GridHelper.setSelectionColumnFrozen(grid, true);    
-    
-    add(grid);    
-  }
 
+    GridHelper.setSelectionColumnFrozen(grid, true);
+
+    add(grid);
+  }
 }

@@ -1,8 +1,5 @@
 package com.flowingcode.vaadin.addons.gridhelpers;
 
-import java.io.Serializable;
-import java.util.Optional;
-
 import com.vaadin.flow.component.ComponentUtil;
 import com.vaadin.flow.component.checkbox.Checkbox;
 import com.vaadin.flow.component.contextmenu.MenuItem;
@@ -12,7 +9,8 @@ import com.vaadin.flow.component.grid.Grid.Column;
 import com.vaadin.flow.component.icon.VaadinIcon;
 import com.vaadin.flow.component.menubar.MenuBar;
 import com.vaadin.flow.component.menubar.MenuBarVariant;
-
+import java.io.Serializable;
+import java.util.Optional;
 import lombok.NonNull;
 import lombok.RequiredArgsConstructor;
 
@@ -22,7 +20,7 @@ class ColumnToggleHelper implements Serializable {
 
   private static final String GRID_HELPER_TOGGLE_THEME = "gridHelperToggle";
 
-  private final static String TOGGLE_LABEL_DATA = GridHelper.class.getName() + "#TOGGLE_LABEL";
+  private static final String TOGGLE_LABEL_DATA = GridHelper.class.getName() + "#TOGGLE_LABEL";
 
   private final GridHelper<?> helper;
 
@@ -42,15 +40,17 @@ class ColumnToggleHelper implements Serializable {
   }
 
   private void showColumnToggle() {
-    createMenuToggle().ifPresent(toggle -> {
-      Grid<?> grid = helper.getGrid();
-      if (menuToggleColumn == null) {
-        menuToggleColumn = grid.addColumn(t -> "").setWidth("auto").setFlexGrow(0);
-      } else {
-        menuToggleColumn.setVisible(true);
-      }
-      grid.getHeaderRows().get(0).getCell(menuToggleColumn).setComponent(toggle);
-    });
+    createMenuToggle()
+        .ifPresent(
+            toggle -> {
+              Grid<?> grid = helper.getGrid();
+              if (menuToggleColumn == null) {
+                menuToggleColumn = grid.addColumn(t -> "").setWidth("auto").setFlexGrow(0);
+              } else {
+                menuToggleColumn.setVisible(true);
+              }
+              grid.getHeaderRows().get(0).getCell(menuToggleColumn).setComponent(toggle);
+            });
   }
 
   private void hideColumnToggle() {
@@ -68,12 +68,14 @@ class ColumnToggleHelper implements Serializable {
     SubMenu subMenu = menuItem.getSubMenu();
 
     for (Column<?> column : grid.getColumns()) {
-      getToggleLabel(column).ifPresent(label -> {
-        Checkbox checkbox = new Checkbox(label);
-        checkbox.setValue(column.isVisible());
-        checkbox.addValueChangeListener(e -> column.setVisible(e.getValue()));
-        subMenu.addItem(checkbox);
-      });
+      getToggleLabel(column)
+          .ifPresent(
+              label -> {
+                Checkbox checkbox = new Checkbox(label);
+                checkbox.setValue(column.isVisible());
+                checkbox.addValueChangeListener(e -> column.setVisible(e.getValue()));
+                subMenu.addItem(checkbox);
+              });
     }
 
     menuBar.getThemeNames().add(GRID_HELPER_TOGGLE_THEME);
@@ -100,5 +102,4 @@ class ColumnToggleHelper implements Serializable {
   Column<?> getMenuToggleColumn() {
     return menuToggleColumn;
   }
-
 }

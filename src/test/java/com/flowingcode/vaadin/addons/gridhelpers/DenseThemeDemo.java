@@ -10,22 +10,21 @@ import com.vaadin.flow.router.PageTitle;
 @DemoSource(
     "https://github.com/FlowingCode/GridHelpers/blob/master/src/test/java/com/flowingcode/vaadin/addons/gridhelpers/DenseThemeDemo.java")
 public class DenseThemeDemo extends Div {
-  
+
   public DenseThemeDemo() {
     setSizeFull();
-    
+
     Grid<Person> grid = new Grid<>();
     grid.setItems(TestData.initializeData());
-    
+
     grid.setSelectionMode(SelectionMode.SINGLE);
 
     grid.addColumn(Person::getFirstName).setHeader("First name");
     grid.addColumn(Person::getLastName).setHeader("Last name");
     grid.addColumn(p -> p.isActive() ? "Yes" : "No").setHeader("Active");
-    
-    grid.addThemeName(GridHelper.DENSE_THEME);   
-    
-    add(grid);    
-  }
 
+    grid.addThemeName(GridHelper.DENSE_THEME);
+
+    add(grid);
+  }
 }
