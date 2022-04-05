@@ -20,6 +20,10 @@ class SelectionFilterHelper<T> implements Serializable {
     this.selectionFilter = predicate;
     if (predicate != null) {
       deselectIf(predicate.negate());
+      helper.setHelperClassNameGenerator(this.getClass(),
+          row -> predicate.test(row) ? null : "fcGh-noselect");
+    } else {
+      helper.setHelperClassNameGenerator(this.getClass(), null);
     }
   }
 

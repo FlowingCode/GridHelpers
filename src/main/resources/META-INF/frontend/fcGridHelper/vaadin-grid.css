@@ -21,3 +21,8 @@
 :host([overflow~="right"]), :host([overflow~="left"]) {
   --fcgh-toggle-right: 24px;
 }
+
+.fcGh-noselect[first-column] ::slotted(*) {
+  opacity: 0.5;
+  pointer-events: none;
+}
