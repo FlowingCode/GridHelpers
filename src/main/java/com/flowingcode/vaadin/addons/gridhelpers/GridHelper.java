@@ -42,6 +42,7 @@ public final class GridHelper<T> implements Serializable {
   protected void setHelperClassNameGenerator(Class<?> clazz,
       SerializableFunction<T, String> generator) {
     getHelper(grid).helperClassNameGenerator.setHelperClassNameGenerator(clazz, generator);
+    grid.getDataCommunicator().reset();
   }
 
   private boolean selectOnClick;
