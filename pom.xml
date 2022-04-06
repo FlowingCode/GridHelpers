@@ -35,9 +35,9 @@
 	</licenses>
 
 	<scm>
-		<url>https://github.com/FlowingCode/AddonStarter14</url>
-		<connection>scm:git:git://github.com/FlowingCode/AddonStarter14.git</connection>
-		<developerConnection>scm:git:ssh://git@github.com:/FlowingCode/AddonStarter14.git</developerConnection>
+		<url>https://github.com/FlowingCode/GridHelpers</url>
+		<connection>scm:git:git://github.com/FlowingCode/GridHelpers.git</connection>
+		<developerConnection>scm:git:ssh://git@github.com:/FlowingCode/GridHelpers.git</developerConnection>
 		<tag>master</tag>
 	</scm>
 
