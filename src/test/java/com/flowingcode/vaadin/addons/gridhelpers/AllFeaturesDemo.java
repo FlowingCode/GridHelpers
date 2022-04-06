@@ -143,10 +143,12 @@ public class AllFeaturesDemo extends Div {
       if (modes.contains(selectionMode)) {
         checkbox.getElement().removeAttribute("title");
       } else if (modes.size()==1) {
-        checkbox.getElement().setAttribute("title", String.format("This feature only have effect in %s selection mode", modes.get(0).toString().toLowerCase()));
+        checkbox.getElement().setAttribute("title",
+            String.format("This feature only has effect in %s selection mode",
+                modes.get(0).toString().toLowerCase()));
       } else if (modes.size()==2) {
         checkbox.getElement().setAttribute("title",
-            String.format("This feature only have effect in %s and %s selection modes",
+            String.format("This feature only has effect in %s and %s selection modes",
                 modes.get(0).toString().toLowerCase(), modes.get(1).toString().toLowerCase()));
       }
     });
