@@ -42,6 +42,8 @@ import lombok.experimental.ExtensionMethod;
 @ExtensionMethod(GridHelper.class)
 public class AllFeaturesDemo extends Div {
 
+  // This demo is just for presentation purposes.
+  // For examples on the normal API use of each feature, please see the other demos.
   public AllFeaturesDemo() {
     setSizeFull();
 
