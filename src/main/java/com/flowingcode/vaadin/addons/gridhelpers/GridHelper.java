@@ -104,7 +104,7 @@ public final class GridHelper<T> implements Serializable {
 
   private void onItemClick(ItemClickEvent<T> event) {
     T item = event.getItem();
-    if (selectOnClick) {
+    if (selectOnClick && getSelectionMode(grid) == SelectionMode.MULTI) {
       // https://cookbook.vaadin.com/grid-conditional-select
       if (!selectionFilterHelper.canSelect(item)) {
         return;
