@@ -204,7 +204,15 @@ public final class GridHelper<T> implements Serializable {
 
   private final SelectionFilterHelper<T> selectionFilterHelper = new SelectionFilterHelper<>(this);
 
-  /** Sets a predicate for determining which rows are selectable. */
+  /**
+   * Sets a predicate for determining which rows are selectable.
+   * <p>
+   *
+   * After a call to {@link Grid#setSelectionMode(SelectionMode)} the selection filter is lost and
+   * it has to be configured again: <code>
+   * grid.setSelectionFilter(grid.getSelectionFilter());
+   * </code>
+   */
   public static <T> void setSelectionFilter(Grid<T> grid, SerializablePredicate<T> predicate) {
     getHelper(grid).selectionFilterHelper.setSelectionFilter(predicate);
   }

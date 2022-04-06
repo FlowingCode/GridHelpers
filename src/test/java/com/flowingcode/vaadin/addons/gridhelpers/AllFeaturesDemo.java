@@ -139,6 +139,8 @@ public class AllFeaturesDemo extends Div {
 
   private void setSelectionMode(Grid<Person> grid, SelectionMode selectionMode) {
     grid.setSelectionMode(selectionMode);
+    grid.setSelectionFilter(grid.getSelectionFilter());
+
     checkboxes.forEach((checkbox,modes)->{
       if (modes.contains(selectionMode)) {
         checkbox.getElement().removeAttribute("title");

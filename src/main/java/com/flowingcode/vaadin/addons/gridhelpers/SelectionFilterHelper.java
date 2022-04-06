@@ -18,7 +18,7 @@
  * #L%
  */
 
-/* 
+/*
  * This file incorporates work licensed under the Apache License, Version 2.0
  * from Vaadin Cookbook https://github.com/vaadin/cookbook
  *  Copyright 2020-2022 Vaadin Ltd.
@@ -27,8 +27,11 @@
 package com.flowingcode.vaadin.addons.gridhelpers;
 
 import com.vaadin.flow.component.grid.Grid;
+import com.vaadin.flow.data.selection.SelectionEvent;
 import com.vaadin.flow.function.SerializablePredicate;
+import com.vaadin.flow.shared.Registration;
 import java.io.Serializable;
+import java.util.Optional;
 import java.util.stream.Collectors;
 import lombok.Getter;
 import lombok.RequiredArgsConstructor;
@@ -39,14 +42,21 @@ class SelectionFilterHelper<T> implements Serializable {
 
   private final GridHelper<T> helper;
 
+  private Registration selectionListenerRegistration;
+
   @Getter private SerializablePredicate<T> selectionFilter;
 
   public void setSelectionFilter(SerializablePredicate<T> predicate) {
+    Optional.ofNullable(selectionListenerRegistration).ifPresent(Registration::remove);
+    selectionListenerRegistration = null;
+
+    Grid<T> grid = helper.getGrid();
     this.selectionFilter = predicate;
     if (predicate != null) {
       deselectIf(predicate.negate());
       helper.setHelperClassNameGenerator(
           this.getClass(), row -> predicate.test(row) ? null : "fcGh-noselect");
+      selectionListenerRegistration = grid.addSelectionListener(this::onSelection);
     } else {
       helper.setHelperClassNameGenerator(this.getClass(), null);
     }
@@ -76,4 +86,16 @@ class SelectionFilterHelper<T> implements Serializable {
         break;
     }
   }
+
+  private void onSelection(SelectionEvent<Grid<T>, T> event) {
+    if (event.isFromClient()) {
+      event.getAllSelectedItems().forEach(item -> {
+        // Revert selection if item cannot be selected
+        if (!canSelect(item)) {
+          event.getSource().deselect(item);
+        }
+      });
+    }
+  }
+
 }
