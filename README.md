@@ -60,4 +60,39 @@ Grid Helpers Add-on is written by Flowing Code S.A.
 
 ## Getting started
 
-Add your code samples in this section
+The class `GridHelper` provides several static methods that receive a `Grid` or `Column` as the first parameter:
+
+```
+grid.setSelectionMode(SelectionMode.MULTI);
+grid.addThemeName(GridHelper.DENSE_THEME);
+GridHelper.setSelectOnClick(grid, true);
+GridHelper.setArrowSelectionEnabled(grid, true);
+GridHelper.setSelectionColumnHidden(grid, true);
+
+Column<Person> firstNameColumn = grid.addColumn(Person::getFirstName).setHeader("First name");
+GridHelper.setHidingToggleCaption(firstNameColumn, "First name");
+```
+
+If you use [Project Lombok](https://projectlombok.org/), you can benefit from the [extension method](https://projectlombok.org/features/experimental/ExtensionMethod) feature:
+
+```
+@ExtensionMethod(GridHelper.class)
+public class LombokDemo extends Div {
+
+  public LombokDemo() {
+    Grid<Person> grid = new Grid<>();
+    
+    grid.setSelectionMode(SelectionMode.MULTI);
+
+    grid.setSelectionColumnHidden(true);
+    grid.setSelectOnClick(true);
+    grid.setSelectionFilter(Person::isActive);
+
+    grid.addColumn(Person::getFirstName)
+        .setHeader("First name")
+        .setHidingToggleCaption("First name");
+
+    add(grid);
+  }
+}
+```
