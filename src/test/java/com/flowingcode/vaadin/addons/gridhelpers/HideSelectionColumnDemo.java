@@ -41,7 +41,7 @@ public class HideSelectionColumnDemo extends Div {
 
     grid.addColumn(Person::getFirstName).setHeader("First name");
     grid.addColumn(Person::getLastName).setHeader("Last name");
-    grid.addColumn(p -> p.isActive() ? "Yes" : "No").setHeader("Active");
+    grid.addColumn(Person::getCountry).setHeader("Country");
 
     GridHelper.setSelectionColumnHidden(grid, true);
 

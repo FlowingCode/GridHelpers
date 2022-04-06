@@ -41,7 +41,7 @@ public class DenseThemeDemo extends Div {
 
     grid.addColumn(Person::getFirstName).setHeader("First name");
     grid.addColumn(Person::getLastName).setHeader("Last name");
-    grid.addColumn(p -> p.isActive() ? "Yes" : "No").setHeader("Active");
+    grid.addColumn(Person::getCountry).setHeader("Country");
 
     grid.addThemeName(GridHelper.DENSE_THEME);
 

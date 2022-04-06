@@ -41,7 +41,6 @@ public class FreezeSelectionColumnDemo extends Div {
 
     grid.addColumn(Person::getFirstName).setHeader("First name");
     grid.addColumn(Person::getLastName).setHeader("Last name");
-    grid.addColumn(p -> p.isActive() ? "Yes" : "No").setHeader("Active");
     grid.addColumn(Person::getTitle).setHeader("Title");
     grid.addColumn(Person::getCountry).setHeader("Country");
     grid.addColumn(Person::getCity).setHeader("City");

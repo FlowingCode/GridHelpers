@@ -55,6 +55,7 @@ public class LombokDemo extends Div {
     grid.setColumnToggleVisible(true);
     grid.setSelectionColumnFrozen(true);
     grid.setSelectOnClick(true);
+    grid.setSelectionFilter(Person::isActive);
 
     grid.setHeightFull();
     add(grid);
