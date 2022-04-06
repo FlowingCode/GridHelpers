@@ -48,7 +48,7 @@
   --fcgh-toggle-right: 24px;
 }
 
-.fcGh-noselect[first-column] ::slotted(*) {
-  opacity: 0.5;
+table[aria-multiselectable="true"] .fcGh-noselect[first-column] ::slotted(*) {
+  opacity: var(--fcgh-noselect-opacity, 0.5);
   pointer-events: none;
 }
