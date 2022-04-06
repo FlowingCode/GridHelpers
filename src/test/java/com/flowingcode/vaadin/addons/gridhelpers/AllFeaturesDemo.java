@@ -20,6 +20,8 @@
 
 package com.flowingcode.vaadin.addons.gridhelpers;
 
+import static com.vaadin.flow.component.grid.Grid.SelectionMode.MULTI;
+import static com.vaadin.flow.component.grid.Grid.SelectionMode.SINGLE;
 import com.flowingcode.vaadin.addons.GithubLink;
 import com.vaadin.flow.component.Component;
 import com.vaadin.flow.component.checkbox.Checkbox;
@@ -33,6 +35,10 @@ import com.vaadin.flow.component.select.Select;
 import com.vaadin.flow.component.splitlayout.SplitLayout;
 import com.vaadin.flow.data.binder.Binder;
 import com.vaadin.flow.router.PageTitle;
+import java.util.Arrays;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 import lombok.experimental.ExtensionMethod;
 
 @SuppressWarnings("serial")
@@ -94,22 +100,22 @@ public class AllFeaturesDemo extends Div {
     binder.setBean(grid);
     Select<SelectionMode> select = new Select<>(SelectionMode.values());
     select.setLabel("Selection mode");
-    binder.forField(select).bind(GridHelper::getSelectionMode, Grid::setSelectionMode);
+    binder.forField(select).bind(GridHelper::getSelectionMode, this::setSelectionMode);
 
     binder
-        .forField(new Checkbox("Hide selection column"))
+        .forField(newCheckbox("Hide selection column", MULTI))
         .bind(GridHelper::isSelectionColumnHidden, GridHelper::setSelectionColumnHidden);
     binder
-        .forField(new Checkbox("Freeze selection column"))
+        .forField(newCheckbox("Freeze selection column", MULTI))
         .bind(GridHelper::isSelectionColumnFrozen, GridHelper::setSelectionColumnFrozen);
     binder
-        .forField(new Checkbox("Arrow selection enabled"))
+        .forField(newCheckbox("Arrow selection enabled", SINGLE, MULTI))
         .bind(GridHelper::isArrowSelectionEnabled, GridHelper::setArrowSelectionEnabled);
     binder
-        .forField(new Checkbox("Enable selection by clicking row"))
+        .forField(newCheckbox("Enable selection by clicking row", MULTI))
         .bind(GridHelper::isSelectOnClick, GridHelper::setSelectOnClick);
     binder
-        .forField(new Checkbox("Disallow selection of 'inactive' records"))
+        .forField(newCheckbox("Disallow selection of 'inactive' records", SINGLE, MULTI))
         .bind(this::hasSelectionFilter, this::setSelectionFilter);
     binder.forField(new Checkbox("Dense Theme")).bind(this::hasDenseTheme, this::setDenseTheme);
 
@@ -118,6 +124,31 @@ public class AllFeaturesDemo extends Div {
     label.addClassNames("label");
 
     features.addComponentAtIndex(1, label);
+  }
+
+  private final Map<Checkbox, List<SelectionMode>> checkboxes = new HashMap<>();
+
+  private Checkbox newCheckbox(String labelText, SelectionMode... modes) {
+    Checkbox checkbox = new Checkbox(labelText);
+    if (modes.length > 0) {
+      checkboxes.put(checkbox, Arrays.asList(modes));
+    }
+    return checkbox;
+  }
+
+  private void setSelectionMode(Grid<Person> grid, SelectionMode selectionMode) {
+    grid.setSelectionMode(selectionMode);
+    checkboxes.forEach((checkbox,modes)->{
+      if (modes.contains(selectionMode)) {
+        checkbox.getElement().removeAttribute("title");
+      } else if (modes.size()==1) {
+        checkbox.getElement().setAttribute("title", String.format("This feature only have effect in %s selection mode", modes.get(0).toString().toLowerCase()));
+      } else if (modes.size()==2) {
+        checkbox.getElement().setAttribute("title",
+            String.format("This feature only have effect in %s and %s selection modes",
+                modes.get(0).toString().toLowerCase(), modes.get(1).toString().toLowerCase()));
+      }
+    });
   }
 
   private void setSelectionFilter(Grid<Person> grid, boolean value) {
