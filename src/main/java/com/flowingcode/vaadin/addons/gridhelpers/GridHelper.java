@@ -209,9 +209,12 @@ public final class GridHelper<T> implements Serializable {
    * <p>
    *
    * After a call to {@link Grid#setSelectionMode(SelectionMode)} the selection filter is lost and
-   * it has to be configured again: <code>
-   * grid.setSelectionFilter(grid.getSelectionFilter());
-   * </code>
+   * it has to be configured again:
+   * 
+   * <pre>
+   * GridHelper.setSelectionFilter(grid, GridHelper.getSelectionFilter(grid)); // static call
+   * grid.setSelectionFilter(grid.getSelectionFilter()); // with lombok extension
+   * </pre>
    */
   public static <T> void setSelectionFilter(Grid<T> grid, SerializablePredicate<T> predicate) {
     getHelper(grid).selectionFilterHelper.setSelectionFilter(predicate);
