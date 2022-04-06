@@ -51,6 +51,7 @@ public class FreezeSelectionColumnDemo extends Div {
 
     GridHelper.setSelectionColumnFrozen(grid, true);
 
+    grid.setHeightFull();
     add(grid);
   }
 }

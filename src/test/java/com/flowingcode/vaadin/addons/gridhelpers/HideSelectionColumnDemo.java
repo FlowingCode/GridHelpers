@@ -45,6 +45,7 @@ public class HideSelectionColumnDemo extends Div {
 
     GridHelper.setSelectionColumnHidden(grid, true);
 
+    grid.setHeightFull();
     add(grid);
   }
 }

@@ -45,6 +45,7 @@ public class EnableSelectionOnClickDemo extends Div {
 
     GridHelper.setSelectOnClick(grid, true);
 
+    grid.setHeightFull();
     add(grid);
   }
 }

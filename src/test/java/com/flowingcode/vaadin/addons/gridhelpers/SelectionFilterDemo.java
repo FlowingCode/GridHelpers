@@ -45,6 +45,7 @@ public class SelectionFilterDemo extends Div {
 
     GridHelper.setSelectionFilter(grid, Person::isActive);
 
+    grid.setHeightFull();
     add(grid);
   }
 }

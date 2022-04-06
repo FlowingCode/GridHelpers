@@ -48,6 +48,7 @@ public class ColumnToggleMenuDemo extends Div {
 
     GridHelper.setColumnToggleVisible(grid, isVisible());
 
+    grid.setHeightFull();
     add(grid);
   }
 }

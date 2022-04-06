@@ -56,6 +56,7 @@ public class LombokDemo extends Div {
     grid.setSelectionColumnFrozen(true);
     grid.setSelectOnClick(true);
 
+    grid.setHeightFull();
     add(grid);
   }
 }

@@ -45,6 +45,7 @@ public class DenseThemeDemo extends Div {
 
     grid.addThemeName(GridHelper.DENSE_THEME);
 
+    grid.setHeightFull();
     add(grid);
   }
 }

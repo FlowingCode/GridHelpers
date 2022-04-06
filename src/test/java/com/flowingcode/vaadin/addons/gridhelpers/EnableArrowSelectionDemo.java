@@ -45,6 +45,7 @@ public class EnableArrowSelectionDemo extends Div {
 
     GridHelper.setArrowSelectionEnabled(grid, true);
 
+    grid.setHeightFull();
     add(grid);
   }
 }
