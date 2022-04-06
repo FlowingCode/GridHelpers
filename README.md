@@ -10,7 +10,7 @@ Several grid recipes for Vaadin 23+ (and 22), ready to use. DOES NOT require ext
 
 - Remove multiselect selection column
 - Freeze a grid's selection (checkbox) column
-- Create multiselect Grid with conditional selection
+- Create Grid with conditional selection (with the following limitations: [#11](https://github.com/FlowingCode/GridHelpers/issues/11), [#12](https://github.com/FlowingCode/GridHelpers/issues/12))
 - Select Grid rows automatically using up/down arrow keys
 - Show a Vaadin Grid with compact row styling
 - Show a meaningful message instead of an empty Grid
