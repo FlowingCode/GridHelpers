@@ -124,6 +124,7 @@ public class AllFeaturesDemo extends Div {
     label.addClassNames("label");
 
     features.addComponentAtIndex(1, label);
+    setSelectionMode(grid, grid.getSelectionMode());
   }
 
   private final Map<Checkbox, List<SelectionMode>> checkboxes = new HashMap<>();
@@ -149,6 +150,14 @@ public class AllFeaturesDemo extends Div {
                 modes.get(0).toString().toLowerCase(), modes.get(1).toString().toLowerCase()));
       }
     });
+
+    // workaround for https://github.com/FlowingCode/GridHelpers/issues/11 in Vaadin 22
+    if (selectionMode == MULTI) {
+      grid.getStyle().remove("--fcgh-noselect-opacity");
+    } else {
+      grid.getStyle().set("--fcgh-noselect-opacity", "1");
+    }
+
   }
 
   private void setSelectionFilter(Grid<Person> grid, boolean value) {
