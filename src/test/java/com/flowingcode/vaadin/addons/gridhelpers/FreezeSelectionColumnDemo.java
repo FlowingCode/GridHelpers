@@ -27,8 +27,7 @@ import com.vaadin.flow.component.html.Div;
 import com.vaadin.flow.router.PageTitle;
 
 @PageTitle("Freeze Selection Column")
-@DemoSource(
-    "https://github.com/FlowingCode/GridHelpers/blob/master/src/test/java/com/flowingcode/vaadin/addons/gridhelpers/FreezeSelectionColumnDemo.java")
+@DemoSource
 public class FreezeSelectionColumnDemo extends Div {
 
   public FreezeSelectionColumnDemo() {

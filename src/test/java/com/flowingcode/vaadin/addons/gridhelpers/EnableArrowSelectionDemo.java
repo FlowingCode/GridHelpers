@@ -27,8 +27,7 @@ import com.vaadin.flow.component.html.Div;
 import com.vaadin.flow.router.PageTitle;
 
 @PageTitle("Enable Arrow Selection")
-@DemoSource(
-    "https://github.com/FlowingCode/GridHelpers/blob/master/src/test/java/com/flowingcode/vaadin/addons/gridhelpers/EnableArrowSelectionDemo.java")
+@DemoSource
 public class EnableArrowSelectionDemo extends Div {
 
   public EnableArrowSelectionDemo() {

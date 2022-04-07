@@ -27,8 +27,7 @@ import com.vaadin.flow.component.html.Div;
 import com.vaadin.flow.router.PageTitle;
 
 @PageTitle("Hide Selection Column")
-@DemoSource(
-    "https://github.com/FlowingCode/GridHelpers/blob/master/src/test/java/com/flowingcode/vaadin/addons/gridhelpers/HideSelectionColumnDemo.java")
+@DemoSource
 public class HideSelectionColumnDemo extends Div {
 
   public HideSelectionColumnDemo() {

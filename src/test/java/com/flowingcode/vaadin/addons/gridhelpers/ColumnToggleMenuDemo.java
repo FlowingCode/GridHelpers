@@ -27,8 +27,7 @@ import com.vaadin.flow.component.html.Div;
 import com.vaadin.flow.router.PageTitle;
 
 @PageTitle("Column Toggle Menu")
-@DemoSource(
-    "https://github.com/FlowingCode/GridHelpers/blob/master/src/test/java/com/flowingcode/vaadin/addons/gridhelpers/ColumnToggleMenuDemo.java")
+@DemoSource
 public class ColumnToggleMenuDemo extends Div {
 
   public ColumnToggleMenuDemo() {

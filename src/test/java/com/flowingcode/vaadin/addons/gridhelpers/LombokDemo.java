@@ -28,8 +28,7 @@ import com.vaadin.flow.router.PageTitle;
 import lombok.experimental.ExtensionMethod;
 
 @PageTitle("Using Lombok")
-@DemoSource(
-    "https://github.com/FlowingCode/GridHelpers/blob/master/src/test/java/com/flowingcode/vaadin/addons/gridhelpers/LombokDemo.java")
+@DemoSource
 @ExtensionMethod(GridHelper.class)
 public class LombokDemo extends Div {
 

@@ -117,6 +117,11 @@ public class AllFeaturesDemo extends Div {
     binder
         .forField(newCheckbox("Disallow selection of 'inactive' records", SINGLE, MULTI))
         .bind(this::hasSelectionFilter, this::setSelectionFilter);
+
+    binder
+        .forField(newCheckbox("Enable range selection", MULTI))
+        .bind(GridHelper::isRangeSelectionEnabled, GridHelper::setRangeSelectionEnabled);
+
     binder.forField(new Checkbox("Dense Theme")).bind(this::hasDenseTheme, this::setDenseTheme);
 
     binder.getFields().map(Component.class::cast).forEach(features::add);

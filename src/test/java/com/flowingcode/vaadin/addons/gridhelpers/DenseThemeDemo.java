@@ -27,8 +27,7 @@ import com.vaadin.flow.component.html.Div;
 import com.vaadin.flow.router.PageTitle;
 
 @PageTitle("Dense Theme")
-@DemoSource(
-    "https://github.com/FlowingCode/GridHelpers/blob/master/src/test/java/com/flowingcode/vaadin/addons/gridhelpers/DenseThemeDemo.java")
+@DemoSource
 public class DenseThemeDemo extends Div {
 
   public DenseThemeDemo() {
