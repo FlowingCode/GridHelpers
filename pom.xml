@@ -114,6 +114,12 @@
 		</dependency>
 
 		<dependency>
+		   <groupId>com.vaadin.componentfactory</groupId>
+		   <artifactId>selection-grid-flow</artifactId>
+		   <version>2.0.0</version>
+		</dependency>
+
+		<dependency>
 			<groupId>com.vaadin</groupId>
 			<artifactId>vaadin-core</artifactId>
 		</dependency>

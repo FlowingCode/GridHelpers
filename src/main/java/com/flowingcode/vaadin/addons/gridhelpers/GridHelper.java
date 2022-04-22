@@ -67,6 +67,7 @@ public final class GridHelper<T> implements Serializable {
 
   private GridHelper(Grid<T> grid) {
     this.grid = grid;
+    this.rangeSelection = new RangeSelectionHelper<>(this, grid);
     this.helperClassNameGenerator = new GridHelperClassNameGenerator<>();
     setClassNameGenerator(grid.getClassNameGenerator());
     grid.addItemClickListener(this::onItemClick);
@@ -102,18 +103,31 @@ public final class GridHelper<T> implements Serializable {
     selectionColumnHelper.onAttach();
   }
 
+  boolean canSelect(T item) {
+    return selectionFilterHelper.canSelect(item);
+  }
+
   private void onItemClick(ItemClickEvent<T> event) {
     T item = event.getItem();
-    if (selectOnClick && getSelectionMode(grid) == SelectionMode.MULTI) {
+    if (getSelectionMode(grid) == SelectionMode.MULTI) {
+
       // https://cookbook.vaadin.com/grid-conditional-select
-      if (!selectionFilterHelper.canSelect(item)) {
+      if (!canSelect(item)) {
         return;
       }
 
-      if (grid.getSelectedItems().contains(item)) {
-        grid.deselect(item);
-      } else {
-        grid.select(item);
+      // attempt to process the item click as a range selection, if applicable
+      if (rangeSelection.onItemClick(event)) {
+        return;
+      }
+
+      if (selectOnClick) {
+        if (grid.getSelectedItems().contains(item)) {
+          grid.deselect(item);
+        } else {
+          grid.select(item);
+        }
+        return;
       }
     }
   }
@@ -267,4 +281,19 @@ public final class GridHelper<T> implements Serializable {
   public static Component getEmptyGridLabel(Grid<?> grid) {
     return getHelper(grid).emptyLabel.getEmptyGridLabel();
   }
+
+  // Range Selection
+
+  private final RangeSelectionHelper<T> rangeSelection;
+
+  /** Returns whether range selection using Shift/Control click is supported */
+  public static boolean isRangeSelectionEnabled(Grid<?> grid) {
+    return getHelper(grid).rangeSelection.isEnabled();
+  }
+
+  /** Configures whether range selection using Shift/Control click is supported */
+  public static void setRangeSelectionEnabled(Grid<?> grid, boolean enable) {
+    getHelper(grid).rangeSelection.setEnabled(enable);
+  }
+
 }
