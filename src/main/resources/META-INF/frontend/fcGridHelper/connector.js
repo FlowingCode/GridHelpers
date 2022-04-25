@@ -29,6 +29,20 @@ import { Grid } from '@vaadin/grid/src/vaadin-grid.js';
 (function () { 
   window.Vaadin.Flow.fcGridHelperConnector = {
     initLazy: grid => {
+    
+        if (!window.Vaadin.Flow.fcGridHelperConnector.gridConnectorOverriden) {
+          let gridConnectorInitLazy = window.Vaadin.Flow.gridConnector.initLazy;
+          window.Vaadin.Flow.gridConnector.initLazy = grid => {
+            gridConnectorInitLazy(grid);
+            let setSelectionMode = grid.$connector.setSelectionMode;
+            grid.$connector.setSelectionMode = selectionMode => {
+              setSelectionMode(selectionMode);
+              grid.__fcSelectionMode=selectionMode;
+            }; 
+          };
+          window.Vaadin.Flow.fcGridHelperConnector.gridConnectorOverriden=true;
+        }
+        
     	//https://cookbook.vaadin.com/grid-arrow-selection
     	grid.addEventListener('keyup', function(e) {
     		if (e.keyCode == 32) return;
