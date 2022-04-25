@@ -47,6 +47,8 @@ import { Grid } from '@vaadin/grid/src/vaadin-grid.js';
     	grid.addEventListener('keyup', function(e) {
     		if (e.keyCode == 32) return;
     		if (!grid._fcghArrowSelection) return;
+    		if (grid.activeItem===grid.getEventContext(e).item) return;
+
     		if (grid.selectedItems){
     			grid.activeItem=grid.getEventContext(e).item;
     			grid.selectedItems=[grid.getEventContext(e).item];
