@@ -267,4 +267,13 @@ public final class GridHelper<T> implements Serializable {
   public static Component getEmptyGridLabel(Grid<?> grid) {
     return getHelper(grid).emptyLabel.getEmptyGridLabel();
   }
+  
+  // FooterToolbar
+
+  private final FooterToolbarGridHelper footerToolbar = new FooterToolbarGridHelper(this);
+  
+
+  public static void addToolbarFooter(Grid<?> grid, Component toolBar) {
+    getHelper(grid).footerToolbar.setFooterToolbar(toolBar);
+  }
 }
