@@ -43,5 +43,6 @@ public class GridHelpersDemoView extends TabbedDemo {
     addDemo(new SelectionFilterDemo());
     addDemo(new DenseThemeDemo());
     addDemo(new LombokDemo());
+    addDemo(new AddToolbarFooterDemo());
   }
 }

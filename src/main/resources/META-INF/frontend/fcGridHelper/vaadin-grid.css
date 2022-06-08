@@ -52,3 +52,7 @@ table[aria-multiselectable="true"] .fcGh-noselect[first-column] ::slotted(*) {
   opacity: var(--fcgh-noselect-opacity, 0.5);
   pointer-events: none;
 }
+
+:host([theme~="hide-first-footer"]) tfoot [part="row"]:first-child {
+    display: none;
+}
