@@ -20,6 +20,7 @@
 
 package com.flowingcode.vaadin.addons.gridhelpers;
 
+import java.io.Serializable;
 import com.vaadin.flow.component.AttachEvent;
 import com.vaadin.flow.component.Component;
 import com.vaadin.flow.component.ComponentUtil;
@@ -34,7 +35,6 @@ import com.vaadin.flow.component.grid.GridSingleSelectionModel;
 import com.vaadin.flow.component.grid.ItemClickEvent;
 import com.vaadin.flow.function.SerializableFunction;
 import com.vaadin.flow.function.SerializablePredicate;
-import java.io.Serializable;
 import lombok.AccessLevel;
 import lombok.Getter;
 
@@ -276,4 +276,18 @@ public final class GridHelper<T> implements Serializable {
   public static void addToolbarFooter(Grid<?> grid, Component toolBar) {
     getHelper(grid).footerToolbar.setFooterToolbar(toolBar);
   }
+
+  // HeaderFooter
+
+  private final HeaderFooterGridHelper headerFooter = new HeaderFooterGridHelper(this);
+  
+
+  public static String getHeader(Grid<?> grid, Column<?> column) {
+    return getHelper(grid).headerFooter.getHeader(column);
+  }
+  
+  public static String getFooter(Grid<?> grid, Column<?> column) {
+    return getHelper(grid).headerFooter.getFooter(column);
+  }
+
 }
