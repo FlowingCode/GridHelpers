@@ -22,6 +22,7 @@ class FooterToolbarGridHelper implements Serializable {
     }
     FooterRow fr = grid.appendFooterRow();
     FooterCell fc = fr.join(grid.getColumns().toArray(new Grid.Column[0]));
+    toolBar.getElement().setAttribute("fcGh-footer",true);
     fc.setComponent(toolBar);
   }
 

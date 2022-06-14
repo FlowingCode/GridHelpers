@@ -39,6 +39,19 @@ import { Grid } from '@vaadin/grid/src/vaadin-grid.js';
     			grid.$server.select(grid.getEventContext(e).item.key);
     		}
     	});
+
+		const __updateHorizontalScrollPosition = grid.__updateHorizontalScrollPosition.bind(grid); 
+		grid.__updateHorizontalScrollPosition = function() {
+			__updateHorizontalScrollPosition();
+			console.error(this._scrollLeft);
+			this.querySelectorAll("[fcgh-footer]").forEach(footer=>{
+				const slot = footer.parentElement.parentElement.assignedSlot;
+				if (slot) {
+					slot.parentElement.parentElement.style.transform = `translate(${this._scrollLeft}px, 0)`;
+				}
+			});
+		}.bind(grid);
+
     }
   }
 })();
