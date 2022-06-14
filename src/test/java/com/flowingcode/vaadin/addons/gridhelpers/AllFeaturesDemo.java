@@ -95,6 +95,7 @@ public class AllFeaturesDemo extends Div {
 
     grid.setSelectOnClick(true);
     grid.setColumnToggleVisible(true);
+    grid.setRangeSelectionEnabled(true);
 
     Binder<Grid<Person>> binder = new Binder<>();
     binder.setBean(grid);
