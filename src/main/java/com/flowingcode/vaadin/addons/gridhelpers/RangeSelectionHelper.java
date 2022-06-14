@@ -85,8 +85,9 @@ class RangeSelectionHelper<T> implements Serializable {
             .then(Boolean.class, empty -> {
               if (empty) {
                 boolean wasSelected = grid.asMultiSelect().isSelected(clickedItem);
+                int selectionSize = !wasSelected ? 0 : grid.asMultiSelect().getSelectedItems().size();
                 grid.asMultiSelect().clear();
-                if (!wasSelected) {
+                if (selectionSize!=1) {
                   ComponentUtil.setData(grid, LAST_CLICKED_ITEM, clickedItem);
                   grid.select(clickedItem);
                 }
