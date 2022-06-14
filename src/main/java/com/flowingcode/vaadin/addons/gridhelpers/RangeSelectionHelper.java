@@ -76,7 +76,10 @@ class RangeSelectionHelper<T> implements Serializable {
         return true;
       }
 
-      if (!ev.isCtrlKey() && !ev.isShiftKey() && grid.asMultiSelect().isSelected(clickedItem)) {
+      //many OS+browser combinations reserve control for their own purposes.
+      var bucky = ev.isCtrlKey() || ev.isMetaKey() || ev.isAltKey();
+      
+      if (!bucky && !ev.isShiftKey() && grid.asMultiSelect().isSelected(clickedItem)) {
         // allows selecting text on selected items
         grid.getElement().executeJs("return !document.getSelection().toString().length")
             .then(Boolean.class, empty -> {
@@ -94,7 +97,7 @@ class RangeSelectionHelper<T> implements Serializable {
 
       grid.getElement().executeJs("document.getSelection().removeAllRanges()");
 
-      if (!ev.isCtrlKey()) {
+      if (!bucky) {
         grid.asMultiSelect().clear();
       }
 
