@@ -31,7 +31,7 @@ public class TestData {
 
   private static synchronized Person newPerson() {
     return Person.builder()
-        .active(faker.random().nextBoolean())
+        .active(faker.random().nextInt(3)>0)
         .firstName(faker.name().firstName())
         .lastName(faker.name().lastName())
         .country(generateCountry())
