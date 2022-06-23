@@ -60,25 +60,25 @@ public class AllFeaturesDemo extends Div {
 
     Grid<Person> grid = new Grid<>();
 
-    grid.addColumn(Person::getLastName).setHeader("Last name").setHidingToggleCaption("Last name");
+    grid.addColumn(Person::getLastName).setHeader("Last name").setHidingToggleCaption("Last name column");
     grid.addColumn(Person::getFirstName)
         .setHeader("First name")
-        .setHidingToggleCaption("First name");
+        .setHidingToggleCaption("First name column");
     grid.addColumn(p -> p.isActive() ? "Yes" : "No")
         .setHeader("Active")
-        .setHidingToggleCaption("Active");
-    grid.addColumn(Person::getTitle).setHeader("Title").setHidingToggleCaption("Title");
-    grid.addColumn(Person::getCountry).setHeader("Country").setHidingToggleCaption("Country");
-    grid.addColumn(Person::getCity).setHeader("City").setHidingToggleCaption("City");
+        .setHidable(true);
+    grid.addColumn(Person::getTitle).setHeader("Title").setHidable(true);
+    grid.addColumn(Person::getCountry).setHeader("Country").setHidable(true);
+    grid.addColumn(Person::getCity).setHeader("City").setHidable(true);
     grid.addColumn(Person::getStreetAddress)
         .setHeader("Street Address")
-        .setHidingToggleCaption("Street Address");
+        .setHidable(true);
     grid.addColumn(Person::getPhoneNumber)
         .setHeader("Phone Number")
-        .setHidingToggleCaption("Phone Number");
+        .setHidable(true);
     grid.addColumn(Person::getEmailAddress)
         .setHeader("Email Address")
-        .setHidingToggleCaption("Email Address");
+        .setHidable(true);
     grid.getColumns().forEach(c -> c.setAutoWidth(true));
 
     grid.setItems(TestData.initializeData());
