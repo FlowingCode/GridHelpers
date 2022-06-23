@@ -47,6 +47,8 @@ class ColumnToggleHelper implements Serializable {
   private static final String GRID_HELPER_TOGGLE_THEME = "gridHelperToggle";
 
   private static final String TOGGLE_LABEL_DATA = GridHelper.class.getName() + "#TOGGLE_LABEL";
+  
+  private static final String HIDABLE_DATA = GridHelper.class.getName() + "#HIDABLE";
 
   private final GridHelper<?> helper;
 
@@ -94,31 +96,51 @@ class ColumnToggleHelper implements Serializable {
     SubMenu subMenu = menuItem.getSubMenu();
 
     for (Column<?> column : grid.getColumns()) {
-      getToggleLabel(column)
-          .ifPresent(
-              label -> {
-                Checkbox checkbox = new Checkbox(label);
-                checkbox.setValue(column.isVisible());
-                checkbox.addValueChangeListener(e -> column.setVisible(e.getValue()));
-                subMenu.addItem(checkbox);
-              });
+      if (isHidable(column)) {
+        String label = getToggleLabel(column);
+        Checkbox checkbox = new Checkbox(label);
+        checkbox.setValue(column.isVisible());
+        checkbox.addValueChangeListener(e -> column.setVisible(e.getValue()));
+        subMenu.addItem(checkbox);
+      }
     }
 
     menuBar.getThemeNames().add(GRID_HELPER_TOGGLE_THEME);
     return Optional.of(menuBar).filter(_menuBar -> !_menuBar.getItems().isEmpty());
   }
 
-  private Optional<String> getToggleLabel(@NonNull Column<?> column) {
-    return Optional.ofNullable((String) ComponentUtil.getData(column, TOGGLE_LABEL_DATA));
+  private String getToggleLabel(@NonNull Column<?> column) {
+    Grid<?> grid = helper.getGrid();
+    return Optional.ofNullable((String) ComponentUtil.getData(column, TOGGLE_LABEL_DATA)).orElseGet(()->GridHelper.getHeader(grid, column));
   }
 
+  public boolean isHidable(Column<?> column) {
+    return column!=null && Boolean.TRUE.equals(ComponentUtil.getData(column, HIDABLE_DATA));
+  }
+  
+  public void setHidable(Column<?> column, boolean hidable) {
+    if (column != null) {
+      Grid<?> grid = helper.getGrid();
+      if (!grid.getColumns().contains(column)) {
+        throw new IllegalArgumentException();
+      }      
+      ComponentUtil.setData(column, HIDABLE_DATA, hidable);
+      if (isColumnToggleVisible()) {
+        showColumnToggle();
+      }
+    }
+  }
+  
   public void setHidingToggleCaption(Column<?> column, String caption) {
     if (column != null) {
       Grid<?> grid = helper.getGrid();
       if (!grid.getColumns().contains(column)) {
         throw new IllegalArgumentException();
-      }
+      }      
       ComponentUtil.setData(column, TOGGLE_LABEL_DATA, caption);
+      if (caption!=null && ComponentUtil.getData(column, HIDABLE_DATA)==null) {
+        ComponentUtil.setData(column, HIDABLE_DATA, Boolean.TRUE);
+      }
       if (isColumnToggleVisible()) {
         showColumnToggle();
       }

@@ -239,8 +239,26 @@ public final class GridHelper<T> implements Serializable {
     return getHelper(grid).columnToggleHelper.isColumnToggleVisible();
   }
 
+  /**Returns whether this column can be hidden by the user. Default is {@code false}.
+   * 
+   * @return {@code true} if the user can hide the column, {@code false} if not.*/
+  public static <T> boolean isHidable(Column<T> column) {
+    return getHelper(column.getGrid()).columnToggleHelper.isHidable(column);
+  }
+
+  /**Sets whether this column can be hidden by the user. Hidable columns can be hidden and shown via the sidebar menu.
+   * @param column the column to be configured
+   * @param hidable {@code true} if the column may be hidden by the user via UI interaction
+   * 
+   * @return the column.
+   */
+  public static <T> Column<T> setHidable(Column<T> column, boolean hidable) {
+    getHelper(column.getGrid()).columnToggleHelper.setHidable(column, hidable);
+    return column;
+  }
+  
   /**
-   * Sets the caption of the hiding toggle for this column.
+   * Sets the caption of the hiding toggle for this column. Shown in the toggle for this column in the grid's sidebar when the column is {@linkplain #isHidable(Column) hidable}.
    *
    * <p>If the value is <code>null</code>, the column cannot be hidden via the sidebar menu.
    *
