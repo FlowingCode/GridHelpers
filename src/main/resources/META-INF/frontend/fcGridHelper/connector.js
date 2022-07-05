@@ -43,7 +43,6 @@ import { Grid } from '@vaadin/grid/src/vaadin-grid.js';
 		const __updateHorizontalScrollPosition = grid.__updateHorizontalScrollPosition.bind(grid); 
 		grid.__updateHorizontalScrollPosition = function() {
 			__updateHorizontalScrollPosition();
-			console.error(this._scrollLeft);
 			this.querySelectorAll("[fcgh-footer]").forEach(footer=>{
 				const slot = footer.parentElement.parentElement.assignedSlot;
 				if (slot) {
