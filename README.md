@@ -1,5 +1,5 @@
-[![Published on Vaadin Directory](https://img.shields.io/badge/Vaadin%20Directory-published-00b4f0.svg)](https://vaadin.com/directory/component/grid-helpers-addon)
-[![Stars on vaadin.com/directory](https://img.shields.io/vaadin-directory/star/GridHelpers-addon.svg)](https://vaadin.com/directory/component/grid-helpers-addon)
+[![Published on Vaadin Directory](https://img.shields.io/badge/Vaadin%20Directory-published-00b4f0.svg)](https://vaadin.com/directory/component/grid-helpers-add-on)
+[![Stars on vaadin.com/directory](https://img.shields.io/vaadin-directory/star/GridHelpers-addon.svg)](https://vaadin.com/directory/component/grid-helpers-add-on)
 [![Build Status](https://jenkins.flowingcode.com/job/GridHelpers-addon/badge/icon)](https://jenkins.flowingcode.com/job/GridHelpers-addon)
 
 # Grid Helpers Add-on
@@ -22,7 +22,7 @@ Several grid recipes for Vaadin 23+ (and 22), ready to use. DOES NOT require ext
 
 ## Download release
 
-[Available in Vaadin Directory](https://vaadin.com/directory/component/grid-helpers-addon)
+[Available in Vaadin Directory](https://vaadin.com/directory/component/grid-helpers-add-on)
 
 ## Building and running demo
 
