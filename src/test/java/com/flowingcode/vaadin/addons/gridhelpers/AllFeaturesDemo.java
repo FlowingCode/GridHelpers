@@ -24,6 +24,7 @@ import static com.vaadin.flow.component.grid.Grid.SelectionMode.MULTI;
 import static com.vaadin.flow.component.grid.Grid.SelectionMode.SINGLE;
 import com.flowingcode.vaadin.addons.GithubLink;
 import com.vaadin.flow.component.Component;
+import com.vaadin.flow.component.Text;
 import com.vaadin.flow.component.button.Button;
 import com.vaadin.flow.component.checkbox.Checkbox;
 import com.vaadin.flow.component.dependency.StyleSheet;
@@ -33,9 +34,9 @@ import com.vaadin.flow.component.html.Div;
 import com.vaadin.flow.component.html.Label;
 import com.vaadin.flow.component.icon.VaadinIcon;
 import com.vaadin.flow.component.notification.Notification;
+import com.vaadin.flow.component.orderedlayout.FlexComponent.JustifyContentMode;
 import com.vaadin.flow.component.orderedlayout.HorizontalLayout;
 import com.vaadin.flow.component.orderedlayout.VerticalLayout;
-import com.vaadin.flow.component.orderedlayout.FlexComponent.JustifyContentMode;
 import com.vaadin.flow.component.select.Select;
 import com.vaadin.flow.component.splitlayout.SplitLayout;
 import com.vaadin.flow.data.binder.Binder;
@@ -134,9 +135,16 @@ public class AllFeaturesDemo extends Div {
 
     features.addComponentAtIndex(1, label);
     setSelectionMode(grid, grid.getSelectionMode());
-    
-    HorizontalLayout hl = new HorizontalLayout(new Button(VaadinIcon.TOOLS.create(),ev->Notification.show("Not implemented")));
+
+    HorizontalLayout hl = new HorizontalLayout();
+    hl.setPadding(false);
+    Div toolbarFooterLabel = new Div(new Text("Toolbar Footer"));
+    toolbarFooterLabel.getStyle().set("margin", "auto");
     hl.setSizeFull();
+    Button toolbarFooterButton = new Button(VaadinIcon.TOOLS.create(),
+        ev -> Notification.show("You clicked a button in the Toolbar Footer"));
+    toolbarFooterButton.getThemeNames().add("small");
+    hl.add(toolbarFooterLabel, toolbarFooterButton);
     hl.setJustifyContentMode(JustifyContentMode.END);
 
     grid.addToolbarFooter(hl);
