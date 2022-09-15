@@ -20,7 +20,6 @@
 
 package com.flowingcode.vaadin.addons.gridhelpers;
 
-import java.io.Serializable;
 import com.vaadin.flow.component.AttachEvent;
 import com.vaadin.flow.component.Component;
 import com.vaadin.flow.component.ComponentUtil;
@@ -35,6 +34,7 @@ import com.vaadin.flow.component.grid.GridSingleSelectionModel;
 import com.vaadin.flow.component.grid.ItemClickEvent;
 import com.vaadin.flow.function.SerializableFunction;
 import com.vaadin.flow.function.SerializablePredicate;
+import java.io.Serializable;
 import lombok.AccessLevel;
 import lombok.Getter;
 
@@ -42,6 +42,10 @@ import lombok.Getter;
 @JsModule("./fcGridHelper/connector.js")
 @CssImport(value = "./fcGridHelper/vaadin-menu-bar.css", themeFor = "vaadin-menu-bar")
 @CssImport(value = GridHelper.GRID_STYLES, themeFor = "vaadin-grid")
+@CssImport(value = "./fcGridHelper/vaadin-context-menu-item.css",
+    themeFor = "vaadin-context-menu-item")
+@CssImport(value = "./fcGridHelper/vaadin-context-menu-list-box.css",
+    themeFor = "vaadin-context-menu-list-box")
 public final class GridHelper<T> implements Serializable {
 
   private static final String ARROW_SELECTION_PROPERTY = "_fcghArrowSelection";
@@ -210,7 +214,7 @@ public final class GridHelper<T> implements Serializable {
    *
    * After a call to {@link Grid#setSelectionMode(SelectionMode)} the selection filter is lost and
    * it has to be configured again:
-   * 
+   *
    * <pre>
    * GridHelper.setSelectionFilter(grid, GridHelper.getSelectionFilter(grid)); // static call
    * grid.setSelectionFilter(grid.getSelectionFilter()); // with lombok extension
@@ -240,7 +244,7 @@ public final class GridHelper<T> implements Serializable {
   }
 
   /**Returns whether this column can be hidden by the user. Default is {@code false}.
-   * 
+   *
    * @return {@code true} if the user can hide the column, {@code false} if not.*/
   public static <T> boolean isHidable(Column<T> column) {
     return getHelper(column.getGrid()).columnToggleHelper.isHidable(column);
@@ -249,14 +253,14 @@ public final class GridHelper<T> implements Serializable {
   /**Sets whether this column can be hidden by the user. Hidable columns can be hidden and shown via the sidebar menu.
    * @param column the column to be configured
    * @param hidable {@code true} if the column may be hidden by the user via UI interaction
-   * 
+   *
    * @return the column.
    */
   public static <T> Column<T> setHidable(Column<T> column, boolean hidable) {
     getHelper(column.getGrid()).columnToggleHelper.setHidable(column, hidable);
     return column;
   }
-  
+
   /**
    * Sets the caption of the hiding toggle for this column. Shown in the toggle for this column in the grid's sidebar when the column is {@linkplain #isHidable(Column) hidable}.
    *
@@ -285,11 +289,11 @@ public final class GridHelper<T> implements Serializable {
   public static Component getEmptyGridLabel(Grid<?> grid) {
     return getHelper(grid).emptyLabel.getEmptyGridLabel();
   }
-  
+
   // FooterToolbar
 
   private final FooterToolbarGridHelper footerToolbar = new FooterToolbarGridHelper(this);
-  
+
 
   public static void addToolbarFooter(Grid<?> grid, Component toolBar) {
     getHelper(grid).footerToolbar.setFooterToolbar(toolBar);
@@ -298,12 +302,12 @@ public final class GridHelper<T> implements Serializable {
   // HeaderFooter
 
   private final HeaderFooterGridHelper headerFooter = new HeaderFooterGridHelper(this);
-  
+
 
   public static String getHeader(Grid<?> grid, Column<?> column) {
     return getHelper(grid).headerFooter.getHeader(column);
   }
-  
+
   public static String getFooter(Grid<?> grid, Column<?> column) {
     return getHelper(grid).headerFooter.getFooter(column);
   }
