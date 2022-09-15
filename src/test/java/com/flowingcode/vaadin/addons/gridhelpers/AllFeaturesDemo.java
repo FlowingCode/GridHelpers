@@ -58,6 +58,8 @@ public class AllFeaturesDemo extends Div {
   public AllFeaturesDemo() {
     setSizeFull();
 
+    getElement().getStyle().set("flex-grow", "1");
+
     Grid<Person> grid = new Grid<>();
 
     grid.addColumn(Person::getLastName).setHeader("Last name").setHidingToggleCaption("Last name column");
@@ -85,7 +87,6 @@ public class AllFeaturesDemo extends Div {
     grid.setSelectionMode(SelectionMode.MULTI);
 
     grid.getElement().getStyle().set("flex-grow", "1");
-    grid.setHeight("100vh");
 
     VerticalLayout features = new VerticalLayout();
     features.getStyle().set("margin-left", "4px");
@@ -94,8 +95,11 @@ public class AllFeaturesDemo extends Div {
     features.setPadding(false);
     features.setWidth(null);
 
-    SplitLayout split = new SplitLayout(grid, features);
+    VerticalLayout layout = new VerticalLayout(grid);
+    layout.setPadding(false);
+    SplitLayout split = new SplitLayout(layout, features);
     split.setSplitterPosition(100);
+    split.setHeightFull();
     add(split);
 
     grid.setSelectOnClick(true);
