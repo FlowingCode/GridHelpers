@@ -1,0 +1,3 @@
+:host([theme~='gridHelperToggle']) [part~="items"] ::slotted(.vaadin-menu-item) {
+ padding: 0;
+}
