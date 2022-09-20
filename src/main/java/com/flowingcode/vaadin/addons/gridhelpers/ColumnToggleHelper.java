@@ -115,7 +115,7 @@ class ColumnToggleHelper<T> implements Serializable {
     menuItem.getElement().executeJs("this.addEventListener('click',ev=>ev.stopPropagation())");
   }
 
-  private String getHidingToggleCaption(@NonNull Column<?> column) {
+  public String getHidingToggleCaption(@NonNull Column<?> column) {
     Grid<?> grid = helper.getGrid();
     return Optional.ofNullable((String) ComponentUtil.getData(column, TOGGLE_CAPTION_DATA))
         .orElseGet(() -> GridHelper.getHeader(grid, column));

@@ -272,6 +272,15 @@ public final class GridHelper<T> implements Serializable {
     getHelper(column.getGrid()).columnToggleHelper.setHidingToggleCaption(column, caption);
   }
 
+  /**
+   * Returns the caption of the hiding toggle for this column.
+   *
+   * @return the text shown in the column hiding toggle
+   */
+  public static <T> String getHidingToggleCaption(Column<T> column) {
+    return getHelper(column.getGrid()).columnToggleHelper.getHidingToggleCaption(column);
+  }
+
   public static boolean isMenuToggleColumn(Column<?> column) {
     return column == getHelper(column).columnToggleHelper.getMenuToggleColumn();
   }
