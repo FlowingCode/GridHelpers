@@ -42,7 +42,7 @@ import lombok.RequiredArgsConstructor;
 
 @SuppressWarnings("serial")
 @RequiredArgsConstructor
-class ColumnToggleHelper implements Serializable {
+class ColumnToggleHelper<T> implements Serializable {
 
   private static final String GRID_HELPER_TOGGLE_THEME = "gridHelperToggle";
 
@@ -50,7 +50,7 @@ class ColumnToggleHelper implements Serializable {
 
   private static final String HIDABLE_DATA = GridHelper.class.getName() + "#HIDABLE";
 
-  private final GridHelper<?> helper;
+  private final GridHelper<T> helper;
 
   private Column<?> menuToggleColumn;
 
@@ -88,14 +88,14 @@ class ColumnToggleHelper implements Serializable {
   }
 
   private Optional<MenuBar> createMenuToggle() {
-    Grid<?> grid = helper.getGrid();
+    Grid<T> grid = helper.getGrid();
 
     MenuBar menuBar = new MenuBar();
     menuBar.addThemeVariants(MenuBarVariant.LUMO_TERTIARY_INLINE);
     MenuItem menuItem = menuBar.addItem(VaadinIcon.ELLIPSIS_DOTS_V.create());
     SubMenu subMenu = menuItem.getSubMenu();
 
-    for (Column<?> column : grid.getColumns()) {
+    for (Column<T> column : grid.getColumns()) {
       if (isHidable(column)) {
         String label = getToggleLabel(column);
         Checkbox checkbox = new Checkbox(label);
