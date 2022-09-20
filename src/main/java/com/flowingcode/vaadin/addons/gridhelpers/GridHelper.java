@@ -22,6 +22,7 @@ package com.flowingcode.vaadin.addons.gridhelpers;
 
 import com.vaadin.flow.component.AttachEvent;
 import com.vaadin.flow.component.Component;
+import com.vaadin.flow.component.ComponentEventListener;
 import com.vaadin.flow.component.ComponentUtil;
 import com.vaadin.flow.component.dependency.CssImport;
 import com.vaadin.flow.component.dependency.JsModule;
@@ -34,6 +35,7 @@ import com.vaadin.flow.component.grid.GridSingleSelectionModel;
 import com.vaadin.flow.component.grid.ItemClickEvent;
 import com.vaadin.flow.function.SerializableFunction;
 import com.vaadin.flow.function.SerializablePredicate;
+import com.vaadin.flow.shared.Registration;
 import java.io.Serializable;
 import lombok.AccessLevel;
 import lombok.Getter;
@@ -259,6 +261,14 @@ public final class GridHelper<T> implements Serializable {
   public static <T> Column<T> setHidable(Column<T> column, boolean hidable) {
     getHelper(column.getGrid()).columnToggleHelper.setHidable(column, hidable);
     return column;
+  }
+
+  /**
+   * Adds a listener that is notified when column visibility is modified through the sidebar menu.
+   */
+  public static <T> Registration addColumnToggleListener(Grid<T> grid,
+      ComponentEventListener<ColumnToggleEvent<T>> listener) {
+    return getHelper(grid).columnToggleHelper.addColumnToggleListener(listener);
   }
 
   /**

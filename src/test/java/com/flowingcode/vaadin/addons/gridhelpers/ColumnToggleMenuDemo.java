@@ -24,6 +24,7 @@ import com.flowingcode.vaadin.addons.demo.DemoSource;
 import com.vaadin.flow.component.grid.Grid;
 import com.vaadin.flow.component.grid.Grid.Column;
 import com.vaadin.flow.component.html.Div;
+import com.vaadin.flow.component.notification.Notification;
 import com.vaadin.flow.router.PageTitle;
 
 @PageTitle("Column Toggle Menu")
@@ -46,6 +47,12 @@ public class ColumnToggleMenuDemo extends Div {
     GridHelper.setHidingToggleCaption(countryColumn, "Country");
 
     GridHelper.setColumnToggleVisible(grid, isVisible());
+
+    GridHelper.addColumnToggleListener(grid, ev -> {
+      String caption = GridHelper.getHidingToggleCaption(ev.getColumn());
+      String message = caption + " is now " + (ev.getColumn().isVisible() ? "visible" : "invisible");
+      new Notification(message).open();
+    });
 
     grid.setHeightFull();
     add(grid);

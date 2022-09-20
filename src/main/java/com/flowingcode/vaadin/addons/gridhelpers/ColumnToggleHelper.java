@@ -26,6 +26,7 @@
 
 package com.flowingcode.vaadin.addons.gridhelpers;
 
+import com.vaadin.flow.component.ComponentEventListener;
 import com.vaadin.flow.component.ComponentUtil;
 import com.vaadin.flow.component.checkbox.Checkbox;
 import com.vaadin.flow.component.contextmenu.MenuItem;
@@ -35,6 +36,7 @@ import com.vaadin.flow.component.grid.Grid.Column;
 import com.vaadin.flow.component.icon.VaadinIcon;
 import com.vaadin.flow.component.menubar.MenuBar;
 import com.vaadin.flow.component.menubar.MenuBarVariant;
+import com.vaadin.flow.shared.Registration;
 import java.io.Serializable;
 import java.util.Optional;
 import lombok.NonNull;
@@ -100,7 +102,7 @@ class ColumnToggleHelper<T> implements Serializable {
         String label = getHidingToggleCaption(column);
         Checkbox checkbox = new Checkbox(label);
         checkbox.setValue(column.isVisible());
-        checkbox.addValueChangeListener(e -> column.setVisible(e.getValue()));
+        checkbox.addValueChangeListener(e -> setColumnVisible(column, e.getValue()));
         MenuItem submenuItem = subMenu.addItem(checkbox);
         submenuItem.addAttachListener(ev -> stopClickPropagation(submenuItem));
         stopClickPropagation(submenuItem);
@@ -113,6 +115,20 @@ class ColumnToggleHelper<T> implements Serializable {
 
   private static void stopClickPropagation(MenuItem menuItem) {
     menuItem.getElement().executeJs("this.addEventListener('click',ev=>ev.stopPropagation())");
+  }
+
+
+  private void setColumnVisible(Column<T> column, boolean visible) {
+    Grid<T> grid = helper.getGrid();
+    column.setVisible(visible);
+    ComponentUtil.fireEvent(helper.getGrid(), new ColumnToggleEvent<>(grid, column, true));
+  }
+
+  public Registration addColumnToggleListener(
+      @NonNull ComponentEventListener<ColumnToggleEvent<T>> listener) {
+    @SuppressWarnings({"rawtypes", "unchecked"})
+    Class<ColumnToggleEvent<T>> eventType = (Class) ColumnToggleEvent.class;
+    return ComponentUtil.addListener(helper.getGrid(), eventType, listener);
   }
 
   public String getHidingToggleCaption(@NonNull Column<?> column) {
