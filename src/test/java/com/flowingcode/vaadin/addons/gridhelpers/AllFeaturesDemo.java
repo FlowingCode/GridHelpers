@@ -106,6 +106,12 @@ public class AllFeaturesDemo extends Div {
     grid.setSelectOnClick(true);
     grid.setColumnToggleVisible(true);
 
+    GridHelper.addColumnToggleListener(grid, ev -> {
+      String caption = GridHelper.getHidingToggleCaption(ev.getColumn());
+      String message = caption + " is now " + (ev.getColumn().isVisible() ? "visible" : "invisible");
+      new Notification(message).open();
+    });
+
     Binder<Grid<Person>> binder = new Binder<>();
     binder.setBean(grid);
     Select<SelectionMode> select = new Select<>(SelectionMode.values());
