@@ -231,7 +231,7 @@ public final class GridHelper<T> implements Serializable {
 
   // Column Toggle
 
-  private final ColumnToggleHelper columnToggleHelper = new ColumnToggleHelper(this);
+  private final ColumnToggleHelper<T> columnToggleHelper = new ColumnToggleHelper<>(this);
 
   /** Shows a menu to toggle the visibility of grid columns. */
   public static void setColumnToggleVisible(Grid<?> grid, boolean visible) {
