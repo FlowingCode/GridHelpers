@@ -46,7 +46,7 @@ class ColumnToggleHelper<T> implements Serializable {
 
   private static final String GRID_HELPER_TOGGLE_THEME = "gridHelperToggle";
 
-  private static final String TOGGLE_LABEL_DATA = GridHelper.class.getName() + "#TOGGLE_LABEL";
+  private static final String TOGGLE_CAPTION_DATA = GridHelper.class.getName() + "#TOGGLE_CAPTION";
 
   private static final String HIDABLE_DATA = GridHelper.class.getName() + "#HIDABLE";
 
@@ -97,7 +97,7 @@ class ColumnToggleHelper<T> implements Serializable {
 
     for (Column<T> column : grid.getColumns()) {
       if (isHidable(column)) {
-        String label = getToggleLabel(column);
+        String label = getHidingToggleCaption(column);
         Checkbox checkbox = new Checkbox(label);
         checkbox.setValue(column.isVisible());
         checkbox.addValueChangeListener(e -> column.setVisible(e.getValue()));
@@ -115,9 +115,10 @@ class ColumnToggleHelper<T> implements Serializable {
     menuItem.getElement().executeJs("this.addEventListener('click',ev=>ev.stopPropagation())");
   }
 
-  private String getToggleLabel(@NonNull Column<?> column) {
+  private String getHidingToggleCaption(@NonNull Column<?> column) {
     Grid<?> grid = helper.getGrid();
-    return Optional.ofNullable((String) ComponentUtil.getData(column, TOGGLE_LABEL_DATA)).orElseGet(()->GridHelper.getHeader(grid, column));
+    return Optional.ofNullable((String) ComponentUtil.getData(column, TOGGLE_CAPTION_DATA))
+        .orElseGet(() -> GridHelper.getHeader(grid, column));
   }
 
   public boolean isHidable(Column<?> column) {
@@ -143,7 +144,7 @@ class ColumnToggleHelper<T> implements Serializable {
       if (!grid.getColumns().contains(column)) {
         throw new IllegalArgumentException();
       }
-      ComponentUtil.setData(column, TOGGLE_LABEL_DATA, caption);
+      ComponentUtil.setData(column, TOGGLE_CAPTION_DATA, caption);
       if (caption!=null && ComponentUtil.getData(column, HIDABLE_DATA)==null) {
         ComponentUtil.setData(column, HIDABLE_DATA, Boolean.TRUE);
       }
