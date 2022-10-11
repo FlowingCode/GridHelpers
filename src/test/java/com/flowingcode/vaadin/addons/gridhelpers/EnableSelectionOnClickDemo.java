@@ -25,10 +25,11 @@ import com.vaadin.flow.component.grid.Grid;
 import com.vaadin.flow.component.grid.Grid.SelectionMode;
 import com.vaadin.flow.component.html.Div;
 import com.vaadin.flow.router.PageTitle;
+import com.vaadin.flow.router.Route;
 
 @PageTitle("Row Selection On Click")
-@DemoSource(
-    "https://github.com/FlowingCode/GridHelpers/blob/master/src/test/java/com/flowingcode/vaadin/addons/gridhelpers/EnableSelectionOnClickDemo.java")
+@DemoSource
+@Route(value = "grid-helpers/row-selection-on-click", layout = GridHelpersDemoView.class)
 public class EnableSelectionOnClickDemo extends Div {
 
   public EnableSelectionOnClickDemo() {

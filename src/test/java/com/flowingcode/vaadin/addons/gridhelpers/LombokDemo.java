@@ -25,11 +25,13 @@ import com.vaadin.flow.component.grid.Grid;
 import com.vaadin.flow.component.grid.Grid.SelectionMode;
 import com.vaadin.flow.component.html.Div;
 import com.vaadin.flow.router.PageTitle;
+import com.vaadin.flow.router.Route;
+
 import lombok.experimental.ExtensionMethod;
 
 @PageTitle("Using Lombok")
-@DemoSource(
-    "https://github.com/FlowingCode/GridHelpers/blob/master/src/test/java/com/flowingcode/vaadin/addons/gridhelpers/LombokDemo.java")
+@DemoSource
+@Route(value = "grid-helpers/lombok-demo", layout = GridHelpersDemoView.class)
 @ExtensionMethod(GridHelper.class)
 public class LombokDemo extends Div {
 

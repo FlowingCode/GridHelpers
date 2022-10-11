@@ -41,6 +41,7 @@ import com.vaadin.flow.component.select.Select;
 import com.vaadin.flow.component.splitlayout.SplitLayout;
 import com.vaadin.flow.data.binder.Binder;
 import com.vaadin.flow.router.PageTitle;
+import com.vaadin.flow.router.Route;
 import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
@@ -49,6 +50,7 @@ import lombok.experimental.ExtensionMethod;
 
 @SuppressWarnings("serial")
 @PageTitle("All Features")
+@Route(value = "grid-helpers/all-features", layout = GridHelpersDemoView.class)
 @GithubLink("https://github.com/FlowingCode/GridHelpers")
 @StyleSheet("context://gridhelpers/styles.css")
 @ExtensionMethod(GridHelper.class)
