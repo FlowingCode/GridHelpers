@@ -26,10 +26,11 @@ import com.vaadin.flow.component.grid.Grid.Column;
 import com.vaadin.flow.component.html.Div;
 import com.vaadin.flow.component.notification.Notification;
 import com.vaadin.flow.router.PageTitle;
+import com.vaadin.flow.router.Route;
 
 @PageTitle("Column Toggle Menu")
-@DemoSource(
-    "https://github.com/FlowingCode/GridHelpers/blob/master/src/test/java/com/flowingcode/vaadin/addons/gridhelpers/ColumnToggleMenuDemo.java")
+@DemoSource
+@Route(value = "grid-helpers/column-toggle-menu", layout = GridHelpersDemoView.class)
 public class ColumnToggleMenuDemo extends Div {
 
   public ColumnToggleMenuDemo() {

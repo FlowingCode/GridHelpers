@@ -34,16 +34,16 @@ public class GridHelpersDemoView extends TabbedDemo {
 
   public GridHelpersDemoView() {
     setSizeFull();
-    addDemo(new AllFeaturesDemo());
-    addDemo(new ColumnToggleMenuDemo());
-    addDemo(new HideSelectionColumnDemo());
-    addDemo(new FreezeSelectionColumnDemo());
-    addDemo(new EnableArrowSelectionDemo());
-    addDemo(new EnableSelectionOnClickDemo());
-    addDemo(new SelectionFilterDemo());
-    addDemo(new DenseThemeDemo());
-    addDemo(new LombokDemo());
-    addDemo(new AddToolbarFooterDemo());
-    addDemo(new GetHeaderFooterDemo());
+    addDemo(AllFeaturesDemo.class);
+    addDemo(ColumnToggleMenuDemo.class);
+    addDemo(HideSelectionColumnDemo.class);
+    addDemo(FreezeSelectionColumnDemo.class);
+    addDemo(EnableArrowSelectionDemo.class);
+    addDemo(EnableSelectionOnClickDemo.class);
+    addDemo(SelectionFilterDemo.class);
+    addDemo(DenseThemeDemo.class);
+    addDemo(LombokDemo.class);
+    addDemo(AddToolbarFooterDemo.class);
+    addDemo(GetHeaderFooterDemo.class);
   }
 }

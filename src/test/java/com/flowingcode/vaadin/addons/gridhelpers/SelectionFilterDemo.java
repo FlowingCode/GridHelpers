@@ -25,10 +25,11 @@ import com.vaadin.flow.component.grid.Grid;
 import com.vaadin.flow.component.grid.Grid.SelectionMode;
 import com.vaadin.flow.component.html.Div;
 import com.vaadin.flow.router.PageTitle;
+import com.vaadin.flow.router.Route;
 
 @PageTitle("Selection Filter")
-@DemoSource(
-    "https://github.com/FlowingCode/GridHelpers/blob/master/src/test/java/com/flowingcode/vaadin/addons/gridhelpers/SelectionFilterDemo.java")
+@DemoSource
+@Route(value = "grid-helpers/selection-filter", layout = GridHelpersDemoView.class)
 public class SelectionFilterDemo extends Div {
 
   public SelectionFilterDemo() {

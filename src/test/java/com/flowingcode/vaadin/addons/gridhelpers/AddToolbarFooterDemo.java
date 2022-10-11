@@ -23,17 +23,17 @@ package com.flowingcode.vaadin.addons.gridhelpers;
 import com.flowingcode.vaadin.addons.demo.DemoSource;
 import com.vaadin.flow.component.button.Button;
 import com.vaadin.flow.component.grid.Grid;
-import com.vaadin.flow.component.grid.Grid.SelectionMode;
 import com.vaadin.flow.component.html.Div;
 import com.vaadin.flow.component.icon.VaadinIcon;
 import com.vaadin.flow.component.notification.Notification;
 import com.vaadin.flow.component.orderedlayout.FlexComponent.JustifyContentMode;
 import com.vaadin.flow.component.orderedlayout.HorizontalLayout;
 import com.vaadin.flow.router.PageTitle;
+import com.vaadin.flow.router.Route;
 
 @PageTitle("Toolbar Footer")
-@DemoSource(
-    "https://github.com/FlowingCode/GridHelpers/blob/master/src/test/java/com/flowingcode/vaadin/addons/gridhelpers/AddToolbarFooterDemo.java")
+@DemoSource
+@Route(value = "grid-helpers/toolbar-footer", layout = GridHelpersDemoView.class)
 public class AddToolbarFooterDemo extends Div {
 
   public AddToolbarFooterDemo() {
