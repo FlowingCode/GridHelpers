@@ -61,7 +61,7 @@ class HeaderFooterGridHelper implements Serializable {
 
   public String getFooter(@NotNull Grid.Column<?> column) {
       final Renderer<?> headerRenderer = getFooterRenderer(column);
-      return getTemplate(headerRenderer);
+      return headerRenderer==null?null:getTemplate(headerRenderer);
   }
 
 }
