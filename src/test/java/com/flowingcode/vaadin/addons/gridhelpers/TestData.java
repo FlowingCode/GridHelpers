@@ -43,7 +43,7 @@ public class TestData {
         .build();
   }
 
-  static List<Person> initializeData() {
+  public static List<Person> initializeData() {
     return Stream.generate(TestData::newPerson).limit(40).collect(Collectors.toList());
   }
 
