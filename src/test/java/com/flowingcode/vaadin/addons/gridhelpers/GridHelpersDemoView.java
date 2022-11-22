@@ -24,10 +24,12 @@ import com.flowingcode.vaadin.addons.DemoLayout;
 import com.flowingcode.vaadin.addons.GithubLink;
 import com.flowingcode.vaadin.addons.demo.TabbedDemo;
 import com.vaadin.flow.component.dependency.StyleSheet;
+import com.vaadin.flow.router.ParentLayout;
 import com.vaadin.flow.router.Route;
 
 @SuppressWarnings("serial")
-@Route(value = "grid-helpers", layout = DemoLayout.class)
+@ParentLayout(DemoLayout.class)
+@Route("grid-helpers")
 @GithubLink("https://github.com/FlowingCode/GridHelpers")
 @StyleSheet("context://gridhelpers/styles.css")
 public class GridHelpersDemoView extends TabbedDemo {
