@@ -3,7 +3,6 @@ package com.flowingcode.vaadin.addons.gridhelpers;
 import java.io.Serializable;
 import java.lang.reflect.Field;
 import java.lang.reflect.Method;
-import javax.validation.constraints.NotNull;
 import com.vaadin.flow.component.grid.Grid;
 import com.vaadin.flow.data.renderer.Renderer;
 import lombok.RequiredArgsConstructor;
@@ -14,8 +13,7 @@ class HeaderFooterGridHelper implements Serializable {
 
   private final GridHelper<?> helper;
 
-  @NotNull
-  private static String getTemplate(@NotNull Renderer<?> renderer) {
+  private static String getTemplate(Renderer<?> renderer) {
       try {
           final Field templateField = Renderer.class.getDeclaredField("template");
           templateField.setAccessible(true);
@@ -26,8 +24,7 @@ class HeaderFooterGridHelper implements Serializable {
       }
   }
 
-  @NotNull
-  private static Renderer<?> getHeaderRenderer(@NotNull Grid.Column<?> column) {
+  private static Renderer<?> getHeaderRenderer(Grid.Column<?> column) {
       try {
           final Class<?> clazz = Class.forName("com.vaadin.flow.component.grid.AbstractColumn");
           final Method m = clazz.getDeclaredMethod("getHeaderRenderer");
@@ -38,8 +35,7 @@ class HeaderFooterGridHelper implements Serializable {
       }
   }
 
-  @NotNull
-  private static Renderer<?> getFooterRenderer(@NotNull Grid.Column<?> column) {
+  private static Renderer<?> getFooterRenderer(Grid.Column<?> column) {
       try {
           final Class<?> clazz = Class.forName("com.vaadin.flow.component.grid.AbstractColumn");
           final Method m = clazz.getDeclaredMethod("getFooterRenderer");
@@ -53,13 +49,12 @@ class HeaderFooterGridHelper implements Serializable {
   /**
    * See https://github.com/vaadin/flow-components/issues/1496
    */
-  @NotNull
-  public String getHeader(@NotNull Grid.Column<?> column) {
+  public String getHeader(Grid.Column<?> column) {
       final Renderer<?> headerRenderer = getHeaderRenderer(column);
       return getTemplate(headerRenderer);
   }
 
-  public String getFooter(@NotNull Grid.Column<?> column) {
+  public String getFooter(Grid.Column<?> column) {
       final Renderer<?> headerRenderer = getFooterRenderer(column);
       return headerRenderer==null?null:getTemplate(headerRenderer);
   }
