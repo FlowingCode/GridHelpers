@@ -23,10 +23,10 @@ package com.flowingcode.vaadin.addons.gridhelpers.it;
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.empty;
 import com.flowingcode.vaadin.testbench.rpc.HasRpcSupport;
+import com.flowingcode.vaadin.testbench.rpc.JsonArrayList;
 import com.vaadin.flow.component.grid.Grid.SelectionMode;
 import com.vaadin.flow.component.grid.testbench.GridElement;
 import java.util.Arrays;
-import java.util.List;
 import org.hamcrest.Matcher;
 import org.hamcrest.Matchers;
 import org.junit.Test;
@@ -47,7 +47,7 @@ public class SelectOnClickIT extends AbstractViewTest implements HasRpcSupport {
   }
 
   @SafeVarargs
-  private static <T> Matcher<? super List<T>> equalToList(T... items) {
+  private static <T> Matcher<? super JsonArrayList<T>> equalToList(T... items) {
     return Matchers.equalTo(Arrays.asList(items));
   }
 
