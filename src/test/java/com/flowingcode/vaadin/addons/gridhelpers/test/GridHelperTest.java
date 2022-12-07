@@ -103,8 +103,6 @@ public class GridHelperTest {
 
     col0.setFooter(footer);
     assertEquals(footer, grid.getFooter(col0));
-
-    col0.setFooter((String)null);
   }
 
   @Test
