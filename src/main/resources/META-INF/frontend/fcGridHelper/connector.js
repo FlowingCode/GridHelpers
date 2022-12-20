@@ -44,7 +44,7 @@ import { Grid } from '@vaadin/grid/src/vaadin-grid.js';
 		grid.__updateHorizontalScrollPosition = function() {
 			__updateHorizontalScrollPosition();
 			this.querySelectorAll("[fcgh-footer]").forEach(footer=>{
-				const slot = footer.parentElement.parentElement.assignedSlot;
+				const slot = footer.closest('vaadin-grid-cell-content').assignedSlot;
 				if (slot) {
 					slot.parentElement.parentElement.style.transform = `translate(${this._scrollLeft}px, 0)`;
 				}
