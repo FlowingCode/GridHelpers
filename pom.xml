@@ -139,7 +139,7 @@
 		<dependency>
 			<groupId>com.flowingcode.vaadin.test</groupId>
 			<artifactId>testbench-rpc</artifactId>
-			<version>1.0.0-SNAPSHOT</version>
+			<version>1.0.0</version>
 			<scope>test</scope>
 		</dependency>
 		<dependency>
