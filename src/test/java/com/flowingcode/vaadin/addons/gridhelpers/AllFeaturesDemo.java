@@ -116,7 +116,9 @@ public class AllFeaturesDemo extends Div {
 
     Binder<Grid<Person>> binder = new Binder<>();
     binder.setBean(grid);
-    Select<SelectionMode> select = new Select<>(SelectionMode.values());
+    Select<SelectionMode> select = new Select<>();
+    select.setItems(SelectionMode.values());
+
     select.setLabel("Selection mode");
     binder.forField(select).bind(GridHelper::getSelectionMode, this::setSelectionMode);
 
