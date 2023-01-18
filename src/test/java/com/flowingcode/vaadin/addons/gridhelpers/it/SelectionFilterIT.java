@@ -21,11 +21,9 @@
 package com.flowingcode.vaadin.addons.gridhelpers.it;
 
 import static org.hamcrest.MatcherAssert.assertThat;
-import static org.hamcrest.Matchers.empty;
 import com.flowingcode.vaadin.testbench.rpc.HasRpcSupport;
 import com.flowingcode.vaadin.testbench.rpc.JsonArrayList;
 import com.vaadin.flow.component.grid.Grid.SelectionMode;
-import com.vaadin.flow.component.grid.testbench.GridElement;
 import java.util.Arrays;
 import org.hamcrest.Matcher;
 import org.hamcrest.Matchers;
@@ -43,7 +41,7 @@ public class SelectionFilterIT extends AbstractViewTest implements HasRpcSupport
   @Override
   public void setup() throws Exception {
 	super.setup();
-	grid = new GridHelperElement($(GridElement.class).waitForFirst());
+	grid = new GridHelperElement($(MyGridElement.class).waitForFirst());
   }
 
   @SafeVarargs
@@ -75,9 +73,8 @@ public class SelectionFilterIT extends AbstractViewTest implements HasRpcSupport
 
     // odd items cannot be selected
     grid.select(1);
-    // TODO should it be cleared?
-    // assertThat($server.getSelectedRows(), equalToList(0));
-    assertThat($server.getSelectedRows(), empty());
+    // original selection is preserved
+    assertThat($server.getSelectedRows(), equalToList(0));
 
     grid.select(2);
     assertThat($server.getSelectedRows(), equalToList(2));
