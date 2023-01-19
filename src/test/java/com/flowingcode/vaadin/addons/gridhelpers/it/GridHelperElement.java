@@ -13,7 +13,7 @@ import org.openqa.selenium.By;
 import org.openqa.selenium.TimeoutException;
 import org.openqa.selenium.WebElement;
 
-public class GridHelperElement extends GridElement {
+public class GridHelperElement extends MyGridElement {
 
   public GridHelperElement(GridElement e) {
     init(e.getWrappedElement(), e.getCommandExecutor());

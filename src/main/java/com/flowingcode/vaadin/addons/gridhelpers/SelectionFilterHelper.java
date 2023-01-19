@@ -27,6 +27,7 @@
 package com.flowingcode.vaadin.addons.gridhelpers;
 
 import com.vaadin.flow.component.grid.Grid;
+import com.vaadin.flow.component.grid.Grid.SelectionMode;
 import com.vaadin.flow.data.selection.SelectionEvent;
 import com.vaadin.flow.function.SerializablePredicate;
 import com.vaadin.flow.shared.Registration;
@@ -46,12 +47,16 @@ class SelectionFilterHelper<T> implements Serializable {
 
   @Getter private SerializablePredicate<T> selectionFilter;
 
+  // holds latest selected item or null
+  private T currentSingleSelectedItem;
+
   public void setSelectionFilter(SerializablePredicate<T> predicate) {
     Optional.ofNullable(selectionListenerRegistration).ifPresent(Registration::remove);
     selectionListenerRegistration = null;
 
     Grid<T> grid = helper.getGrid();
     this.selectionFilter = predicate;
+    currentSingleSelectedItem = null;
     if (predicate != null) {
       deselectIf(predicate.negate());
       helper.setHelperClassNameGenerator(
@@ -88,13 +93,30 @@ class SelectionFilterHelper<T> implements Serializable {
   }
 
   private void onSelection(SelectionEvent<Grid<T>, T> event) {
+    SelectionMode currentSelectionMode = GridHelper.getSelectionMode(event.getSource());
     if (event.isFromClient()) {
-      event.getAllSelectedItems().forEach(item -> {
-        // Revert selection if item cannot be selected
-        if (!canSelect(item)) {
-          event.getSource().deselect(item);
-        }
-      });
+      if (SelectionMode.SINGLE.equals(currentSelectionMode)) {
+        event.getFirstSelectedItem().ifPresent(item -> {
+          if (canSelect(item)) {
+            currentSingleSelectedItem = item;
+          } else {
+            // restore previous selected item
+            if (currentSingleSelectedItem != null && canSelect(currentSingleSelectedItem)) {
+              event.getSource().select(currentSingleSelectedItem);
+            } else {
+              event.getSource().deselect(item);
+              currentSingleSelectedItem = null;
+            }
+          }
+        });
+      } else if (SelectionMode.MULTI.equals(currentSelectionMode)) {
+        event.getAllSelectedItems().forEach(item -> {
+          // Revert selection if item cannot be selected
+          if (!canSelect(item)) {
+            event.getSource().deselect(item);
+          }
+        });
+      }
     }
   }
 
