@@ -93,7 +93,7 @@ class ColumnToggleHelper<T> implements Serializable {
     Grid<T> grid = helper.getGrid();
 
     MenuBar menuBar = new MenuBar();
-    menuBar.addThemeVariants(MenuBarVariant.LUMO_TERTIARY_INLINE);
+    menuBar.getThemeNames().add(MenuBarVariant.LUMO_TERTIARY_INLINE.getVariantName());
     MenuItem menuItem = menuBar.addItem(VaadinIcon.ELLIPSIS_DOTS_V.create());
     SubMenu subMenu = menuItem.getSubMenu();
 
