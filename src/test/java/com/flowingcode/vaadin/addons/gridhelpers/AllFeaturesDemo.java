@@ -132,6 +132,9 @@ public class AllFeaturesDemo extends Div {
         .forField(newCheckbox("Arrow selection enabled", SINGLE, MULTI))
         .bind(GridHelper::isArrowSelectionEnabled, GridHelper::setArrowSelectionEnabled);
     binder
+        .forField(newCheckbox("Enhanced selection enabled", MULTI))
+        .bind(GridHelper::isEnhancedSelectionEnabled, GridHelper::setEnhancedSelectionEnabled);
+    binder
         .forField(newCheckbox("Enable selection by clicking row", MULTI))
         .bind(GridHelper::isSelectOnClick, GridHelper::setSelectOnClick);
     binder

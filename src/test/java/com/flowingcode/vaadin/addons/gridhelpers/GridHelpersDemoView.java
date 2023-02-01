@@ -42,6 +42,7 @@ public class GridHelpersDemoView extends TabbedDemo {
     addDemo(FreezeSelectionColumnDemo.class);
     addDemo(EnableArrowSelectionDemo.class);
     addDemo(EnableSelectionOnClickDemo.class);
+    addDemo(EnableEnhancedSelectionDemo.class);
     addDemo(SelectionFilterDemo.class);
     addDemo(DenseThemeDemo.class);
     addDemo(LombokDemo.class);
