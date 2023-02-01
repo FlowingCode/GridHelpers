@@ -39,6 +39,8 @@ import com.vaadin.flow.shared.Registration;
 import java.io.Serializable;
 import lombok.AccessLevel;
 import lombok.Getter;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 @SuppressWarnings("serial")
 @JsModule("./fcGridHelper/connector.js")
@@ -50,6 +52,8 @@ import lombok.Getter;
     themeFor = "vaadin-context-menu-list-box")
 public final class GridHelper<T> implements Serializable {
 
+  private static final Logger logger = LoggerFactory.getLogger(GridHelper.class);
+  
   private static final String ARROW_SELECTION_PROPERTY = "_fcghArrowSelection";
 
   public static final String GRID_STYLES = "./fcGridHelper/vaadin-grid.css";
@@ -163,6 +167,10 @@ public final class GridHelper<T> implements Serializable {
   // Select on click
   public static void setSelectOnClick(Grid<?> grid, boolean selectOnClick) {
     getHelper(grid).selectOnClick = selectOnClick;
+    if (selectOnClick && GridHelper.isEnhancedSelectionEnabled(grid)) {
+      logger.warn(
+          "Please disable Enhanced Selection feature when enabling Select On Click to avoid unwanted side effects.");
+    }
   }
 
   public static boolean isSelectOnClick(Grid<?> grid) {
@@ -175,6 +183,10 @@ public final class GridHelper<T> implements Serializable {
   public static void setArrowSelectionEnabled(Grid<?> grid, boolean value) {
     getHelper(grid);
     grid.getElement().setProperty(ARROW_SELECTION_PROPERTY, value);
+    if (value && GridHelper.isEnhancedSelectionEnabled(grid)) {
+      logger.warn(
+          "Please disable Enhanced Selection feature when enabling Arrow Selection to avoid unwanted side effects.");
+    }
   }
 
   /** Returns whether Grid rows can be selected using up/down arrow keys. */
@@ -329,6 +341,33 @@ public final class GridHelper<T> implements Serializable {
 
   public static String getFooter(Grid<?> grid, Column<?> column) {
     return getHelper(grid).headerFooter.getFooter(column);
+  }
+  
+  private final EnhancedSelectionGridHelper<T> enhancedSelectionGridHelper = new EnhancedSelectionGridHelper<>(this);
+
+  /**
+   * When enabled, enhances grid row selection support adding support for these combinations: click, arrow
+   * up/down, shift+click, shift+arrow up/down, ctrl+click and ctrl+space.
+   * 
+   * @param grid
+   * @param enabled
+   */
+  public static final void setEnhancedSelectionEnabled(Grid<?> grid, boolean enabled) {
+    if (enabled) {
+      getHelper(grid).enhancedSelectionGridHelper.enableEnhancedSelection();
+      
+      if (GridHelper.isArrowSelectionEnabled(grid) || GridHelper.isSelectOnClick(grid)) {
+        logger.warn(
+            "Please disable Arrow Selection and Select On Click features when enabling Enhanced Selection to avoid unwanted side effects.");
+      }
+    } else {
+      getHelper(grid).enhancedSelectionGridHelper.disableEnhancedSelection();
+    }
+  }
+
+  /** Returns whether the enhanced selection is enabled. */
+  public static boolean isEnhancedSelectionEnabled(Grid<?> grid) {
+    return getHelper(grid).enhancedSelectionGridHelper.isEnhancedSelectionEnabled();
   }
 
 }
