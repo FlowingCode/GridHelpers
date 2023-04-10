@@ -36,9 +36,9 @@ public class GetHeaderFooterDemo extends Div {
         ", Header text column 2: " + GridHelper.getHeader(grid,lastName) +
         ", Header text column 3: " + GridHelper.getHeader(grid,country)));
     Button getFooters = new Button("Obtain footers", ev->Notification.show(
-        "Header text column 1: " + GridHelper.getFooter(grid,firstName) + 
-        ", Header text column 2: " + GridHelper.getFooter(grid,lastName) +
-        ", Header text column 3: " + GridHelper.getFooter(grid,country)));
+        "Footer text column 1: " + GridHelper.getFooter(grid,firstName) + 
+        ", Footer text column 2: " + GridHelper.getFooter(grid,lastName) +
+        ", Footer text column 3: " + GridHelper.getFooter(grid,country)));
 
     grid.setHeightFull();
     add(grid, getHeaders, getFooters);
