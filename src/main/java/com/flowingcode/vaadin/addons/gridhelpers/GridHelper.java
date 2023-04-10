@@ -329,18 +329,15 @@ public final class GridHelper<T> implements Serializable {
   public static void addToolbarFooter(Grid<?> grid, Component toolBar) {
     getHelper(grid).footerToolbar.setFooterToolbar(toolBar);
   }
-
-  // HeaderFooter
-
-  private final HeaderFooterGridHelper headerFooter = new HeaderFooterGridHelper(this);
-
-
+ 
+  @Deprecated
   public static String getHeader(Grid<?> grid, Column<?> column) {
-    return getHelper(grid).headerFooter.getHeader(column);
+    return column.getHeaderText();
   }
 
+  @Deprecated
   public static String getFooter(Grid<?> grid, Column<?> column) {
-    return getHelper(grid).headerFooter.getFooter(column);
+    return column.getFooterText();
   }
   
   private final EnhancedSelectionGridHelper<T> enhancedSelectionGridHelper = new EnhancedSelectionGridHelper<>(this);
