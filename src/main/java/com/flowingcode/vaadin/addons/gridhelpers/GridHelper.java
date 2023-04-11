@@ -204,8 +204,13 @@ public final class GridHelper<T> implements Serializable {
   }
 
   /** Sets whether the multiselect selection column is frozen. */
+  @Deprecated
   public static void setSelectionColumnFrozen(Grid<?> grid, boolean value) {
-    getHelper(grid).selectionColumnHelper.setSelectionColumnFrozen(value);
+    if (getSelectionMode(grid) == SelectionMode.MULTI) {
+      // https://cookbook.vaadin.com/grid-frozen-selection-column
+      ((GridMultiSelectionModel<?>) grid.getSelectionModel())
+              .setSelectionColumnFrozen(value);
+    }
   }
 
   /** Returns whether the multiselect selection column is hidden. */
@@ -214,8 +219,10 @@ public final class GridHelper<T> implements Serializable {
   }
 
   /** Returns whether the multiselect selection column is frozen. */
+  @Deprecated
   public static boolean isSelectionColumnFrozen(Grid<?> grid) {
-    return getHelper(grid).selectionColumnHelper.isSelectionColumnFrozen();
+    return getSelectionMode(grid) == SelectionMode.MULTI && ((GridMultiSelectionModel<?>) grid.getSelectionModel())
+            .isSelectionColumnFrozen();
   }
 
   // Selection Filter
