@@ -20,13 +20,15 @@
 
 package com.flowingcode.vaadin.addons.gridhelpers.it;
 
-import static org.junit.Assert.assertNotEquals;
+import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNotNull;
 import static org.junit.Assert.assertNull;
 import com.flowingcode.vaadin.testbench.rpc.HasRpcSupport;
 import com.vaadin.flow.component.grid.Grid.SelectionMode;
 import com.vaadin.flow.component.grid.testbench.GridElement;
 import org.junit.Test;
+import org.openqa.selenium.By;
+import org.openqa.selenium.WebElement;
 
 public class SelectionColumnIT extends AbstractViewTest implements HasRpcSupport {
 
@@ -56,18 +58,21 @@ public class SelectionColumnIT extends AbstractViewTest implements HasRpcSupport
 
   @Test
   public void testSelectionColumnFrozen() {
-    $server.setSelectionMode(SelectionMode.MULTI);
-
-    String getParentOffset = "function getParentOffset(el) {"
-        + "return el.offsetParent ? el.offsetParent.offsetLeft + getParentOffset(el.offsetParent) : 0;"
-        + "}; return getParentOffset(arguments[0]);";
-
+    $server.setSelectionMode(SelectionMode.MULTI);  
+    
+    String frozen = "return arguments[0].frozen";
+    
+    // find selection column
+    WebElement idColumn = grid.findElements(By.tagName("vaadin-grid-flow-selection-column")).get(0);
+    
+    // assert that the selection column is not frozen by default
+    assertEquals("Selection column is frozen", false, (Boolean) executeScript(frozen, idColumn));
+    
+    // make selection column frozen
     $server.setSelectionColumnFrozen(true);
 
-    long offsetBefore = (Long) executeScript(getParentOffset, grid.getSelectionCheckbox(0));
-    grid.executeScript("this.shadowRoot.querySelector('#table').scrollBy(1000,0)");
-    long offsetAfter = (Long) executeScript(getParentOffset, grid.getSelectionCheckbox(0));
-    assertNotEquals(offsetBefore, offsetAfter);
+    // assert that the selection column is now frozen 
+    assertEquals("Selection column is not frozen", true, (Boolean) executeScript(frozen, idColumn));
   }
 
 }
