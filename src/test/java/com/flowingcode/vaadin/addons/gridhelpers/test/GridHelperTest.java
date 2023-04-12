@@ -37,6 +37,9 @@ public class GridHelperTest {
 
   @Test
   public void testSelectionColumnFrozen() {
+    
+    grid.setSelectionMode(SelectionMode.MULTI);
+      
     assertTrue(!grid.isSelectionColumnFrozen());
 
     grid.setSelectionColumnFrozen(true);
