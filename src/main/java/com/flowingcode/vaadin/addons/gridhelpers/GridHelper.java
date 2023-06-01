@@ -374,4 +374,41 @@ public final class GridHelper<T> implements Serializable {
     return getHelper(grid).enhancedSelectionGridHelper.isEnhancedSelectionEnabled();
   }
 
+
+  // HeaderFooterVisibilityHelper
+
+  private final HeaderFooterVisibilityHelper headerFooterVisibility =
+      new HeaderFooterVisibilityHelper(this);
+
+  public static void setHeaderVisible(Grid<?> grid, boolean visible) {
+    getHelper(grid).headerFooterVisibility.setHeaderVisible(visible);
+  }
+
+  /**
+   * Returns the visibility of the header section.
+   *
+   * @return true if visible, false otherwise.
+   */
+  public static boolean isHeaderVisible(Grid<?> grid) {
+    return getHelper(grid).headerFooterVisibility.isHeaderVisible();
+  }
+
+  /**
+   * Sets the visibility of the footer section.
+   *
+   * @param visible true to show footer section, false to hide
+   */
+  public static void setFooterVisible(Grid<?> grid, boolean visible) {
+    getHelper(grid).headerFooterVisibility.setFooterVisible(visible);
+  }
+
+  /**
+   * Returns the visibility of the footer section.
+   *
+   * @return true if visible, false otherwise.
+   */
+  public static boolean isFooterVisible(Grid<?> grid) {
+    return getHelper(grid).headerFooterVisibility.isFooterVisible();
+  }
+
 }

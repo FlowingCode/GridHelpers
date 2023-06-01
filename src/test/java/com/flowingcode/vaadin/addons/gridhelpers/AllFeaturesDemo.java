@@ -142,6 +142,14 @@ public class AllFeaturesDemo extends Div {
         .bind(this::hasSelectionFilter, this::setSelectionFilter);
     binder.forField(new Checkbox("Dense Theme")).bind(this::hasDenseTheme, this::setDenseTheme);
 
+    binder
+      .forField(newCheckbox("Hide headers"))
+        .bind(this::isHeaderHidden, this::setHeaderHidden);
+
+    binder
+        .forField(newCheckbox("Hide footers"))
+        .bind(this::isFooterHidden, this::setFooterHidden);
+
     binder.getFields().map(Component.class::cast).forEach(features::add);
     Label label = new Label("Features");
     label.addClassNames("label");
@@ -226,4 +234,21 @@ public class AllFeaturesDemo extends Div {
   private boolean hasDenseTheme(Grid<Person> grid) {
     return grid.hasThemeName(GridHelper.DENSE_THEME);
   }
+
+  private void setHeaderHidden(Grid<Person> grid, boolean value) {
+    GridHelper.setHeaderVisible(grid, !value);
+  }
+
+  private boolean isHeaderHidden(Grid<Person> grid) {
+    return !GridHelper.isHeaderVisible(grid);
+  }
+
+  private void setFooterHidden(Grid<Person> grid, boolean value) {
+    GridHelper.setFooterVisible(grid, !value);
+  }
+
+  private boolean isFooterHidden(Grid<Person> grid) {
+    return !GridHelper.isFooterVisible(grid);
+  }
+
 }
