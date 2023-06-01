@@ -56,3 +56,11 @@ table[aria-multiselectable="true"] .fcGh-noselect[first-column] ::slotted(*) {
 :host([theme~="hide-first-footer"]) tfoot [part="row"]:first-child {
     display: none;
 }
+
+:host([theme~="fcGh-hide-headers"]) #header {
+	display: none;
+}
+
+:host([theme~="fcGh-hide-footers"]) #footer {
+	display: none;
+}
