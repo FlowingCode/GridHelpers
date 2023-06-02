@@ -26,12 +26,16 @@ import com.vaadin.flow.component.ComponentEventListener;
 import com.vaadin.flow.component.ComponentUtil;
 import com.vaadin.flow.component.dependency.CssImport;
 import com.vaadin.flow.component.dependency.JsModule;
+import com.vaadin.flow.component.grid.FooterRow;
+import com.vaadin.flow.component.grid.FooterRow.FooterCell;
 import com.vaadin.flow.component.grid.Grid;
 import com.vaadin.flow.component.grid.Grid.Column;
 import com.vaadin.flow.component.grid.Grid.SelectionMode;
 import com.vaadin.flow.component.grid.GridMultiSelectionModel;
 import com.vaadin.flow.component.grid.GridSelectionModel;
 import com.vaadin.flow.component.grid.GridSingleSelectionModel;
+import com.vaadin.flow.component.grid.HeaderRow;
+import com.vaadin.flow.component.grid.HeaderRow.HeaderCell;
 import com.vaadin.flow.component.grid.ItemClickEvent;
 import com.vaadin.flow.function.SerializableFunction;
 import com.vaadin.flow.function.SerializablePredicate;
@@ -409,6 +413,26 @@ public final class GridHelper<T> implements Serializable {
    */
   public static boolean isFooterVisible(Grid<?> grid) {
     return getHelper(grid).headerFooterVisibility.isFooterVisible();
+  }
+
+
+  private final HeaderFooterStylesHelper headerFooterStylesHelper =
+      new HeaderFooterStylesHelper(this);
+
+  public static GridStylesHelper getHeaderStyles(Grid<?> grid, HeaderRow row) {
+    return getHelper(grid).headerFooterStylesHelper.getStyles(row);
+  }
+
+  public static GridStylesHelper getFooterStyles(Grid<?> grid, FooterRow row) {
+    return getHelper(grid).headerFooterStylesHelper.getStyles(row);
+  }
+
+  public static GridStylesHelper getHeaderStyles(Grid<?> grid, HeaderCell cell) {
+    return getHelper(grid).headerFooterStylesHelper.getStyles(cell);
+  }
+
+  public static GridStylesHelper getFooterStyles(Grid<?> grid, FooterCell cell) {
+    return getHelper(grid).headerFooterStylesHelper.getStyles(cell);
   }
 
 }

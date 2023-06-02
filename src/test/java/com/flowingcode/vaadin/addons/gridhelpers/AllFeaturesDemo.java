@@ -65,6 +65,8 @@ public class AllFeaturesDemo extends Div {
 
     Grid<Person> grid = new Grid<>();
 
+    grid.setColumnReorderingAllowed(true);
+
     grid.addColumn(Person::getLastName).setHeader("Last name").setHidingToggleCaption("Last name column");
     grid.addColumn(Person::getFirstName)
         .setHeader("First name")
@@ -90,6 +92,12 @@ public class AllFeaturesDemo extends Div {
     grid.setSelectionMode(SelectionMode.MULTI);
 
     grid.getElement().getStyle().set("flex-grow", "1");
+
+    grid.getHeaderStyles(grid.getHeaderRows().get(0).getCells().get(1))
+        .setClassName("fcGh-demo-custom-header");
+
+    grid.getElement().executeJs(
+        "var e = document.createElement('style'); e.innerHTML='.fcGh-demo-custom-header  {background: #888}'; this.shadowRoot.appendChild(e);");
 
     VerticalLayout features = new VerticalLayout();
     features.getStyle().set("margin-left", "4px");
