@@ -18,3 +18,4 @@ types.d.ts
 /frontend/index.html
 /pnpm-lock.yaml
 /pnpmfile.js
+/src/main/dev-bundle
