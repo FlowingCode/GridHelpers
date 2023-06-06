@@ -27,6 +27,7 @@ import com.vaadin.flow.component.Component;
 import com.vaadin.flow.component.Text;
 import com.vaadin.flow.component.button.Button;
 import com.vaadin.flow.component.checkbox.Checkbox;
+import com.vaadin.flow.component.dependency.JavaScript;
 import com.vaadin.flow.component.dependency.StyleSheet;
 import com.vaadin.flow.component.grid.Grid;
 import com.vaadin.flow.component.grid.Grid.SelectionMode;
@@ -39,6 +40,7 @@ import com.vaadin.flow.component.orderedlayout.HorizontalLayout;
 import com.vaadin.flow.component.orderedlayout.VerticalLayout;
 import com.vaadin.flow.component.select.Select;
 import com.vaadin.flow.component.splitlayout.SplitLayout;
+import com.vaadin.flow.component.textfield.IntegerField;
 import com.vaadin.flow.data.binder.Binder;
 import com.vaadin.flow.router.PageTitle;
 import com.vaadin.flow.router.Route;
@@ -53,6 +55,7 @@ import lombok.experimental.ExtensionMethod;
 @Route(value = "grid-helpers/all-features", layout = GridHelpersDemoView.class)
 @GithubLink("https://github.com/FlowingCode/GridHelpers")
 @StyleSheet("context://gridhelpers/styles.css")
+@JavaScript("context://gridhelpers/gridhelpers-demo.js")
 @ExtensionMethod(GridHelper.class)
 public class AllFeaturesDemo extends Div {
 
@@ -158,6 +161,17 @@ public class AllFeaturesDemo extends Div {
         .forField(newCheckbox("Hide footers"))
         .bind(this::isFooterHidden, this::setFooterHidden);
 
+    Checkbox cbHeightByRows = newCheckbox("Height by rows enabled");
+    binder.forField(cbHeightByRows)
+        .bind(this::isHeightByRowsEnabled, this::setHeightByRowsEnabled);
+
+    IntegerField heightByRowsField = new IntegerField("Height by rows");
+    cbHeightByRows.addValueChangeListener(ev -> heightByRowsField.setEnabled(ev.getValue()));
+
+    binder.forField(heightByRowsField).bind(this::getHeightByRows, this::setHeightByRows);
+    updateHeightByRowsField(grid, heightByRowsField);
+    heightByRowsField.setStepButtonsVisible(true);
+
     binder.getFields().map(Component.class::cast).forEach(features::add);
     Label label = new Label("Features");
     label.addClassNames("label");
@@ -258,5 +272,35 @@ public class AllFeaturesDemo extends Div {
   private boolean isFooterHidden(Grid<Person> grid) {
     return !GridHelper.isFooterVisible(grid);
   }
+
+  private void setHeightByRows(Grid<Person> grid, int rows) {
+    if (rows > 0) {
+      grid.setHeightByRows(rows);
+    }
+  }
+
+  private int getHeightByRows(Grid<Person> grid) {
+    return (int) grid.getHeightByRows();
+  }
+
+  private void updateHeightByRowsField(Grid<?> grid, IntegerField field) {
+    grid.getElement().executeJs("return")
+        .then(x -> grid.getElement()
+            .executeJs("return window.Vaadin.Flow.fcGridHelperDemoConnector.getViewportRowCount(this)")
+            .then(Integer.class, rows -> {
+              field.setValue(rows);
+              field.setMin(1);
+              field.setEnabled(false);
+            }));
+  }
+
+  private void setHeightByRowsEnabled(Grid<?> grid, boolean value) {
+    grid.setHeightMode(value ? HeightMode.ROW : HeightMode.CSS);
+  }
+
+  private boolean isHeightByRowsEnabled(Grid<?> grid) {
+    return grid.getHeightMode() == HeightMode.ROW;
+  }
+
 
 }

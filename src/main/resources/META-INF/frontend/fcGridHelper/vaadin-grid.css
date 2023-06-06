@@ -64,3 +64,8 @@ table[aria-multiselectable="true"] .fcGh-noselect[first-column] ::slotted(*) {
 :host([theme~="fcGh-hide-footers"]) #footer {
 	display: none;
 }
+
+:host([theme~="height-by-rows"]) {
+	height : var(--height-by-rows);
+	max-height : var(--height-by-rows);
+}

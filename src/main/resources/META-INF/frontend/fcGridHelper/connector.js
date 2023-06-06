@@ -29,6 +29,7 @@ import { Grid } from '@vaadin/grid/src/vaadin-grid.js';
 (function () { 
   window.Vaadin.Flow.fcGridHelperConnector = {
     initLazy: grid => {
+    
     	//https://cookbook.vaadin.com/grid-arrow-selection
     	grid.addEventListener('keyup', function(e) {
     		if (e.keyCode == 32) return;
@@ -51,6 +52,38 @@ import { Grid } from '@vaadin/grid/src/vaadin-grid.js';
 			});
 		}.bind(grid);
 
+		grid.fcGridHelper = {
+			setHeightByRows : function(n) {
+				var height = grid.fcGridHelper.computeHeightByRows(n);
+				grid.style.setProperty('--height-by-rows',height+'px');
+			},
+			
+			computeHeightByRows : function(n) {
+				var height = 0;
+				var rows = grid.shadowRoot.querySelectorAll("tbody tr");
+				for(var i=0;i<n && i<rows.length;i++) {
+					height += rows[i].offsetHeight;
+				}
+				
+				if (rows.length<n) {
+				  height *= n/rows.length;
+				}
+				
+				height += grid.shadowRoot.querySelector("thead").offsetHeight;
+				height += grid.shadowRoot.querySelector("tfoot").offsetHeight;
+				
+				var table = grid.shadowRoot.querySelector("table");
+				
+				var clientHeight = table.clientHeight;
+				table.style.overflowX = 'hidden';
+				height += table.clientHeight - clientHeight;
+				table.style.overflowX = '';
+				
+				return height;
+			},
+			
+		};
     }
+	
   }
 })();

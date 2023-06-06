@@ -435,4 +435,81 @@ public final class GridHelper<T> implements Serializable {
     return getHelper(grid).headerFooterStylesHelper.getStyles(cell);
   }
 
+
+  private final HeightByRowsHelper heightByRowsHelper = new HeightByRowsHelper(this);
+
+  /**
+   * Sets the number of rows that should be visible in Grid's body.
+   *
+   * The algorithm assumes that all data rows have the same height and considers headers, footers,
+   * and the horizontal scrollbar when the method is called. However, if data rows, headers, or
+   * footers are inserted or removed after the initial calculation, the grid may not automatically
+   * adjust the size of the grid to accommodate the changed number of rows.
+   *
+   * @param rows The height in terms of number of rows displayed in Grid's body. If Grid doesn't
+   *        contain enough rows, white space is displayed instead.
+   * @throws IllegalArgumentException if {@code rows} is zero or less
+   * @throws IllegalArgumentException if {@code rows} is {@link Double#isInfinite(double) infinite}
+   * @throws IllegalArgumentException if {@code rows} is {@link Double#isNaN(double) NaN}
+   */
+  public static void setHeightByRows(Grid<?> grid, double rows) {
+    getHelper(grid).heightByRowsHelper.setHeightByRows(rows);
+  }
+
+  /**
+   * Sets the number of rows that should be visible in Grid's body, while
+   * {@link #getHeightMode()} is {@link HeightMode#ROW}.
+   * <p>
+   * If Grid is currently not in {@link HeightMode#ROW}, the given value is
+   * remembered, and applied once the mode is applied.
+   *
+   * @See {@link #setHeightByRows(Grid, double)}
+   */
+  public static void setHeightByRows(Grid<?> grid, int rows) {
+    // this overload is a workaround for a lombok issue "bad type on operand stack"
+    // when setHeightByRows(Grid, double) is called with actual parameter of type int
+    setHeightByRows(grid, (double) rows);
+  }
+
+  /**
+   * Gets the amount of rows in Grid's body that are shown,
+   * while {@link #getHeightMode()} is {@link HeightMode#ROW}.
+   *
+   * @return the amount of rows that are being shown in Grid's body
+   * @see #setHeightByRows(double)
+   */
+  public static double getHeightByRows(Grid<?> grid) {
+    return getHelper(grid).heightByRowsHelper.getHeightByRows();
+  }
+
+  /**
+   * Defines the mode in which the Grid's height is calculated.
+   * <p>
+   * If {@link HeightMode#CSS} is given, Grid will respect the values given via a
+   * {@code setHeight}-method, and behave as a traditional Component.
+   * <p>
+   * If {@link HeightMode#ROW} is given, Grid will make sure that the body will display as many rows
+   * as {@link #getHeightByRows()} defines.
+   *
+   * @param heightMode the mode in to which Grid should be set
+   */
+  public static void setHeightMode(Grid<?> grid, HeightMode heightMode) {
+    getHelper(grid).heightByRowsHelper.setHeightMode(heightMode);
+  }
+
+  /**
+   * Defines the mode in which the Grid's height is calculated.
+   * <p>
+   * If {@link HeightMode#CSS} is given, Grid will respect the CSS height as a traditional Component.
+   * <p>
+   * If {@link HeightMode#ROW} is given, Grid will make sure that the body will display as many rows
+   * as {@link #getHeightByRows()} defines.
+   *
+   * @param heightMode the mode in to which Grid should be set
+   * @return
+   */
+  public static HeightMode getHeightMode(Grid<?> grid) {
+    return getHelper(grid).heightByRowsHelper.getHeightMode();
+  }
+
 }
