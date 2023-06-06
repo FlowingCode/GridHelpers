@@ -261,6 +261,12 @@
 							<resourceBase>src/main/resources/META-INF/resources</resourceBase>
 						</resourceBases>
 					</webAppConfig>
+					<webApp>
+						<resourceBases>
+							<resourceBase>src/test/resources/META-INF/resources</resourceBase>
+							<resourceBase>src/main/resources/META-INF/resources</resourceBase>
+						</resourceBases>
+					</webApp>
 					<supportedPackagings>
 						<supportedPackaging>jar</supportedPackaging>
 					</supportedPackagings>
