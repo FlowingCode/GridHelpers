@@ -107,6 +107,7 @@ public class AllFeaturesDemo extends Div {
     features.getStyle().set("margin-right", "-4px");
     features.getStyle().set("min-width", "310px");
     features.setPadding(false);
+    features.setSpacing(false);
     features.setWidth(null);
 
     VerticalLayout layout = new VerticalLayout(grid);
