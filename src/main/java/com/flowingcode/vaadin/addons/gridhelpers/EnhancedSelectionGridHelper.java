@@ -68,13 +68,13 @@ class EnhancedSelectionGridHelper<T> implements Serializable {
 
           return;
         }
-      } else if (isSpecialKey) {
+      } else if (isSpecialKey && !GridHelper.isSelectOnClick(grid)) {
         if (grid.asMultiSelect().isSelected(clickedItem)) {
           grid.deselect(clickedItem);
         } else {
           grid.select(clickedItem);
         }
-      } else {
+      } else if (!GridHelper.isSelectOnClick(grid)) {
         grid.asMultiSelect().clear();
         grid.select(clickedItem);
       }

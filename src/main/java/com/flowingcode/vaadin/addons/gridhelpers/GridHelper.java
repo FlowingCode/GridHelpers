@@ -60,6 +60,7 @@ public final class GridHelper<T> implements Serializable {
   private static final Logger logger = LoggerFactory.getLogger(GridHelper.class);
   
   private static final String ARROW_SELECTION_PROPERTY = "_fcghArrowSelection";
+  private static final String ENHANCED_SELECTION_PROPERTY = "_fcghEnhancedSelection";
 
   public static final String GRID_STYLES = "./fcGridHelper/vaadin-grid.css";
 
@@ -118,8 +119,8 @@ public final class GridHelper<T> implements Serializable {
   }
 
   private void onItemClick(ItemClickEvent<T> event) {
-    T item = event.getItem();
     if (selectOnClick && getSelectionMode(grid) == SelectionMode.MULTI) {
+      T item = event.getItem();
       // https://cookbook.vaadin.com/grid-conditional-select
       if (!selectionFilterHelper.canSelect(item)) {
         return;
@@ -172,10 +173,6 @@ public final class GridHelper<T> implements Serializable {
   // Select on click
   public static void setSelectOnClick(Grid<?> grid, boolean selectOnClick) {
     getHelper(grid).selectOnClick = selectOnClick;
-    if (selectOnClick && GridHelper.isEnhancedSelectionEnabled(grid)) {
-      logger.warn(
-          "Please disable Enhanced Selection feature when enabling Select On Click to avoid unwanted side effects.");
-    }
   }
 
   public static boolean isSelectOnClick(Grid<?> grid) {
@@ -186,12 +183,7 @@ public final class GridHelper<T> implements Serializable {
 
   /** Allows Grid rows to be selected using up/down arrow keys. */
   public static void setArrowSelectionEnabled(Grid<?> grid, boolean value) {
-    getHelper(grid);
     grid.getElement().setProperty(ARROW_SELECTION_PROPERTY, value);
-    if (value && GridHelper.isEnhancedSelectionEnabled(grid)) {
-      logger.warn(
-          "Please disable Enhanced Selection feature when enabling Arrow Selection to avoid unwanted side effects.");
-    }
   }
 
   /** Returns whether Grid rows can be selected using up/down arrow keys. */
@@ -362,13 +354,9 @@ public final class GridHelper<T> implements Serializable {
    * @param enabled
    */
   public static final void setEnhancedSelectionEnabled(Grid<?> grid, boolean enabled) {
+    grid.getElement().setProperty(ENHANCED_SELECTION_PROPERTY, enabled);
     if (enabled) {
       getHelper(grid).enhancedSelectionGridHelper.enableEnhancedSelection();
-      
-      if (GridHelper.isArrowSelectionEnabled(grid) || GridHelper.isSelectOnClick(grid)) {
-        logger.warn(
-            "Please disable Arrow Selection and Select On Click features when enabling Enhanced Selection to avoid unwanted side effects.");
-      }
     } else {
       getHelper(grid).enhancedSelectionGridHelper.disableEnhancedSelection();
     }

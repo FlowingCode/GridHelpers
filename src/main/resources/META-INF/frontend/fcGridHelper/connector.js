@@ -33,7 +33,7 @@ import { Grid } from '@vaadin/grid/src/vaadin-grid.js';
     	//https://cookbook.vaadin.com/grid-arrow-selection
     	grid.addEventListener('keyup', function(e) {
     		if (e.keyCode == 32) return;
-    		if (!grid._fcghArrowSelection) return;
+    		if (!grid._fcghArrowSelection || grid._fcghEnhancedSelection) return;
     		if (grid.selectedItems){
     			grid.activeItem=grid.getEventContext(e).item;
     			grid.selectedItems=[grid.getEventContext(e).item];
