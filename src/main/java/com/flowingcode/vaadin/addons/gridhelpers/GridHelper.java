@@ -118,6 +118,7 @@ public final class GridHelper<T> implements Serializable {
 
   private void onItemClick(ItemClickEvent<T> event) {
     T item = event.getItem();
+    boolean isSpecialKey = event.isCtrlKey() || event.isMetaKey() || event.isAltKey();
     if (selectOnClick && getSelectionMode(grid) == SelectionMode.MULTI) {
       // https://cookbook.vaadin.com/grid-conditional-select
       if (!selectionFilterHelper.canSelect(item)) {
@@ -171,10 +172,6 @@ public final class GridHelper<T> implements Serializable {
   // Select on click
   public static void setSelectOnClick(Grid<?> grid, boolean selectOnClick) {
     getHelper(grid).selectOnClick = selectOnClick;
-    if (selectOnClick && GridHelper.isEnhancedSelectionEnabled(grid)) {
-      logger.warn(
-          "Please disable Enhanced Selection feature when enabling Select On Click to avoid unwanted side effects.");
-    }
   }
 
   public static boolean isSelectOnClick(Grid<?> grid) {
