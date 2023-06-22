@@ -81,6 +81,34 @@ import { Grid } from '@vaadin/grid/src/vaadin-grid.js';
 				
 				return height;
 			},
+
+			_resizeObserver : new ResizeObserver((entries) => {
+				const observer = grid.fcGridHelper._resizeObserver;
+				for (const e of entries) {
+					let width = e.contentBoxSize[0].inlineSize;
+					width = observer.widths.findLast(step=>step<width);
+					if (width && width!==observer.width) {
+						observer.width = width;
+						grid.dispatchEvent(new CustomEvent("fcgh-responsive-step", { detail: {step:width} }));
+						console.error(width);
+					}
+				 }
+  			}),
+  			
+			_setResponsiveSteps : function(widths) {
+				const observer = grid.fcGridHelper._resizeObserver;
+				observer.widths=widths.sort();
+				if (widths.length>0 && !observer.observing) {
+					observer.observing=true;
+					observer.observe(grid);		
+				}
+								
+				if (widths.length==0 && observer.observing) {
+					observer.observing=false;
+					observer.width=undefined;
+					observer.unobserve(grid);
+				}				
+			}
 			
 		};
     }

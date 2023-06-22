@@ -1,0 +1,119 @@
+package com.flowingcode.vaadin.addons.gridhelpers;
+
+import com.vaadin.flow.component.grid.Grid;
+import com.vaadin.flow.dom.DebouncePhase;
+import com.vaadin.flow.shared.Registration;
+import elemental.json.Json;
+import elemental.json.JsonArray;
+import java.io.Serializable;
+import java.util.Collection;
+import java.util.Collections;
+import java.util.NavigableMap;
+import java.util.TreeMap;
+import lombok.RequiredArgsConstructor;
+
+@SuppressWarnings("serial")
+@RequiredArgsConstructor
+class ResponsiveGridHelper<T> implements Serializable {
+
+  private final GridHelper<T> helper;
+
+  private boolean initialized;
+
+  private NavigableMap<Integer, GridResponsiveStep<T>> steps = new TreeMap<>();
+
+  private int currentMinWidth = -1;
+
+  private Registration refreshRegistration;
+
+  Grid<T> getGrid() {
+    return helper.getGrid();
+  }
+
+  GridResponsiveStep<T> getOrCreate(int minWidth) {
+    Grid<T> grid = helper.getGrid();
+
+    if (minWidth < 0) {
+      throw new IllegalArgumentException();
+    }
+
+    steps.computeIfAbsent(minWidth, w -> new GridResponsiveStep<>(w, this));
+
+    if (initialized) {
+      refreshAll();
+    } else {
+      initialized = true;
+      grid.addAttachListener(ev -> initialize());
+      if (grid.isAttached()) {
+        initialize();
+      }
+    }
+
+    return steps.get(minWidth);
+  }
+
+  private void initialize() {
+    Grid<T> grid = helper.getGrid();
+    grid.getElement().addEventListener("fcgh-responsive-step", ev -> {
+      apply((int) ev.getEventData().getNumber("event.detail.step"), false);
+    }).addEventData("event.detail.step").debounce(200, DebouncePhase.TRAILING);
+    refreshAll();
+  }
+
+  void refreshAll() {
+    JsonArray widths = Json.createArray();
+    steps.keySet().forEach(w -> widths.set(widths.length(), w));
+    helper.getGrid().getElement().executeJs("this.fcGridHelper._setResponsiveSteps($0)", widths);
+    refresh();
+  }
+
+  private void refresh() {
+    apply(currentMinWidth, true);
+  }
+
+  void requireRefresh(GridResponsiveStep<T> step) {
+    if (step.getMinWidth() <= currentMinWidth) {
+      Grid<T> grid = helper.getGrid();
+      grid.getUI().ifPresent(ui -> {
+        if (refreshRegistration != null) {
+          refreshRegistration.remove();
+        }
+        refreshRegistration = ui.beforeClientResponse(grid, context -> refresh());
+      });
+    }
+  }
+
+  private void apply(int width, boolean force) {
+    if (steps.floorKey(width) != null) {
+      Grid<T> grid = helper.getGrid();
+      GridResponsiveStep<T> step = new GridResponsiveStep<T>().show(grid.getColumns());
+      steps.subMap(0, true, width, true).values().forEach(step::accumulate);
+      if (step.getMinWidth() >= 0) {
+        if (force || currentMinWidth != step.getMinWidth()) {
+          apply(step);
+        }
+      }
+    }
+  }
+
+  private void apply(GridResponsiveStep<T> step) {
+    currentMinWidth = step.getMinWidth();
+    step.apply(helper.getGrid());
+  }
+
+  void remove(GridResponsiveStep<?> step) {
+    if (steps.remove(step.getMinWidth(), step)) {
+      if (step.getMinWidth() <= currentMinWidth) {
+        refreshAll();
+      }
+    } else {
+      throw new IllegalArgumentException("The responsive step is not connected to this grid");
+    }
+  }
+
+  Collection<GridResponsiveStep<T>> getAll() {
+    return Collections.unmodifiableCollection(steps.values());
+  }
+
+}
+
