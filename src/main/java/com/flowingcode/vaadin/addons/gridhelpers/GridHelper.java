@@ -41,6 +41,7 @@ import com.vaadin.flow.function.SerializableFunction;
 import com.vaadin.flow.function.SerializablePredicate;
 import com.vaadin.flow.shared.Registration;
 import java.io.Serializable;
+import java.util.Collection;
 import lombok.AccessLevel;
 import lombok.Getter;
 import org.slf4j.Logger;
@@ -510,6 +511,20 @@ public final class GridHelper<T> implements Serializable {
    */
   public static HeightMode getHeightMode(Grid<?> grid) {
     return getHelper(grid).heightByRowsHelper.getHeightMode();
+  }
+
+  private final ResponsiveGridHelper<T> responsiveGridHelper = new ResponsiveGridHelper<>(this);
+
+  /**
+   * Get or create a responsive steps for the given {@code grid} and minimum width.
+   */
+  public static <T> GridResponsiveStep<T> responsiveStep(Grid<T> grid, int minWidth) {
+    return getHelper(grid).responsiveGridHelper.getOrCreate(minWidth);
+  }
+
+  /** Return the responsive steps of the given {@code grid}. */
+  public static <T> Collection<GridResponsiveStep<T>> getResponsiveSteps(Grid<T> grid) {
+    return getHelper(grid).responsiveGridHelper.getAll();
   }
 
 }

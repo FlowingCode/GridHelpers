@@ -48,6 +48,7 @@ import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.stream.IntStream;
 import lombok.experimental.ExtensionMethod;
 
 @SuppressWarnings("serial")
@@ -96,11 +97,16 @@ public class AllFeaturesDemo extends Div {
 
     grid.getElement().getStyle().set("flex-grow", "1");
 
-    grid.getHeaderStyles(grid.getHeaderRows().get(0).getCells().get(1))
+    GridHelper.getHeaderStyles(grid, grid.getHeaderRows().get(0).getCells().get(1))
         .setClassName("fcGh-demo-custom-header");
 
     grid.getElement().executeJs(
         "var e = document.createElement('style'); e.innerHTML='.fcGh-demo-custom-header  {background: #888}'; this.shadowRoot.appendChild(e);");
+
+    IntStream.iterate(0, i -> i + 100).skip(1).limit(20)
+        .forEach(w -> grid.responsiveStep(w).addListener(ev -> {
+          Notification.show("Responsive step: " + ev.getMinWidth());
+        }));
 
     VerticalLayout features = new VerticalLayout();
     features.getStyle().set("margin-left", "4px");
