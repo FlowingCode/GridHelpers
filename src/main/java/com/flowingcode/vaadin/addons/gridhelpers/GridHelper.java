@@ -51,14 +51,16 @@ import org.slf4j.LoggerFactory;
 @JsModule("./fcGridHelper/connector.js")
 @CssImport(value = "./fcGridHelper/vaadin-menu-bar.css", themeFor = "vaadin-menu-bar")
 @CssImport(value = GridHelper.GRID_STYLES, themeFor = "vaadin-grid")
-@CssImport(value = "./fcGridHelper/vaadin-context-menu-item.css",
+@CssImport(
+    value = "./fcGridHelper/vaadin-context-menu-item.css",
     themeFor = "vaadin-context-menu-item")
-@CssImport(value = "./fcGridHelper/vaadin-context-menu-list-box.css",
+@CssImport(
+    value = "./fcGridHelper/vaadin-context-menu-list-box.css",
     themeFor = "vaadin-context-menu-list-box")
 public final class GridHelper<T> implements Serializable {
 
   private static final Logger logger = LoggerFactory.getLogger(GridHelper.class);
-  
+
   private static final String ARROW_SELECTION_PROPERTY = "_fcghArrowSelection";
   private static final String ENHANCED_SELECTION_PROPERTY = "_fcghEnhancedSelection";
 
@@ -83,7 +85,7 @@ public final class GridHelper<T> implements Serializable {
 
   private GridHelper(Grid<T> grid) {
     this.grid = grid;
-    this.helperClassNameGenerator = new GridHelperClassNameGenerator<>();
+    helperClassNameGenerator = new GridHelperClassNameGenerator<>();
     setClassNameGenerator(grid.getClassNameGenerator());
     grid.addItemClickListener(this::onItemClick);
     grid.addAttachListener(this::onAttach);
@@ -109,9 +111,8 @@ public final class GridHelper<T> implements Serializable {
 
   private void initConnector() {
     grid.getUI()
-        .orElseThrow(
-            () ->
-                new IllegalStateException("Connector can only be initialized for an attached Grid"))
+        .orElseThrow(() -> new IllegalStateException(
+            "Connector can only be initialized for an attached Grid"))
         .getPage()
         .executeJs("window.Vaadin.Flow.fcGridHelperConnector.initLazy($0)", grid.getElement());
   }
@@ -164,7 +165,7 @@ public final class GridHelper<T> implements Serializable {
    * @see Column#setClassNameGenerator(SerializableFunction)
    */
   public void setClassNameGenerator(SerializableFunction<T, String> classNameGenerator) {
-    grid.setClassNameGenerator(this.helperClassNameGenerator);
+    grid.setClassNameGenerator(helperClassNameGenerator);
     if (classNameGenerator instanceof GridHelperClassNameGenerator) {
       helperClassNameGenerator.setGridClassNameGenerator(
           ((GridHelperClassNameGenerator<T>) classNameGenerator).getGridClassNameGenerator());
@@ -208,8 +209,7 @@ public final class GridHelper<T> implements Serializable {
   public static void setSelectionColumnFrozen(Grid<?> grid, boolean value) {
     if (getSelectionMode(grid) == SelectionMode.MULTI) {
       // https://cookbook.vaadin.com/grid-frozen-selection-column
-      ((GridMultiSelectionModel<?>) grid.getSelectionModel())
-              .setSelectionColumnFrozen(value);
+      ((GridMultiSelectionModel<?>) grid.getSelectionModel()).setSelectionColumnFrozen(value);
     }
   }
 
@@ -221,8 +221,8 @@ public final class GridHelper<T> implements Serializable {
   /** Returns whether the multiselect selection column is frozen. */
   @Deprecated
   public static boolean isSelectionColumnFrozen(Grid<?> grid) {
-    return getSelectionMode(grid) == SelectionMode.MULTI && ((GridMultiSelectionModel<?>) grid.getSelectionModel())
-            .isSelectionColumnFrozen();
+    return getSelectionMode(grid) == SelectionMode.MULTI
+        && ((GridMultiSelectionModel<?>) grid.getSelectionModel()).isSelectionColumnFrozen();
   }
 
   // Selection Filter
@@ -231,10 +231,9 @@ public final class GridHelper<T> implements Serializable {
 
   /**
    * Sets a predicate for determining which rows are selectable.
-   * <p>
    *
-   * After a call to {@link Grid#setSelectionMode(SelectionMode)} the selection filter is lost and
-   * it has to be configured again:
+   * <p>After a call to {@link Grid#setSelectionMode(SelectionMode)} the selection filter is lost
+   * and it has to be configured again:
    *
    * <pre>
    * GridHelper.setSelectionFilter(grid, GridHelper.getSelectionFilter(grid)); // static call
@@ -264,17 +263,21 @@ public final class GridHelper<T> implements Serializable {
     return getHelper(grid).columnToggleHelper.isColumnToggleVisible();
   }
 
-  /**Returns whether this column can be hidden by the user. Default is {@code false}.
+  /**
+   * Returns whether this column can be hidden by the user. Default is {@code false}.
    *
-   * @return {@code true} if the user can hide the column, {@code false} if not.*/
+   * @return {@code true} if the user can hide the column, {@code false} if not.
+   */
   public static <T> boolean isHidable(Column<T> column) {
     return getHelper(column.getGrid()).columnToggleHelper.isHidable(column);
   }
 
-  /**Sets whether this column can be hidden by the user. Hidable columns can be hidden and shown via the sidebar menu.
+  /**
+   * Sets whether this column can be hidden by the user. Hidable columns can be hidden and shown via
+   * the sidebar menu.
+   *
    * @param column the column to be configured
    * @param hidable {@code true} if the column may be hidden by the user via UI interaction
-   *
    * @return the column.
    */
   public static <T> Column<T> setHidable(Column<T> column, boolean hidable) {
@@ -285,13 +288,14 @@ public final class GridHelper<T> implements Serializable {
   /**
    * Adds a listener that is notified when column visibility is modified through the sidebar menu.
    */
-  public static <T> Registration addColumnToggleListener(Grid<T> grid,
-      ComponentEventListener<ColumnToggleEvent<T>> listener) {
+  public static <T> Registration addColumnToggleListener(
+      Grid<T> grid, ComponentEventListener<ColumnToggleEvent<T>> listener) {
     return getHelper(grid).columnToggleHelper.addColumnToggleListener(listener);
   }
 
   /**
-   * Sets the caption of the hiding toggle for this column. Shown in the toggle for this column in the grid's sidebar when the column is {@linkplain #isHidable(Column) hidable}.
+   * Sets the caption of the hiding toggle for this column. Shown in the toggle for this column in
+   * the grid's sidebar when the column is {@linkplain #isHidable(Column) hidable}.
    *
    * <p>If the value is <code>null</code>, the column cannot be hidden via the sidebar menu.
    *
@@ -332,11 +336,10 @@ public final class GridHelper<T> implements Serializable {
 
   private final FooterToolbarGridHelper footerToolbar = new FooterToolbarGridHelper(this);
 
-
   public static void addToolbarFooter(Grid<?> grid, Component toolBar) {
     getHelper(grid).footerToolbar.setFooterToolbar(toolBar);
   }
- 
+
   @Deprecated
   public static String getHeader(Grid<?> grid, Column<?> column) {
     return column.getHeaderText();
@@ -346,13 +349,14 @@ public final class GridHelper<T> implements Serializable {
   public static String getFooter(Grid<?> grid, Column<?> column) {
     return column.getFooterText();
   }
-  
-  private final EnhancedSelectionGridHelper<T> enhancedSelectionGridHelper = new EnhancedSelectionGridHelper<>(this);
+
+  private final EnhancedSelectionGridHelper<T> enhancedSelectionGridHelper =
+      new EnhancedSelectionGridHelper<>(this);
 
   /**
-   * When enabled, enhances grid row selection support adding support for these combinations: click, arrow
-   * up/down, shift+click, shift+arrow up/down, ctrl+click and ctrl+space.
-   * 
+   * When enabled, enhances grid row selection support adding support for these combinations: click,
+   * arrow up/down, shift+click, shift+arrow up/down, ctrl+click and ctrl+space.
+   *
    * @param grid
    * @param enabled
    */
@@ -369,7 +373,6 @@ public final class GridHelper<T> implements Serializable {
   public static boolean isEnhancedSelectionEnabled(Grid<?> grid) {
     return getHelper(grid).enhancedSelectionGridHelper.isEnhancedSelectionEnabled();
   }
-
 
   // HeaderFooterVisibilityHelper
 
@@ -407,7 +410,6 @@ public final class GridHelper<T> implements Serializable {
     return getHelper(grid).headerFooterVisibility.isFooterVisible();
   }
 
-
   private final HeaderFooterStylesHelper headerFooterStylesHelper =
       new HeaderFooterStylesHelper(this);
 
@@ -427,19 +429,18 @@ public final class GridHelper<T> implements Serializable {
     return getHelper(grid).headerFooterStylesHelper.getStyles(cell);
   }
 
-
   private final HeightByRowsHelper heightByRowsHelper = new HeightByRowsHelper(this);
 
   /**
    * Sets the number of rows that should be visible in Grid's body.
    *
-   * The algorithm assumes that all data rows have the same height and considers headers, footers,
-   * and the horizontal scrollbar when the method is called. However, if data rows, headers, or
-   * footers are inserted or removed after the initial calculation, the grid may not automatically
-   * adjust the size of the grid to accommodate the changed number of rows.
+   * <p>The algorithm assumes that all data rows have the same height and considers headers,
+   * footers, and the horizontal scrollbar when the method is called. However, if data rows,
+   * headers, or footers are inserted or removed after the initial calculation, the grid may not
+   * automatically adjust the size of the grid to accommodate the changed number of rows.
    *
    * @param rows The height in terms of number of rows displayed in Grid's body. If Grid doesn't
-   *        contain enough rows, white space is displayed instead.
+   *     contain enough rows, white space is displayed instead.
    * @throws IllegalArgumentException if {@code rows} is zero or less
    * @throws IllegalArgumentException if {@code rows} is {@link Double#isInfinite(double) infinite}
    * @throws IllegalArgumentException if {@code rows} is {@link Double#isNaN(double) NaN}
@@ -449,13 +450,11 @@ public final class GridHelper<T> implements Serializable {
   }
 
   /**
-   * Sets the number of rows that should be visible in Grid's body, while
-   * {@link #getHeightMode()} is {@link HeightMode#ROW}.
-   * <p>
-   * If Grid is currently not in {@link HeightMode#ROW}, the given value is
-   * remembered, and applied once the mode is applied.
+   * Sets the number of rows that should be visible in Grid's body, while {@link #getHeightMode()}
+   * is {@link HeightMode#ROW}.
    *
-   * @See {@link #setHeightByRows(Grid, double)}
+   * <p>If Grid is currently not in {@link HeightMode#ROW}, the given value is remembered, and
+   * applied once the mode is applied. @See {@link #setHeightByRows(Grid, double)}
    */
   public static void setHeightByRows(Grid<?> grid, int rows) {
     // this overload is a workaround for a lombok issue "bad type on operand stack"
@@ -464,8 +463,8 @@ public final class GridHelper<T> implements Serializable {
   }
 
   /**
-   * Gets the amount of rows in Grid's body that are shown,
-   * while {@link #getHeightMode()} is {@link HeightMode#ROW}.
+   * Gets the amount of rows in Grid's body that are shown, while {@link #getHeightMode()} is {@link
+   * HeightMode#ROW}.
    *
    * @return the amount of rows that are being shown in Grid's body
    * @see #setHeightByRows(double)
@@ -476,12 +475,12 @@ public final class GridHelper<T> implements Serializable {
 
   /**
    * Defines the mode in which the Grid's height is calculated.
-   * <p>
-   * If {@link HeightMode#CSS} is given, Grid will respect the values given via a
-   * {@code setHeight}-method, and behave as a traditional Component.
-   * <p>
-   * If {@link HeightMode#ROW} is given, Grid will make sure that the body will display as many rows
-   * as {@link #getHeightByRows()} defines.
+   *
+   * <p>If {@link HeightMode#CSS} is given, Grid will respect the values given via a {@code
+   * setHeight}-method, and behave as a traditional Component.
+   *
+   * <p>If {@link HeightMode#ROW} is given, Grid will make sure that the body will display as many
+   * rows as {@link #getHeightByRows()} defines.
    *
    * @param heightMode the mode in to which Grid should be set
    */
@@ -491,11 +490,12 @@ public final class GridHelper<T> implements Serializable {
 
   /**
    * Defines the mode in which the Grid's height is calculated.
-   * <p>
-   * If {@link HeightMode#CSS} is given, Grid will respect the CSS height as a traditional Component.
-   * <p>
-   * If {@link HeightMode#ROW} is given, Grid will make sure that the body will display as many rows
-   * as {@link #getHeightByRows()} defines.
+   *
+   * <p>If {@link HeightMode#CSS} is given, Grid will respect the CSS height as a traditional
+   * Component.
+   *
+   * <p>If {@link HeightMode#ROW} is given, Grid will make sure that the body will display as many
+   * rows as {@link #getHeightByRows()} defines.
    *
    * @param heightMode the mode in to which Grid should be set
    * @return
@@ -506,9 +506,7 @@ public final class GridHelper<T> implements Serializable {
 
   private final ResponsiveGridHelper<T> responsiveGridHelper = new ResponsiveGridHelper<>(this);
 
-  /**
-   * Get or create a responsive steps for the given {@code grid} and minimum width.
-   */
+  /** Get or create a responsive steps for the given {@code grid} and minimum width. */
   public static <T> GridResponsiveStep<T> responsiveStep(Grid<T> grid, int minWidth) {
     return getHelper(grid).responsiveGridHelper.getOrCreate(minWidth);
   }
@@ -517,5 +515,4 @@ public final class GridHelper<T> implements Serializable {
   public static <T> Collection<GridResponsiveStep<T>> getResponsiveSteps(Grid<T> grid) {
     return getHelper(grid).responsiveGridHelper.getAll();
   }
-
 }
