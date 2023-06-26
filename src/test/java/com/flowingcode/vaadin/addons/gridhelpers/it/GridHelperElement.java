@@ -43,7 +43,8 @@ public class GridHelperElement extends MyGridElement {
 
   public List<CheckboxElement> getColumnToggleElements() {
     try {
-      return new ElementQuery<>(TestBenchElement.class, "vaadin-context-menu-overlay")
+      return new ElementQuery<>(TestBenchElement.class,
+          "vaadin-context-menu-overlay, vaadin-menu-bar-overlay")
           .context(getDriver())
           .waitForFirst(0)
           .$(CheckboxElement.class).all();
