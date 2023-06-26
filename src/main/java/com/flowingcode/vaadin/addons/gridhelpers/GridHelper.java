@@ -87,6 +87,9 @@ public final class GridHelper<T> implements Serializable {
     setClassNameGenerator(grid.getClassNameGenerator());
     grid.addItemClickListener(this::onItemClick);
     grid.addAttachListener(this::onAttach);
+    if (grid.isAttached()) {
+      initConnector();
+    }
   }
 
   @SuppressWarnings("unchecked")
