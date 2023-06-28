@@ -504,7 +504,7 @@
 									<classifier>demo</classifier>
 									<excludes>
 										<exclude>**/test/*</exclude>
-										<exclude>**/integration/*</exclude>
+										<exclude>**/it/*</exclude>
 										<exclude>**/DemoView.class</exclude>
 										<exclude>**/DemoLayout.class</exclude>
 									</excludes>
