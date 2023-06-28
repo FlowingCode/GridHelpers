@@ -10,6 +10,7 @@ import java.util.Collection;
 import java.util.Collections;
 import java.util.NavigableMap;
 import java.util.TreeMap;
+import lombok.Getter;
 import lombok.RequiredArgsConstructor;
 
 @SuppressWarnings("serial")
@@ -22,6 +23,7 @@ class ResponsiveGridHelper<T> implements Serializable {
 
   private NavigableMap<Integer, GridResponsiveStep<T>> steps = new TreeMap<>();
 
+  @Getter
   private int currentMinWidth = -1;
 
   private Registration refreshRegistration;
@@ -40,7 +42,7 @@ class ResponsiveGridHelper<T> implements Serializable {
     steps.computeIfAbsent(minWidth, w -> new GridResponsiveStep<>(w, this));
 
     if (initialized) {
-      refreshAll();
+      sendSteps();
     } else {
       initialized = true;
       grid.addAttachListener(ev -> initialize());
@@ -57,14 +59,13 @@ class ResponsiveGridHelper<T> implements Serializable {
     grid.getElement().addEventListener("fcgh-responsive-step", ev -> {
       apply((int) ev.getEventData().getNumber("event.detail.step"), false);
     }).addEventData("event.detail.step").debounce(200, DebouncePhase.TRAILING);
-    refreshAll();
+    sendSteps();
   }
 
-  void refreshAll() {
+  private void sendSteps() {
     JsonArray widths = Json.createArray();
     steps.keySet().forEach(w -> widths.set(widths.length(), w));
     helper.getGrid().getElement().executeJs("this.fcGridHelper._setResponsiveSteps($0)", widths);
-    refresh();
   }
 
   private void refresh() {
@@ -90,22 +91,18 @@ class ResponsiveGridHelper<T> implements Serializable {
       steps.subMap(0, true, width, true).values().forEach(step::accumulate);
       if (step.getMinWidth() >= 0) {
         if (force || currentMinWidth != step.getMinWidth()) {
-          apply(step);
+          currentMinWidth = step.getMinWidth();
+          step.apply(helper.getGrid());
         }
       }
+    } else {
+      currentMinWidth = -1;
     }
-  }
-
-  private void apply(GridResponsiveStep<T> step) {
-    currentMinWidth = step.getMinWidth();
-    step.apply(helper.getGrid());
   }
 
   void remove(GridResponsiveStep<?> step) {
     if (steps.remove(step.getMinWidth(), step)) {
-      if (step.getMinWidth() <= currentMinWidth) {
-        refreshAll();
-      }
+      sendSteps();
     } else {
       throw new IllegalArgumentException("The responsive step is not connected to this grid");
     }
