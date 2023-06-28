@@ -70,4 +70,10 @@ public class GridHelperElement extends MyGridElement {
     return findElement(By.cssSelector(String.format("[slot='%s']", slot)));
   }
 
+  public boolean hasColumn(String headerText) {
+    return getVisibleColumns().stream()
+        .filter(column -> headerText.equals(column.getHeaderCell().getText())).findFirst()
+        .isPresent();
+  }
+
 }
