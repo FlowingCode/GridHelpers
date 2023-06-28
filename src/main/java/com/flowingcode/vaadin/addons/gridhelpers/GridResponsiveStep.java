@@ -271,7 +271,21 @@ public class GridResponsiveStep<T> implements Serializable {
   public GridResponsiveStepListenerRegistration addListener(
       @NonNull SerializableConsumer<GridResponsiveStepEvent> listener) {
     listeners.put(listener, Boolean.FALSE);
+    if (minWidth == helper.getCurrentMinWidth()) {
+      listener.accept(new GridResponsiveStepEvent(helper.getGrid(), minWidth));
+    }
     return new GridResponsiveStepListenerRegistration() {
+
+      {
+        if (minWidth == helper.getCurrentMinWidth()) {
+          fireStepEvent();
+        }
+      }
+
+      private void fireStepEvent() {
+        listener.accept(new GridResponsiveStepEvent(helper.getGrid(), helper.getCurrentMinWidth()));
+      }
+
       @Override
       public void remove() {
         listeners.remove(listener);
@@ -279,7 +293,12 @@ public class GridResponsiveStep<T> implements Serializable {
 
       @Override
       public GridResponsiveStepListenerRegistration cummulative() {
-        listeners.computeIfPresent(listener, (k, v) -> Boolean.TRUE);
+        listeners.computeIfPresent(listener, (k, cummulative) -> {
+          if (!cummulative && minWidth < helper.getCurrentMinWidth()) {
+            fireStepEvent();
+          }
+          return Boolean.TRUE;
+        });
         return this;
       }
     };
