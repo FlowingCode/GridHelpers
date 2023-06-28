@@ -87,9 +87,9 @@ import { Grid } from '@vaadin/grid/src/vaadin-grid.js';
 				for (const e of entries) {
 					let width = e.contentBoxSize[0].inlineSize;
 					width = observer.widths.findLast(step=>step<width);
-					if (width && width!==observer.width) {
+					if (width!==observer.width) {
 						observer.width = width;
-						grid.dispatchEvent(new CustomEvent("fcgh-responsive-step", { detail: {step:width} }));
+						grid.dispatchEvent(new CustomEvent("fcgh-responsive-step", { detail: {step: width===undefined ? -1 : width} }));
 						console.error(width);
 					}
 				 }
@@ -98,16 +98,15 @@ import { Grid } from '@vaadin/grid/src/vaadin-grid.js';
 			_setResponsiveSteps : function(widths) {
 				const observer = grid.fcGridHelper._resizeObserver;
 				observer.widths=widths.sort();
-				if (widths.length>0 && !observer.observing) {
-					observer.observing=true;
+				observer.unobserve(grid);
+				
+				if (widths.length>0) {
 					observer.observe(grid);		
-				}
-								
-				if (widths.length==0 && observer.observing) {
-					observer.observing=false;
+				} else {
 					observer.width=undefined;
-					observer.unobserve(grid);
-				}				
+					grid.dispatchEvent(new CustomEvent("fcgh-responsive-step", { detail: {step: -1} }));
+					console.error('unreg');
+				}
 			}
 			
 		};
