@@ -90,7 +90,6 @@ import { Grid } from '@vaadin/grid/src/vaadin-grid.js';
 					if (width!==observer.width) {
 						observer.width = width;
 						grid.dispatchEvent(new CustomEvent("fcgh-responsive-step", { detail: {step: width===undefined ? -1 : width} }));
-						console.error(width);
 					}
 				 }
   			}),
@@ -105,7 +104,6 @@ import { Grid } from '@vaadin/grid/src/vaadin-grid.js';
 				} else {
 					observer.width=undefined;
 					grid.dispatchEvent(new CustomEvent("fcgh-responsive-step", { detail: {step: -1} }));
-					console.error('unreg');
 				}
 			}
 			
