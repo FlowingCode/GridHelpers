@@ -35,4 +35,8 @@ public interface IntegrationViewCallables {
 
     void removeAllItems();
 
+    void setHeaderVisible(boolean visible);
+
+    void setFooterVisible(boolean visible);
+
 }

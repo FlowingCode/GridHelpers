@@ -156,4 +156,15 @@ public class IntegrationView extends Div implements IntegrationViewCallables {
     grid.getDataProvider().refreshAll();
   }
 
+  @Override
+  @ClientCallable
+  public void setHeaderVisible(boolean visible) {
+    grid.setHeaderVisible(visible);
+  }
+
+  @Override
+  @ClientCallable
+  public void setFooterVisible(boolean visible) {
+    grid.setFooterVisible(visible);
+  }
 }
