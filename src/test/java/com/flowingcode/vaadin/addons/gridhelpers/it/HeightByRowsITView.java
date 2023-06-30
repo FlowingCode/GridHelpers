@@ -1,0 +1,99 @@
+package com.flowingcode.vaadin.addons.gridhelpers.it;
+
+import com.flowingcode.vaadin.addons.gridhelpers.GridHelper;
+import com.flowingcode.vaadin.addons.gridhelpers.HeightMode;
+import com.vaadin.flow.component.ClientCallable;
+import com.vaadin.flow.component.grid.Grid;
+import com.vaadin.flow.component.orderedlayout.VerticalLayout;
+import com.vaadin.flow.router.BeforeEvent;
+import com.vaadin.flow.router.HasUrlParameter;
+import com.vaadin.flow.router.OptionalParameter;
+import com.vaadin.flow.router.Route;
+import elemental.json.JsonObject;
+import elemental.json.JsonValue;
+import java.util.Arrays;
+import java.util.List;
+import java.util.stream.IntStream;
+import lombok.experimental.ExtensionMethod;
+
+@ExtensionMethod(GridHelper.class)
+@Route(HeightByRowsITView.ROUTE)
+public class HeightByRowsITView extends VerticalLayout
+    implements HeightByRowsITViewCallables, HasUrlParameter<String> {
+
+  public static final String ROUTE = "it/height-by-rows";
+
+  public static final String EMPTY = "empty";
+
+  public static final String FULLSIZE = "fullsize";
+
+  public static final String NO_COLUMNS = "nocolumns";
+
+  private Grid<Integer> grid;
+
+  @Override
+  public void setParameter(BeforeEvent event, @OptionalParameter String parameter) {
+    removeAll();
+
+    if (parameter == null) {
+      return;
+    }
+
+    List<String> params = Arrays.asList(parameter.split(";"));
+
+    if (params.contains(FULLSIZE)) {
+      setSizeFull();
+    }
+
+    grid = new Grid<>();
+
+    if (!params.contains(NO_COLUMNS)) {
+      grid.addColumn(x -> x).setHeader("Header").setFooter("Footer");
+    }
+
+    if (!params.contains(EMPTY)) {
+      grid.setItems(IntStream.range(1, 100).mapToObj(Integer::valueOf).toArray(Integer[]::new));
+    }
+
+    params.stream()
+      .filter(s -> s.matches("\\d+"))
+      .findFirst().map(Integer::valueOf)
+      .ifPresent(rows -> {
+        grid.setHeightMode(HeightMode.ROW);
+          grid.setHeightByRows(rows);
+        });
+
+    add(grid);
+  }
+
+  @Override
+  @ClientCallable
+  public JsonValue $call(JsonObject invocation) {
+    return HeightByRowsITViewCallables.super.$call(invocation);
+  }
+
+  @Override
+  public HeightMode getHeightMode() {
+    return grid.getHeightMode();
+  }
+
+  @Override
+  public void setHeightMode(HeightMode row) {
+    grid.setHeightMode(row);
+  }
+
+  @Override
+  public double getHeightByRows() {
+    return grid.getHeightByRows();
+  }
+
+  @Override
+  public void setHeightByRows(int rows) {
+    grid.setHeightByRows(rows);
+  }
+
+  @Override
+  public void roundtrip() {
+    // do nothing
+  }
+}

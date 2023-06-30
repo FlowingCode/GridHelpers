@@ -1,6 +1,5 @@
 package com.flowingcode.vaadin.addons.gridhelpers.it;
 
-import com.flowingcode.vaadin.addons.gridhelpers.HeightMode;
 import com.flowingcode.vaadin.testbench.rpc.JsonArrayList;
 import com.vaadin.flow.component.grid.Grid.SelectionMode;
 
@@ -35,10 +34,6 @@ public interface IntegrationViewCallables {
     void addToolbarFooter(String footer);
 
     void removeAllItems();
-
-    void setHeightMode(HeightMode row);
-
-    void setHeightByRows(int rows);
 
     void setHeaderVisible(boolean visible);
 

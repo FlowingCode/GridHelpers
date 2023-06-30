@@ -9,6 +9,7 @@ import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
 import java.util.NoSuchElementException;
+import java.util.Optional;
 import org.openqa.selenium.By;
 import org.openqa.selenium.TimeoutException;
 import org.openqa.selenium.WebElement;
@@ -76,4 +77,27 @@ public class GridHelperElement extends MyGridElement {
         .isPresent();
   }
 
+  @Override
+  public int getFirstVisibleRowIndex() {
+    Long result = (Long) executeScript("return this._firstVisibleIndex");
+    return Optional.ofNullable(result).orElse(0L).intValue();
+  }
+
+  @Override
+  public int getLastVisibleRowIndex() {
+    Long result = (Long) executeScript("return this._lastVisibleIndex");
+    return Optional.ofNullable(result).orElse(-1L).intValue();
+  }
+
+  public Object getVisibleRowsCount() {
+    return getLastVisibleRowIndex() - getFirstVisibleRowIndex() + 1;
+  }
+
+  public int getOffsetHeight() {
+    return ((Long) executeScript("return this.offsetHeight")).intValue();
+  }
+
+  public String getHeightByRowsSize() {
+    return (String) executeScript("return this.style.getPropertyValue('--height-by-rows')");
+  }
 }
