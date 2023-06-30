@@ -1,5 +1,6 @@
 package com.flowingcode.vaadin.addons.gridhelpers;
 
+import com.vaadin.flow.component.grid.Grid;
 import java.io.Serializable;
 import java.util.Optional;
 import lombok.Getter;
@@ -29,9 +30,10 @@ class HeightByRowsHelper implements Serializable {
 
     heightByRows = rows;
 
-    if (heightMode == HeightMode.ROW) {
-      helper.getGrid().getElement().executeJs("this.fcGridHelper.setHeightByRows($0)", rows);
-      helper.getGrid().setThemeName(THEME, heightMode == HeightMode.ROW);
+    Grid<?> grid = helper.getGrid();
+    if (heightMode == HeightMode.ROW && grid.isAttached()) {
+      grid.getElement().executeJs("this.fcGridHelper.setHeightByRows($0)", rows);
+      grid.setThemeName(THEME, heightMode == HeightMode.ROW);
     }
   }
 
