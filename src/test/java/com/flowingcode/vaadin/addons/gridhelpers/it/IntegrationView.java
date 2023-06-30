@@ -1,7 +1,6 @@
 package com.flowingcode.vaadin.addons.gridhelpers.it;
 
 import com.flowingcode.vaadin.addons.gridhelpers.GridHelper;
-import com.flowingcode.vaadin.addons.gridhelpers.HeightMode;
 import com.flowingcode.vaadin.addons.gridhelpers.Person;
 import com.flowingcode.vaadin.addons.gridhelpers.TestData;
 import com.flowingcode.vaadin.testbench.rpc.JsonArrayList;
@@ -155,18 +154,6 @@ public class IntegrationView extends Div implements IntegrationViewCallables {
   public void removeAllItems() {
     ((ListDataProvider<?>) grid.getDataProvider()).getItems().clear();
     grid.getDataProvider().refreshAll();
-  }
-
-  @Override
-  @ClientCallable
-  public void setHeightMode(HeightMode row) {
-    grid.setHeightMode(row);
-  }
-
-  @Override
-  @ClientCallable
-  public void setHeightByRows(int rows) {
-    grid.setHeightByRows(rows);
   }
 
   @Override
