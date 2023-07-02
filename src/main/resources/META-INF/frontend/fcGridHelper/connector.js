@@ -79,6 +79,7 @@ import { Grid } from '@vaadin/grid/src/vaadin-grid.js';
 				height += table.clientHeight - clientHeight;
 				table.style.overflowX = '';
 				
+				height += grid.offsetHeight-grid.clientHeight;
 				return height;
 			},
 
