@@ -54,8 +54,16 @@ import { Grid } from '@vaadin/grid/src/vaadin-grid.js';
 
 		grid.fcGridHelper = {
 			setHeightByRows : function(n) {
-				var height = grid.fcGridHelper.computeHeightByRows(n);
-				grid.style.setProperty('--height-by-rows',height+'px');
+				if (grid.fcGridHelper._heightByRowsObserver) {
+					grid.fcGridHelper._heightByRowsObserver.unobserve(grid);
+				}
+				
+				grid.fcGridHelper._heightByRowsObserver = new ResizeObserver(() => {
+					var height = grid.fcGridHelper.computeHeightByRows(n);
+					grid.style.setProperty('--height-by-rows',height+'px');
+				});
+				
+				grid.fcGridHelper._heightByRowsObserver.observe(grid);
 			},
 			
 			computeHeightByRows : function(n) {
