@@ -61,12 +61,15 @@ import { Grid } from '@vaadin/grid/src/vaadin-grid.js';
 			computeHeightByRows : function(n) {
 				var height = 0;
 				var rows = grid.shadowRoot.querySelectorAll("tbody tr");
-				for(var i=0;i<n && i<rows.length;i++) {
-					height += rows[i].offsetHeight;
-				}
 				
-				if (rows.length<n) {
-				  height *= n/rows.length;
+				if (rows.length>0) {
+					for(var i=0;i<n && i<rows.length;i++) {
+						height += rows[i].offsetHeight;
+					}
+				
+					if (rows.length<n) {
+						height *= n/rows.length;
+					}
 				}
 				
 				height += grid.shadowRoot.querySelector("thead").offsetHeight;
