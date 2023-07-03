@@ -12,6 +12,8 @@ import com.vaadin.flow.component.html.Div;
 import com.vaadin.flow.component.html.Span;
 import com.vaadin.flow.data.provider.ListDataProvider;
 import com.vaadin.flow.router.Route;
+import elemental.json.JsonObject;
+import elemental.json.JsonValue;
 import java.util.List;
 import java.util.stream.Collectors;
 import lombok.Getter;
@@ -24,7 +26,7 @@ public class IntegrationView extends Div implements IntegrationViewCallables {
 
   private Grid<Person> grid;
 
-  @Getter(onMethod_ = {@ClientCallable, @Override})
+  @Getter
   private Integer toggledColumn;
 
   public IntegrationView() {
@@ -54,30 +56,32 @@ public class IntegrationView extends Div implements IntegrationViewCallables {
     add(grid);
   }
 
+  @Override
+  @ClientCallable
+  public JsonValue $call(JsonObject invocation) {
+    return IntegrationViewCallables.super.$call(invocation);
+  }
+
   private List<Person> getItems() {
     return grid.getListDataView().getItems().collect(Collectors.toList());
   }
 
   @Override
-  @ClientCallable
   public void setColumnToggleVisible(boolean value) {
     grid.setColumnToggleVisible(value);
   }
 
   @Override
-  @ClientCallable
   public void setSelectOnClick(boolean value) {
     grid.setSelectOnClick(value);
   }
 
   @Override
-  @ClientCallable
   public void setSelectionMode(SelectionMode selectionMode) {
     grid.setSelectionMode(selectionMode);
   }
 
   @Override
-  @ClientCallable
   public JsonArrayList<Integer> getSelectedRows() {
     List<Person> items = getItems();
     return JsonArrayList.fromIntegers(
@@ -86,14 +90,12 @@ public class IntegrationView extends Div implements IntegrationViewCallables {
   }
 
   @Override
-  @ClientCallable
   public void setHidable(int columnIndex, boolean hidable) {
     Column<?> column = grid.getColumns().get(columnIndex);
     column.setHidable(hidable);
   }
 
   @Override
-  @ClientCallable
   public void setSelectionFilterEnabled(boolean enabled) {
     if (enabled) {
       List<Person> items = getItems();
@@ -104,20 +106,17 @@ public class IntegrationView extends Div implements IntegrationViewCallables {
   }
 
   @Override
-  @ClientCallable
   public void setColumnHeader(int i, String header) {
     grid.getColumns().get(i).setHeader(header);
   }
 
   @Override
-  @ClientCallable
   public void setHidingToggleCaption(int i, String header) {
     Grid.Column<Person> col = grid.getColumns().get(i);
     GridHelper.setHidingToggleCaption(col, header);
   }
 
   @Override
-  @ClientCallable
   public void setEmptyGridLabel(String label) {
     Span span = new Span(label);
     span.setVisible(false);
@@ -126,44 +125,37 @@ public class IntegrationView extends Div implements IntegrationViewCallables {
   }
 
   @Override
-  @ClientCallable
   public void setSelectionColumnHidden(boolean b) {
     grid.setSelectionColumnHidden(b);
   }
 
   @Override
-  @ClientCallable
   public void setSelectionColumnFrozen(boolean b) {
     grid.setSelectionColumnFrozen(b);
   }
 
   @Override
-  @ClientCallable
   public void setArrowSelectionEnabled(boolean b) {
     grid.setArrowSelectionEnabled(b);
   }
 
   @Override
-  @ClientCallable
   public void addToolbarFooter(String footer) {
     grid.addToolbarFooter(new Span(footer));
   }
 
   @Override
-  @ClientCallable
   public void removeAllItems() {
     ((ListDataProvider<?>) grid.getDataProvider()).getItems().clear();
     grid.getDataProvider().refreshAll();
   }
 
   @Override
-  @ClientCallable
   public void setHeaderVisible(boolean visible) {
     grid.setHeaderVisible(visible);
   }
 
   @Override
-  @ClientCallable
   public void setFooterVisible(boolean visible) {
     grid.setFooterVisible(visible);
   }
