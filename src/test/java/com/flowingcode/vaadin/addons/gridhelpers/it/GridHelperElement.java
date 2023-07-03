@@ -47,7 +47,7 @@ public class GridHelperElement extends MyGridElement {
       return new ElementQuery<>(TestBenchElement.class,
           "vaadin-context-menu-overlay, vaadin-menu-bar-overlay")
           .context(getDriver())
-          .waitForFirst(0)
+          .waitForFirst(100)
           .$(CheckboxElement.class).all();
     } catch (NoSuchElementException e) {
       return Collections.emptyList();
