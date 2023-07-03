@@ -1,9 +1,10 @@
 package com.flowingcode.vaadin.addons.gridhelpers.it;
 
 import com.flowingcode.vaadin.testbench.rpc.JsonArrayList;
+import com.flowingcode.vaadin.testbench.rpc.RmiCallable;
 import com.vaadin.flow.component.grid.Grid.SelectionMode;
 
-public interface IntegrationViewCallables {
+public interface IntegrationViewCallables extends RmiCallable {
 
     void setColumnToggleVisible(boolean value);
 
