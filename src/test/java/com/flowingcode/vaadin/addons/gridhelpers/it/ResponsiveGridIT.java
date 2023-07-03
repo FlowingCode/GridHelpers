@@ -46,6 +46,11 @@ public class ResponsiveGridIT extends AbstractViewTest implements HasRpcSupport 
   private void setWidth(int w) {
     executeScript("arguments[0].parentElement.style.width=" + w + "+'px';", grid);
     $server.roundtrip();
+    try {
+      Thread.sleep(100);
+    } catch (InterruptedException e) {
+      return;
+    }
   }
 
   @Test
@@ -63,9 +68,10 @@ public class ResponsiveGridIT extends AbstractViewTest implements HasRpcSupport 
   }
 
   @Test
-  public void testHideAll() {
+  public void testHideAll() throws InterruptedException {
     $server.responsiveStep(0).hideAll();
     $server.roundtrip();
+    Thread.sleep(100);
     assertTrue(grid.getVisibleColumns().isEmpty());
   }
 
@@ -92,20 +98,23 @@ public class ResponsiveGridIT extends AbstractViewTest implements HasRpcSupport 
   }
 
   @Test
-  public void testRemove() {
+  public void testRemove() throws InterruptedException {
     $server.responsiveStep(300);
     $server.responsiveStep(400);
     $server.roundtrip();
+    Thread.sleep(100);
     assertEquals(400, $server.getCurrentStep());
 
     $server.responsiveStep(400).remove();
     $server.roundtrip();
+    Thread.sleep(100);
     assertEquals(300, $server.getCurrentStep());
   }
 
   @Test
   public void testAddListenerFireImmediately() {
     IListenerRegistration listener = $server.responsiveStep(200).addListener();
+    $server.roundtrip();
     assertEquals(1, listener.getCount());
     assertEquals(200, listener.getLastMinWidth());
   }
@@ -133,7 +142,7 @@ public class ResponsiveGridIT extends AbstractViewTest implements HasRpcSupport 
   }
 
   @Test
-  public void testListenerCumulative() {
+  public void testListenerCumulative() throws InterruptedException {
     setWidth(200);
     IListenerRegistration listener = $server.responsiveStep(300).addListener();
     $server.responsiveStep(400);
