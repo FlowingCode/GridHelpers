@@ -155,6 +155,7 @@
 			<groupId>io.github.bonigarcia</groupId>
 			<artifactId>webdrivermanager</artifactId>
 			<version>3.8.1</version>
+			<scope>test</scope>
 			<exclusions>
 				<exclusion>
 					<groupId>org.jsoup</groupId>
