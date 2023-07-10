@@ -521,4 +521,25 @@ public final class GridHelper<T> implements Serializable {
   public static <T> Collection<GridResponsiveStep<T>> getResponsiveSteps(Grid<T> grid) {
     return getHelper(grid).responsiveGridHelper.getAll();
   }
+
+  private final LazySelectAllGridHelper<T> lazySelectAllGridHelper =
+      new LazySelectAllGridHelper<>(this);
+
+  /**
+   * Toggles select all checkbox visibility in the grid's default header row for the selection
+   * column.
+   * <p>
+   * Only works when Grid uses {@link SelectionMode.MULTI} and the data provider supplies a count
+   * callback.
+   * <p>
+   * <i>Note: enabling the select all checkbox when grid uses a lazy data source could lead to
+   * memory and performance issues.</i>
+   * 
+   * @see LazySelectAllGridHelper
+   * 
+   * @param visible true to show the select all checkbox, false to hide it.
+   */
+  public static <T> void toggleSelectAllCheckbox(Grid<T> grid, boolean visible) {
+    getHelper(grid).lazySelectAllGridHelper.toggleSelectAllCheckbox(visible);
+  }
 }
