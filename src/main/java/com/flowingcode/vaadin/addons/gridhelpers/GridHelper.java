@@ -20,6 +20,7 @@
 
 package com.flowingcode.vaadin.addons.gridhelpers;
 
+import com.flowingcode.vaadin.addons.gridhelpers.CheckboxColumn.CheckboxColumnConfiguration;
 import com.vaadin.flow.component.AttachEvent;
 import com.vaadin.flow.component.Component;
 import com.vaadin.flow.component.ComponentEventListener;
@@ -63,6 +64,9 @@ import org.slf4j.LoggerFactory;
 @CssImport(
     value = "./fcGridHelper/vaadin-menu-bar-list-box.css",
     themeFor = "vaadin-menu-bar-list-box")
+@CssImport(
+    value = "./fcGridHelper/vaadin-checkbox.css",
+    themeFor = "vaadin-checkbox")
 public final class GridHelper<T> implements Serializable {
 
   private static final Logger logger = LoggerFactory.getLogger(GridHelper.class);
@@ -521,7 +525,15 @@ public final class GridHelper<T> implements Serializable {
   public static <T> Collection<GridResponsiveStep<T>> getResponsiveSteps(Grid<T> grid) {
     return getHelper(grid).responsiveGridHelper.getAll();
   }
+  
+  private final CheckboxColumnGridHelper<T> checkboxColumnGridHelper =
+      new CheckboxColumnGridHelper<>(this);
 
+  public static <T> CheckboxColumn<T> addCheckboxColumn(Grid<T> grid,
+      CheckboxColumnConfiguration<T> config) {
+    return getHelper(grid).checkboxColumnGridHelper.addCheckboxColumn(config);
+  }
+  
   private final LazySelectAllGridHelper<T> lazySelectAllGridHelper =
       new LazySelectAllGridHelper<>(this);
 

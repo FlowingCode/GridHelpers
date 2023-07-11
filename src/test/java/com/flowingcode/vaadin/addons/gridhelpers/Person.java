@@ -25,7 +25,9 @@ import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.EqualsAndHashCode;
 import lombok.Getter;
+import lombok.Setter;
 import lombok.experimental.FieldDefaults;
+import lombok.experimental.NonFinal;
 
 @Getter
 @AllArgsConstructor
@@ -33,7 +35,15 @@ import lombok.experimental.FieldDefaults;
 @EqualsAndHashCode
 @Builder
 public class Person {
+  @Setter
+  @NonFinal
   boolean active;
+  @Setter
+  @NonFinal
+  boolean vip;
+  @Setter
+  @NonFinal
+  boolean hidden;
   String firstName;
   String lastName;
   String country;
@@ -42,4 +52,9 @@ public class Person {
   String emailAddress;
   String phoneNumber;
   String title;
+  
+  @Override
+  public String toString() {
+    return firstName+" "+lastName+" - active: "+active;
+  }
 }

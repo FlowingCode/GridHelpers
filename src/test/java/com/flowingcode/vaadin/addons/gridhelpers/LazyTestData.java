@@ -25,13 +25,15 @@ import java.util.List;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
-public class LazyTestData {
+class LazyTestData {
 
   private static final Faker faker = new Faker();
 
   private static synchronized Person newPerson() {
     return Person.builder()
         .active(faker.random().nextBoolean())
+        .vip(faker.random().nextBoolean())
+        .hidden(faker.random().nextBoolean())
         .firstName(faker.name().firstName())
         .lastName(faker.name().lastName())
         .country(generateCountry())

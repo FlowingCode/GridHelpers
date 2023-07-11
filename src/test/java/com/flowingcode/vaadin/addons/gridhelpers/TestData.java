@@ -32,6 +32,8 @@ public class TestData {
   private static synchronized Person newPerson() {
     return Person.builder()
         .active(faker.random().nextBoolean())
+        .vip(faker.random().nextBoolean())
+        .hidden(faker.random().nextBoolean())
         .firstName(faker.name().firstName())
         .lastName(faker.name().lastName())
         .country(generateCountry())

@@ -23,6 +23,8 @@ package com.flowingcode.vaadin.addons.gridhelpers;
 import static com.vaadin.flow.component.grid.Grid.SelectionMode.MULTI;
 import static com.vaadin.flow.component.grid.Grid.SelectionMode.SINGLE;
 import com.flowingcode.vaadin.addons.GithubLink;
+import com.flowingcode.vaadin.addons.gridhelpers.CheckboxColumn.CheckboxColumnConfiguration;
+import com.flowingcode.vaadin.addons.gridhelpers.CheckboxColumn.CheckboxPosition;
 import com.vaadin.flow.component.Component;
 import com.vaadin.flow.component.Text;
 import com.vaadin.flow.component.button.Button;
@@ -60,6 +62,8 @@ import lombok.experimental.ExtensionMethod;
 @ExtensionMethod(GridHelper.class)
 public class AllFeaturesDemo extends Div {
 
+  private final CheckboxColumn<Person> activeCheckboxColumn;
+  
   // This demo is just for presentation purposes.
   // For examples on the normal API use of each feature, please see the other demos.
   public AllFeaturesDemo() {
@@ -75,9 +79,10 @@ public class AllFeaturesDemo extends Div {
     grid.addColumn(Person::getFirstName)
         .setHeader("First name")
         .setHidingToggleCaption("First name column");
-    grid.addColumn(p -> p.isActive() ? "Yes" : "No")
-        .setHeader("Active")
-        .setHidable(true);
+    activeCheckboxColumn = GridHelper
+        .addCheckboxColumn(grid, new CheckboxColumnConfiguration<>(Person::isActive)
+            .header("Active").checkboxPosition(CheckboxPosition.BOTTOM));
+    activeCheckboxColumn.column().setHidable(true);
     grid.addColumn(Person::getTitle).setHeader("Title").setHidable(true);
     grid.addColumn(Person::getCountry).setHeader("Country").setHidable(true);
     grid.addColumn(Person::getCity).setHeader("City").setHidable(true);
@@ -140,6 +145,10 @@ public class AllFeaturesDemo extends Div {
     select.setLabel("Selection mode");
     binder.forField(select).bind(GridHelper::getSelectionMode, this::setSelectionMode);
 
+    Checkbox useLazyData = new Checkbox("Use lazy data provider");
+    binder.forField(useLazyData).bind(this::isUseLazyData, this::setUseLazyData);
+    add(useLazyData);
+
     binder
         .forField(newCheckbox("Hide selection column", MULTI))
         .bind(GridHelper::isSelectionColumnHidden, GridHelper::setSelectionColumnHidden);
@@ -183,7 +192,7 @@ public class AllFeaturesDemo extends Div {
     Label label = new Label("Features");
     label.addClassNames("label");
 
-    features.addComponentAtIndex(1, label);
+    features.addComponentAtIndex(2, label);
     setSelectionMode(grid, grid.getSelectionMode());
 
     HorizontalLayout hl = new HorizontalLayout();
@@ -309,5 +318,18 @@ public class AllFeaturesDemo extends Div {
     return grid.getHeightMode() == HeightMode.ROW;
   }
 
+  private boolean isUseLazyData(Grid<Person> grid) {
+    return !grid.getDataProvider().isInMemory();
+  }
 
+  private void setUseLazyData(Grid<Person> grid, boolean value) {
+    if (value) {
+      LazyTestData lazyTestData = new LazyTestData();
+      grid.setItems(query -> lazyTestData.filter(query.getOffset(), query.getPageSize()),
+          query -> lazyTestData.count());
+    } else {
+      grid.setItems(TestData.initializeData());
+    }
+    activeCheckboxColumn.refresh();
+  }
 }
