@@ -57,6 +57,12 @@ import org.slf4j.LoggerFactory;
 @CssImport(
     value = "./fcGridHelper/vaadin-context-menu-list-box.css",
     themeFor = "vaadin-context-menu-list-box")
+@CssImport(
+    value = "./fcGridHelper/vaadin-menu-bar-item.css",
+    themeFor = "vaadin-menu-bar-item")
+@CssImport(
+    value = "./fcGridHelper/vaadin-menu-bar-list-box.css",
+    themeFor = "vaadin-menu-bar-list-box")
 public final class GridHelper<T> implements Serializable {
 
   private static final Logger logger = LoggerFactory.getLogger(GridHelper.class);
