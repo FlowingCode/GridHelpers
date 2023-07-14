@@ -1,0 +1,7 @@
+:host([theme~='gridHelperToggle'])::part(checkmark) {
+ display: none;
+}
+
+:host([theme~='gridHelperToggle']) ::slotted(vaadin-checkbox) {
+ width: 100%;
+}
