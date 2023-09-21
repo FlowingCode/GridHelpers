@@ -19,3 +19,5 @@ types.d.ts
 /pnpm-lock.yaml
 /pnpmfile.js
 /src/main/dev-bundle
+vite.generated.ts
+vite.config.ts
