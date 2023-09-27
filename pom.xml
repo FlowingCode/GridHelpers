@@ -86,11 +86,6 @@
             <id>vaadin-snapshots</id>
             <url>https://oss.sonatype.org/content/repositories/vaadin-snapshots/</url>
         </repository>
-        <!-- Flowing Code Repository -->
-        <repository>
-            <id>flowing-releases</id>
-            <url>https://maven.flowingcode.com/releases</url>
-        </repository>
 	</repositories>
 
     <pluginRepositories>
