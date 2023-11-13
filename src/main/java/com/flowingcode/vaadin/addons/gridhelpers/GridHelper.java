@@ -442,7 +442,8 @@ public final class GridHelper<T> implements Serializable {
   private final HeightByRowsHelper heightByRowsHelper = new HeightByRowsHelper(this);
 
   /**
-   * Sets the number of rows that should be visible in Grid's body.
+   * Sets the number of rows that should be visible in Grid's body, while {@link #getHeightMode()}
+   * is {@link HeightMode#ROW}.
    *
    * <p>The algorithm assumes that all data rows have the same height and considers headers,
    * footers, and the horizontal scrollbar when the method is called. However, if data rows,
