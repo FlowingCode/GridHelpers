@@ -50,5 +50,6 @@ public class GridHelpersDemoView extends TabbedDemo {
     addDemo(GetHeaderFooterDemo.class);
     addDemo(LazyMultiSelectionDemo.class);
     addDemo(CheckboxColumnDemo.class);
+    addDemo(EmptyGridLabelDemo.class);
   }
 }
