@@ -28,6 +28,7 @@ package com.flowingcode.vaadin.addons.gridhelpers;
 
 import com.vaadin.flow.component.Component;
 import com.vaadin.flow.component.grid.Grid;
+import com.vaadin.flow.data.provider.DataProviderListener;
 import com.vaadin.flow.data.provider.Query;
 import com.vaadin.flow.shared.Registration;
 import java.io.Serializable;
@@ -59,12 +60,14 @@ class EmptyLabelGridHelper implements Serializable {
 
     if (component != null) {
       emptyLabel = component;
-      registration =
-          grid.getDataProvider()
-              .addDataProviderListener(
-                  ev -> {
-                    component.setVisible(grid.getDataProvider().size(new Query<>()) == 0);
-                  });
+
+      DataProviderListener listener =
+          ev -> component.setVisible(grid.getDataProvider().size(new Query<>()) == 0);
+      registration = grid.getDataProvider().addDataProviderListener(listener);
+
+      // Initial run of the listener, as there is no event fired for the initial state
+      // of the data set that might be empty or not.
+      listener.onDataChange(null);
     }
   }
 
