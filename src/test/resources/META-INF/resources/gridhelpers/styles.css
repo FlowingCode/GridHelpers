@@ -24,3 +24,13 @@ label.label {
 	font-weight: 500;
 	line-height: 1;
 }
+
+.empty-grid-label {
+  position: absolute;
+  top: 0px;
+  left: 0px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-size: 32px;
+}

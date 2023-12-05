@@ -24,6 +24,9 @@ import com.github.javafaker.Faker;
 import java.util.List;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
+import lombok.Getter;
+import lombok.Setter;
+import org.apache.commons.lang3.StringUtils;
 
 class LazyTestData {
 
@@ -52,13 +55,31 @@ class LazyTestData {
   }
 
   public Stream<Person> filter(int offset, int pageSize) {
+    return filter(offset, pageSize, null);
+  }
+
+  public Stream<Person> filter(int offset, int pageSize, PersonFilter filter) {
     int from = Math.max(0, offset);
-    int to = Math.min(data.size(), pageSize + offset);
-    return data.subList(from, to).stream();
+    if (filter != null) {
+      return data.stream()
+          .filter(
+              item -> StringUtils.containsIgnoreCase(item.getFirstName(), filter.getFirstName()))
+          .filter(item -> StringUtils.containsIgnoreCase(item.getLastName(), filter.getLastName()))
+          .skip(from)
+          .limit(pageSize);
+    }
+    return data.stream().skip(from).limit(pageSize);
   }
 
   public int count() {
     return data.size();
+  }
+
+  public int count(PersonFilter filter) {
+    return (int) data.stream()
+        .filter(item -> StringUtils.containsIgnoreCase(item.getFirstName(), filter.getFirstName()))
+        .filter(item -> StringUtils.containsIgnoreCase(item.getLastName(), filter.getLastName()))
+        .count();
   }
 
   private static String generateCountry() {
@@ -69,4 +90,12 @@ class LazyTestData {
       return country;
     }
   }
+
+  @Getter
+  @Setter
+  public static class PersonFilter {
+    private String firstName;
+    private String lastName;
+  }
+
 }
