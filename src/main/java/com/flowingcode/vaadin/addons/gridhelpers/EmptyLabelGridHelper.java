@@ -48,10 +48,7 @@ class EmptyLabelGridHelper implements Serializable {
   void setEmptyGridLabel(Component component) {
     Grid<?> grid = helper.getGrid();
 
-    if (emptyLabel != null) {
-      emptyLabel.getElement().removeFromParent();
-      emptyLabel = null;
-    }
+    emptyLabel = component;
 
     if (registration != null) {
       registration.remove();
@@ -59,8 +56,6 @@ class EmptyLabelGridHelper implements Serializable {
     }
 
     if (component != null) {
-      emptyLabel = component;
-
       DataProviderListener listener =
           ev -> component.setVisible(grid.getDataProvider().size(new Query<>()) == 0);
       registration = grid.getDataProvider().addDataProviderListener(listener);
