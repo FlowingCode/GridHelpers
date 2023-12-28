@@ -51,5 +51,6 @@ public class GridHelpersDemoView extends TabbedDemo {
     addDemo(LazyMultiSelectionDemo.class);
     addDemo(CheckboxColumnDemo.class);
     addDemo(EmptyGridLabelDemo.class);
+    addDemo(HeightByRowsDemo.class);
   }
 }
