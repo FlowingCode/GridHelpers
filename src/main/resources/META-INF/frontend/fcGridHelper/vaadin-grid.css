@@ -24,9 +24,11 @@
  *  Copyright 2020-2022 Vaadin Ltd.
  */
 
-:host([theme~="fcGh-dense"]) [part~="cell"] {
+:host([theme~="fcGh-dense"]) [part~="cell"],
+:host([theme~="fcGh-dense"]:not([theme~='no-row-borders'])) [part~='first-row'] [part~="cell"] {
   min-height: var(--lumo-size-xxs);
 }
+
 :host([theme~="fcGh-dense"]) {
   font-size: var(--lumo-font-size-xs);
 }
