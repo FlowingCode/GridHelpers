@@ -32,6 +32,7 @@ import com.vaadin.flow.data.provider.DataProviderListener;
 import com.vaadin.flow.data.provider.Query;
 import com.vaadin.flow.shared.Registration;
 import java.io.Serializable;
+import java.util.Optional;
 import lombok.RequiredArgsConstructor;
 
 @SuppressWarnings("serial")
@@ -47,6 +48,8 @@ class EmptyLabelGridHelper implements Serializable {
   // https://cookbook.vaadin.com/grid-message-when-empty
   void setEmptyGridLabel(Component component) {
     Grid<?> grid = helper.getGrid();
+
+    Optional.ofNullable(emptyLabel).ifPresent(l -> l.setVisible(false));
 
     emptyLabel = component;
 
