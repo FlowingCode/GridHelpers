@@ -108,7 +108,7 @@ import { Grid } from '@vaadin/grid/src/vaadin-grid.js';
   			
 			_setResponsiveSteps : function(widths) {
 				const observer = grid.fcGridHelper._resizeObserver;
-				observer.widths=widths.sort();
+				observer.widths=widths.sort((a, b) => a - b);
 				observer.unobserve(grid);
 				
 				if (widths.length>0) {
