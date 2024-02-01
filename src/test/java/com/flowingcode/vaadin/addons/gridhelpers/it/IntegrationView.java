@@ -20,6 +20,7 @@
 package com.flowingcode.vaadin.addons.gridhelpers.it;
 
 import com.flowingcode.vaadin.addons.gridhelpers.GridHelper;
+import com.flowingcode.vaadin.addons.gridhelpers.GridRadioSelectionColumn;
 import com.flowingcode.vaadin.addons.gridhelpers.Person;
 import com.flowingcode.vaadin.addons.gridhelpers.TestData;
 import com.flowingcode.vaadin.testbench.rpc.JsonArrayList;
@@ -177,5 +178,10 @@ public class IntegrationView extends Div implements IntegrationViewCallables {
   @Override
   public void setFooterVisible(boolean visible) {
     grid.setFooterVisible(visible);
+  }
+
+  @Override
+  public void showRadioSelectionColumn() {
+    grid.showRadioSelectionColumn();
   }
 }

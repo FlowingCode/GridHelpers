@@ -21,6 +21,7 @@ package com.flowingcode.vaadin.addons.gridhelpers.test;
 
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
+import static org.junit.Assert.assertNotNull;
 import static org.junit.Assert.assertNull;
 import static org.junit.Assert.assertTrue;
 import com.flowingcode.vaadin.addons.gridhelpers.GridHelper;
@@ -188,6 +189,11 @@ public class GridHelperTest {
 
     Column<Bean> toggleColumn=grid.getColumns().get(grid.getColumns().size()-1);
     assertTrue(GridHelper.isMenuToggleColumn(toggleColumn));
+  }
+
+  @Test
+  public void testShowRadioSelectionColumn() {
+    assertNotNull(grid.showRadioSelectionColumn());
   }
 
 }
