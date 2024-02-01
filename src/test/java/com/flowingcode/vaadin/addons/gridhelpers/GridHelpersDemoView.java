@@ -52,5 +52,6 @@ public class GridHelpersDemoView extends TabbedDemo {
     addDemo(CheckboxColumnDemo.class);
     addDemo(EmptyGridLabelDemo.class);
     addDemo(HeightByRowsDemo.class);
+    addDemo(GridRadioSelectionColumnDemo.class);
   }
 }

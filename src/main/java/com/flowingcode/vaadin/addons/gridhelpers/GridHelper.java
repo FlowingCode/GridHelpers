@@ -555,4 +555,12 @@ public final class GridHelper<T> implements Serializable {
   public static <T> void toggleSelectAllCheckbox(Grid<T> grid, boolean visible) {
     getHelper(grid).lazySelectAllGridHelper.toggleSelectAllCheckbox(visible);
   }
+
+  private final GridRadioSelectionColumnHelper<T> radioButtonSelectionColumnHelper =
+      new GridRadioSelectionColumnHelper<>(this);
+
+  public static <T> GridRadioSelectionColumn showRadioSelectionColumn(Grid<T> grid) {
+    return getHelper(grid).radioButtonSelectionColumnHelper.showRadioSelectionColumn();
+  }
+
 }
