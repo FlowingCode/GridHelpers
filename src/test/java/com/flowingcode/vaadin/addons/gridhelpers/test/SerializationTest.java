@@ -48,6 +48,7 @@ public class SerializationTest {
     try {
       Grid<?> grid = new Grid<>();
       GridHelper.setColumnToggleVisible(grid, false);
+      GridHelper.showRadioSelectionColumn(grid);
       testSerializationOf(grid);
     } catch (Exception e) {
       Assert.fail("Problem while testing serialization: " + e.getMessage());

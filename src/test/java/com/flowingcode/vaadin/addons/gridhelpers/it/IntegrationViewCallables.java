@@ -59,4 +59,5 @@ public interface IntegrationViewCallables extends RmiCallable {
 
     void setFooterVisible(boolean visible);
 
+    void showRadioSelectionColumn();
 }

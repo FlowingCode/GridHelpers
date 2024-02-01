@@ -85,6 +85,14 @@ public class GridHelperElement extends MyGridElement {
     return (TestBenchElement) elements.stream().findFirst().orElse(null);
   }
 
+  public TestBenchElement getSelectionRadioButton(int rowIndex) {
+    // assumes that Grid is in single-selection mode
+    TestBenchElement cell = getSlottedCell(getRow(rowIndex));
+    List<WebElement> elements = cell.findElements(By.tagName("vaadin-radio-button"));
+    return (TestBenchElement) elements.stream().findFirst().orElse(null);
+  }
+
+
   private TestBenchElement getSlottedCell(WebElement e) {
     String slot = e.findElement(By.tagName("slot")).getAttribute("name");
     return findElement(By.cssSelector(String.format("[slot='%s']", slot)));

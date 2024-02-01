@@ -16,6 +16,8 @@
 		<project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
 		<drivers.dir>${project.basedir}/drivers</drivers.dir>
 		<jetty.version>9.4.36.v20210114</jetty.version>
+		<webdrivermanager.version>3.8.1</webdrivermanager.version>
+		<driver-binary-downloader-maven-plugin.version>1.0.17</driver-binary-downloader-maven-plugin.version>
 	</properties>
 
 	<organization>
@@ -158,7 +160,7 @@
 		<dependency>
 			<groupId>io.github.bonigarcia</groupId>
 			<artifactId>webdrivermanager</artifactId>
-			<version>3.8.1</version>
+			<version>${webdrivermanager.version}</version>
 			<scope>test</scope>
 			<exclusions>
 				<exclusion>
@@ -330,7 +332,7 @@
 						<configuration>
 							<quiet>true</quiet>
 							<doclint>none</doclint>
-                                                        <additionalparam>-Xdoclint:none</additionalparam>
+                            <additionalparam>-Xdoclint:none</additionalparam>
 						</configuration>
 					</plugin>
 					<plugin>
@@ -414,9 +416,8 @@
 
 					<plugin>
 						<groupId>com.lazerycode.selenium</groupId>
-						<artifactId>driver-binary-downloader-maven-plugin
-                        </artifactId>
-						<version>1.0.17</version>
+						<artifactId>driver-binary-downloader-maven-plugin</artifactId>
+						<version>${driver-binary-downloader-maven-plugin.version}</version>
 						<configuration>
 							<onlyGetDriversForHostOperatingSystem>
 								true
@@ -563,7 +564,18 @@
 				<vaadin.version>24.2.6</vaadin.version>
 				<jetty.version>11.0.12</jetty.version>
 				<frontend.hotdeploy>true</frontend.hotdeploy>
+				<webdrivermanager.version>5.6.3</webdrivermanager.version>
+				<driver-binary-downloader-maven-plugin.version>1.0.18</driver-binary-downloader-maven-plugin.version>
 			</properties>
+			
+			<dependencies>
+				<dependency>
+				    <groupId>org.seleniumhq.selenium</groupId>
+				    <artifactId>selenium-java</artifactId>
+				    <version>4.17.0</version>
+				    <scope>test</scope>
+				</dependency>
+			</dependencies>
 		</profile>
 		
 	</profiles>
