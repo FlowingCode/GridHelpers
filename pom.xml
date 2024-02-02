@@ -4,7 +4,7 @@
 
 	<groupId>org.vaadin.addons.flowingcode</groupId>
 	<artifactId>grid-helpers</artifactId>
-	<version>1.3.3-SNAPSHOT</version>
+	<version>1.4.0-SNAPSHOT</version>
 	<name>Grid Helpers Add-on</name>
 	<description>Grid Helpers Add-on for Vaadin Flow</description>
 
