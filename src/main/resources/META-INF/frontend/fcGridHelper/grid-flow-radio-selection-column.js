@@ -72,7 +72,6 @@ class GridFlowRadioSelectionColumn extends GridRadioSelectionColumnBaseMixin(Gri
     super.connectedCallback();
     if (this._grid) {
       this._grid.addEventListener('active-item-changed', this.__boundOnActiveItemChanged);
-//    this._grid.__deselectDisallowed = true;
     }
   }
     
