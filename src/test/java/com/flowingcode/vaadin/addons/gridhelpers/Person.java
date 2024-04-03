@@ -20,6 +20,7 @@
 
 package com.flowingcode.vaadin.addons.gridhelpers;
 
+import java.io.Serializable;
 import lombok.AccessLevel;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -29,12 +30,13 @@ import lombok.Setter;
 import lombok.experimental.FieldDefaults;
 import lombok.experimental.NonFinal;
 
+@SuppressWarnings("serial")
 @Getter
 @AllArgsConstructor
 @FieldDefaults(level = AccessLevel.PRIVATE, makeFinal = true)
 @EqualsAndHashCode
 @Builder
-public class Person {
+public class Person implements Serializable {
   @Setter
   @NonFinal
   boolean active;

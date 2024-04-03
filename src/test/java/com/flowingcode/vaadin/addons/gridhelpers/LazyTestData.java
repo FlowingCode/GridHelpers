@@ -21,6 +21,7 @@
 package com.flowingcode.vaadin.addons.gridhelpers;
 
 import com.github.javafaker.Faker;
+import java.io.Serializable;
 import java.util.List;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
@@ -28,7 +29,8 @@ import lombok.Getter;
 import lombok.Setter;
 import org.apache.commons.lang3.StringUtils;
 
-class LazyTestData {
+@SuppressWarnings("serial")
+class LazyTestData implements Serializable {
 
   private static final Faker faker = new Faker();
 
