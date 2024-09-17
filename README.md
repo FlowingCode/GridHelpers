@@ -1,6 +1,7 @@
 [![Published on Vaadin Directory](https://img.shields.io/badge/Vaadin%20Directory-published-00b4f0.svg)](https://vaadin.com/directory/component/grid-helpers-add-on)
 [![Stars on vaadin.com/directory](https://img.shields.io/vaadin-directory/star/grid-helpers-add-on.svg)](https://vaadin.com/directory/component/grid-helpers-add-on)
 [![Build Status](https://jenkins.flowingcode.com/job/GridHelpers-addon/badge/icon)](https://jenkins.flowingcode.com/job/GridHelpers-addon)
+[![Javadoc](https://img.shields.io/badge/javadoc-00b4f0)](https://javadoc.flowingcode.com/artifact/org.vaadin.addons.flowingcode/grid-helpers)
 
 # Grid Helpers Add-on
 
