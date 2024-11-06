@@ -307,9 +307,11 @@ public final class GridHelper<T> implements Serializable {
    * Sets the caption of the hiding toggle for this column. Shown in the toggle for this column in
    * the grid's sidebar when the column is {@linkplain #isHidable(Column) hidable}.
    *
-   * <p>If the value is <code>null</code>, the column cannot be hidden via the sidebar menu.
+   * <p>
+   * If the value is <code>null</code>, the column cannot be hidden via the sidebar menu.
    *
-   * @param hidingToggleCaption the text to show in the column hiding toggle
+   * @param column the column for which the hiding toggle caption is set
+   * @param caption the text to show in the column hiding toggle
    */
   public static <T> void setHidingToggleCaption(Column<T> column, String caption) {
     getHelper(column.getGrid()).columnToggleHelper.setHidingToggleCaption(column, caption);
@@ -442,16 +444,17 @@ public final class GridHelper<T> implements Serializable {
   private final HeightByRowsHelper heightByRowsHelper = new HeightByRowsHelper(this);
 
   /**
-   * Sets the number of rows that should be visible in Grid's body, while {@link #getHeightMode()}
-   * is {@link HeightMode#ROW}.
+   * Sets the number of rows that should be visible in Grid's body, while
+   * {@link #getHeightMode(Grid)} is {@link HeightMode#ROW}.
    *
-   * <p>The algorithm assumes that all data rows have the same height and considers headers,
-   * footers, and the horizontal scrollbar when the method is called. However, if data rows,
-   * headers, or footers are inserted or removed after the initial calculation, the grid may not
-   * automatically adjust the size of the grid to accommodate the changed number of rows.
+   * <p>
+   * The algorithm assumes that all data rows have the same height and considers headers, footers,
+   * and the horizontal scrollbar when the method is called. However, if data rows, headers, or
+   * footers are inserted or removed after the initial calculation, the grid may not automatically
+   * adjust the size of the grid to accommodate the changed number of rows.
    *
    * @param rows The height in terms of number of rows displayed in Grid's body. If Grid doesn't
-   *     contain enough rows, white space is displayed instead.
+   *        contain enough rows, white space is displayed instead.
    * @throws IllegalArgumentException if {@code rows} is zero or less
    * @throws IllegalArgumentException if {@code rows} is {@link Double#isInfinite(double) infinite}
    * @throws IllegalArgumentException if {@code rows} is {@link Double#isNaN(double) NaN}
@@ -461,11 +464,12 @@ public final class GridHelper<T> implements Serializable {
   }
 
   /**
-   * Sets the number of rows that should be visible in Grid's body, while {@link #getHeightMode()}
-   * is {@link HeightMode#ROW}.
+   * Sets the number of rows that should be visible in Grid's body, while
+   * {@link #getHeightMode(Grid)} is {@link HeightMode#ROW}.
    *
-   * <p>If Grid is currently not in {@link HeightMode#ROW}, the given value is remembered, and
-   * applied once the mode is applied. @See {@link #setHeightByRows(Grid, double)}
+   * <p>
+   * If Grid is currently not in {@link HeightMode#ROW}, the given value is remembered, and applied
+   * once the mode is applied. @See {@link #setHeightByRows(Grid, double)}
    */
   public static void setHeightByRows(Grid<?> grid, int rows) {
     // this overload is a workaround for a lombok issue "bad type on operand stack"
@@ -474,11 +478,11 @@ public final class GridHelper<T> implements Serializable {
   }
 
   /**
-   * Gets the amount of rows in Grid's body that are shown, while {@link #getHeightMode()} is {@link
-   * HeightMode#ROW}.
+   * Gets the amount of rows in Grid's body that are shown, while {@link #getHeightMode(Grid)} is
+   * {@link HeightMode#ROW}.
    *
    * @return the amount of rows that are being shown in Grid's body
-   * @see #setHeightByRows(double)
+   * @see #setHeightByRows(Grid, double)
    */
   public static double getHeightByRows(Grid<?> grid) {
     return getHelper(grid).heightByRowsHelper.getHeightByRows();
@@ -487,11 +491,13 @@ public final class GridHelper<T> implements Serializable {
   /**
    * Defines the mode in which the Grid's height is calculated.
    *
-   * <p>If {@link HeightMode#CSS} is given, Grid will respect the values given via a {@code
+   * <p>
+   * If {@link HeightMode#CSS} is given, Grid will respect the values given via a {@code
    * setHeight}-method, and behave as a traditional Component.
    *
-   * <p>If {@link HeightMode#ROW} is given, Grid will make sure that the body will display as many
-   * rows as {@link #getHeightByRows()} defines.
+   * <p>
+   * If {@link HeightMode#ROW} is given, Grid will make sure that the body will display as many rows
+   * as {@link #getHeightByRows(Grid)} defines.
    *
    * @param heightMode the mode in to which Grid should be set
    */
@@ -502,14 +508,15 @@ public final class GridHelper<T> implements Serializable {
   /**
    * Defines the mode in which the Grid's height is calculated.
    *
-   * <p>If {@link HeightMode#CSS} is given, Grid will respect the CSS height as a traditional
+   * <p>
+   * If {@link HeightMode#CSS} is given, Grid will respect the CSS height as a traditional
    * Component.
    *
-   * <p>If {@link HeightMode#ROW} is given, Grid will make sure that the body will display as many
-   * rows as {@link #getHeightByRows()} defines.
+   * <p>
+   * If {@link HeightMode#ROW} is given, Grid will make sure that the body will display as many rows
+   * as {@link #getHeightByRows(Grid)} defines.
    *
-   * @param heightMode the mode in to which Grid should be set
-   * @return
+   * @return the mode in which the Grid is set
    */
   public static HeightMode getHeightMode(Grid<?> grid) {
     return getHelper(grid).heightByRowsHelper.getHeightMode();
@@ -542,7 +549,7 @@ public final class GridHelper<T> implements Serializable {
    * Toggles select all checkbox visibility in the grid's default header row for the selection
    * column.
    * <p>
-   * Only works when Grid uses {@link SelectionMode.MULTI} and the data provider supplies a count
+   * Only works when Grid uses {@link SelectionMode#MULTI} and the data provider supplies a count
    * callback.
    * <p>
    * <i>Note: enabling the select all checkbox when grid uses a lazy data source could lead to

@@ -19,10 +19,12 @@
  */
 package com.flowingcode.vaadin.addons.gridhelpers;
 
+import com.vaadin.flow.component.grid.Grid;
+
 /**
  * The modes for height calculation that are supported {@link GridHelper}.
  *
- * @see GridHelper#setHeightMode(HeightMode)
+ * @see GridHelper#setHeightMode(Grid, HeightMode)
  */
 public enum HeightMode {
   /**
