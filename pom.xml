@@ -563,6 +563,12 @@
 				    <version>4.17.0</version>
 				    <scope>test</scope>
 				</dependency>
+				<dependency>
+				<groupId>com.flowingcode.vaadin.addons.demo</groupId>
+				<artifactId>commons-demo</artifactId>
+					<version>4.2.0</version>
+					<scope>test</scope>
+				</dependency>
 			</dependencies>
 		</profile>
 		
