@@ -57,13 +57,17 @@ import { Grid } from '@vaadin/grid/src/vaadin-grid.js';
 				if (grid.fcGridHelper._heightByRowsObserver) {
 					grid.fcGridHelper._heightByRowsObserver.unobserve(grid);
 				}
-				
+
 				grid.fcGridHelper._heightByRowsObserver = new ResizeObserver(() => {
-					var height = grid.fcGridHelper.computeHeightByRows(n);
-					grid.style.setProperty('--height-by-rows',height+'px');
+					grid.fcGridHelper._updateHeightByRows(n);
 				});
-				
+	
 				grid.fcGridHelper._heightByRowsObserver.observe(grid);
+			},
+			
+			_updateHeightByRows : function(n) {
+				var height = grid.fcGridHelper.computeHeightByRows(n);
+				grid.style.setProperty('--height-by-rows',height+'px');
 			},
 			
 			computeHeightByRows : function(n) {
