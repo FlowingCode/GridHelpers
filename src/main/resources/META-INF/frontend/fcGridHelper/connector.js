@@ -63,6 +63,14 @@ import { Grid } from '@vaadin/grid/src/vaadin-grid.js';
 				});
 	
 				grid.fcGridHelper._heightByRowsObserver.observe(grid);
+				
+				grid.removeEventListener('loading-changed', grid.fcGridHelper._heightByRowsListener);
+				
+				grid.fcGridHelper._heightByRowsListener = ()=>{
+					if (!grid.loading) grid.fcGridHelper._updateHeightByRows(n);
+				};
+				
+				grid.addEventListener('loading-changed', grid.fcGridHelper._heightByRowsListener);
 			},
 			
 			_updateHeightByRows : function(n) {
