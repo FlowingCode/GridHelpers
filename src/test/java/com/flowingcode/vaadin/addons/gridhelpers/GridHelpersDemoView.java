@@ -38,6 +38,7 @@ public class GridHelpersDemoView extends TabbedDemo {
     setSizeFull();
     addDemo(AllFeaturesDemo.class);
     addDemo(ColumnToggleMenuDemo.class);
+    addDemo(HeightByRowsDemo.class);
     addDemo(HideSelectionColumnDemo.class);
     addDemo(FreezeSelectionColumnDemo.class);
     addDemo(EnableArrowSelectionDemo.class);
@@ -51,7 +52,6 @@ public class GridHelpersDemoView extends TabbedDemo {
     addDemo(LazyMultiSelectionDemo.class);
     addDemo(CheckboxColumnDemo.class);
     addDemo(EmptyGridLabelDemo.class);
-    addDemo(HeightByRowsDemo.class);
     addDemo(GridRadioSelectionColumnDemo.class);
   }
 }
