@@ -2,7 +2,7 @@
  * #%L
  * Grid Helpers Add-on
  * %%
- * Copyright (C) 2022 - 2024 Flowing Code
+ * Copyright (C) 2022 - 2025 Flowing Code
  * %%
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -110,7 +110,7 @@ class EnhancedSelectionGridHelper<T> implements Serializable {
       int newFocusedItemIndex =
           (int) ev.getEventData().getNumber(KEY_UP_ELEMENT_FOCUSED_ITEM_INDEX);
       if (newFocusedItemIndex >= 0) {
-        newFocusedItemMaybe = Optional.ofNullable(dataView.getItem(newFocusedItemIndex));
+        newFocusedItemMaybe = dataView.getItems().skip(newFocusedItemIndex).findFirst();
       }
 
       if (newFocusedItemMaybe.isPresent()) {
