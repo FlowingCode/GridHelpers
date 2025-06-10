@@ -17,7 +17,7 @@
 		<project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
 		<drivers.dir>${project.basedir}/drivers</drivers.dir>
 		<jetty.version>9.4.36.v20210114</jetty.version>
-		<webdrivermanager.version>3.8.1</webdrivermanager.version>
+		<webdrivermanager.version>6.1.0</webdrivermanager.version>
 		<driver-binary-downloader-maven-plugin.version>1.0.17</driver-binary-downloader-maven-plugin.version>
 	</properties>
 
