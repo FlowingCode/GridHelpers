@@ -46,17 +46,14 @@ public class ResponsiveGridIT extends AbstractViewTest implements HasRpcSupport 
   private void setWidth(int w) {
     executeScript("arguments[0].parentElement.style.width=" + w + "+'px';", grid);
     $server.roundtrip();
-    try {
-      Thread.sleep(100);
-    } catch (InterruptedException e) {
-      return;
-    }
+    sleep();
   }
 
   @Test
   public void testCreateResponsiveStep() {
     $server.responsiveStep(300);
     $server.roundtrip();
+    sleep();
     assertEquals(300, $server.getCurrentStep());
   }
 
@@ -64,6 +61,7 @@ public class ResponsiveGridIT extends AbstractViewTest implements HasRpcSupport 
   public void testHide() {
     $server.responsiveStep(0).hide(0);
     $server.roundtrip();
+    sleep();
     assertTrue(!grid.hasColumn("Col 0"));
   }
 
@@ -71,7 +69,7 @@ public class ResponsiveGridIT extends AbstractViewTest implements HasRpcSupport 
   public void testHideAll() throws InterruptedException {
     $server.responsiveStep(0).hideAll();
     $server.roundtrip();
-    Thread.sleep(100);
+    sleep();
     assertTrue(grid.getVisibleColumns().isEmpty());
   }
 
@@ -79,21 +77,33 @@ public class ResponsiveGridIT extends AbstractViewTest implements HasRpcSupport 
   public void testShow() {
     $server.responsiveStep(0).hide(0);
     $server.roundtrip();
+    sleep();
     assertTrue(!grid.hasColumn("Col 0"));
 
     $server.responsiveStep(100).show(0);
     $server.roundtrip();
+    sleep();
     assertTrue(grid.hasColumn("Col 0"));
+  }
+
+  private void sleep() {
+    try {
+      Thread.sleep(500);
+    } catch (InterruptedException e) {
+      return;
+    }
   }
 
   @Test
   public void testShowAll() {
     $server.responsiveStep(0).hide(0);
     $server.roundtrip();
+    sleep();
     assertTrue(!grid.hasColumn("Col 0"));
 
     $server.responsiveStep(100).showAll();
     $server.roundtrip();
+    sleep();
     assertTrue(grid.hasColumn("Col 0"));
   }
 
@@ -102,12 +112,12 @@ public class ResponsiveGridIT extends AbstractViewTest implements HasRpcSupport 
     $server.responsiveStep(300);
     $server.responsiveStep(400);
     $server.roundtrip();
-    Thread.sleep(100);
+    sleep();
     assertEquals(400, $server.getCurrentStep());
 
     $server.responsiveStep(400).remove();
     $server.roundtrip();
-    Thread.sleep(100);
+    sleep();
     assertEquals(300, $server.getCurrentStep());
   }
 
@@ -115,6 +125,7 @@ public class ResponsiveGridIT extends AbstractViewTest implements HasRpcSupport 
   public void testAddListenerFireImmediately() {
     IListenerRegistration listener = $server.responsiveStep(200).addListener();
     $server.roundtrip();
+    sleep();
     assertEquals(1, listener.getCount());
     assertEquals(200, listener.getLastMinWidth());
   }
@@ -159,6 +170,7 @@ public class ResponsiveGridIT extends AbstractViewTest implements HasRpcSupport 
     $server.responsiveStep(300).addListener();
     IListenerRegistration listener = $server.responsiveStep(200).addListener();
     assertEquals(0, listener.getCount());
+    sleep();
 
     listener.cumulative();
     assertEquals(1, listener.getCount());
