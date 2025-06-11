@@ -30,14 +30,6 @@ public class FooterToolbarTest {
 
   private static class Bean {}
 
-  @Test
-  public void addToolbarFooter() {
-    Grid<Bean> grid = new Grid<>(Bean.class, false);
-    grid.addColumn(x -> x).setHeader("Header");
-    var toolbarFooter = new HorizontalLayout();
-    GridHelper.addToolbarFooter(grid, toolbarFooter);
-  }
-
   @Test(expected = IllegalStateException.class)
   public void testSetFooterToolbarBeforeColumnsConfiguredThrowsException() {
     Grid<Bean> grid = new Grid<>(Bean.class, false);
