@@ -2,7 +2,7 @@
  * #%L
  * Grid Helpers Add-on
  * %%
- * Copyright (C) 2022 - 2024 Flowing Code
+ * Copyright (C) 2022 - 2025 Flowing Code
  * %%
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -348,6 +348,16 @@ public final class GridHelper<T> implements Serializable {
 
   private final FooterToolbarGridHelper footerToolbar = new FooterToolbarGridHelper(this);
 
+  /**
+   * Adds a toolbar component to the footer of the grid.
+   * <p>
+   * Note: The grid must have its columns configured before calling this method.
+   * Otherwise, an {@link IllegalStateException} will be thrown.
+   *
+   * @param grid the grid to add the toolbar to
+   * @param toolBar the toolbar component to add
+   * @throws IllegalStateException if the grid columns have not been configured
+   */
   public static void addToolbarFooter(Grid<?> grid, Component toolBar) {
     getHelper(grid).footerToolbar.setFooterToolbar(toolBar);
   }

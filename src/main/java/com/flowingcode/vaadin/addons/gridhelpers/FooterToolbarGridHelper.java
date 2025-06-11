@@ -2,7 +2,7 @@
  * #%L
  * Grid Helpers Add-on
  * %%
- * Copyright (C) 2022 - 2024 Flowing Code
+ * Copyright (C) 2022 - 2025 Flowing Code
  * %%
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -36,6 +36,9 @@ class FooterToolbarGridHelper implements Serializable {
 
   public void setFooterToolbar(Component toolBar) {
     Grid<?> grid = helper.getGrid();
+    if (grid.getColumns().isEmpty()) {
+      throw new IllegalStateException("Cannot set footer toolbar: Grid columns have not been configured.");
+    }
     if (grid.getFooterRows().isEmpty()) {
       // create a fake footer and hide it (workaround:
       // https://github.com/vaadin/flow-components/issues/1558#issuecomment-987783794)
