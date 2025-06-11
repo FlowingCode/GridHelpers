@@ -20,8 +20,10 @@
 package com.flowingcode.vaadin.addons.gridhelpers.test;
 
 import com.flowingcode.vaadin.addons.gridhelpers.GridHelper;
+import com.flowingcode.vaadin.addons.gridhelpers.GridHelper;
 import com.vaadin.flow.component.grid.Grid;
 import com.vaadin.flow.component.orderedlayout.HorizontalLayout;
+import org.junit.Assert;
 import org.junit.Test;
 
 public class FooterToolbarTest {
@@ -41,5 +43,17 @@ public class FooterToolbarTest {
     Grid<Bean> grid = new Grid<>(Bean.class, false);
     var toolbarFooter = new HorizontalLayout();
     GridHelper.addToolbarFooter(grid, toolbarFooter);
+  }
+
+  @Test(expected = NullPointerException.class)
+  public void testSetFooterToolbarWithNullToolbarThrowsException() {
+    Grid<Bean> grid = new Grid<>(Bean.class, false);
+    grid.addColumn(x -> x).setHeader("Header");
+    try {
+      GridHelper.addToolbarFooter(grid, null);
+    } catch (NullPointerException e) {
+      Assert.assertEquals("Toolbar component must not be null", e.getMessage());
+      throw e;
+    }
   }
 }

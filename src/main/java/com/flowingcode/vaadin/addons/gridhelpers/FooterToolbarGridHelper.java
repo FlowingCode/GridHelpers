@@ -24,6 +24,7 @@ import com.vaadin.flow.component.grid.FooterRow;
 import com.vaadin.flow.component.grid.FooterRow.FooterCell;
 import com.vaadin.flow.component.grid.Grid;
 import java.io.Serializable;
+import java.util.Objects;
 import lombok.RequiredArgsConstructor;
 
 @SuppressWarnings("serial")
@@ -35,6 +36,7 @@ class FooterToolbarGridHelper implements Serializable {
   private FooterCell footerCell;
 
   public void setFooterToolbar(Component toolBar) {
+    Objects.requireNonNull(toolBar, "Toolbar component must not be null");
     Grid<?> grid = helper.getGrid();
     if (grid.getColumns().isEmpty()) {
       throw new IllegalStateException("Cannot set footer toolbar: Grid columns have not been configured.");
