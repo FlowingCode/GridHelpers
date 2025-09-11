@@ -2,7 +2,7 @@
  * #%L
  * Grid Helpers Add-on
  * %%
- * Copyright (C) 2022 - 2024 Flowing Code
+ * Copyright (C) 2022 - 2025 Flowing Code
  * %%
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -133,11 +133,17 @@ class HeaderFooterStylesHelper implements Serializable {
     private int getColumnIndex(int rowIndex) {
       ROW row = getRowSelector().getRow();
       int j = -1;
+
+      CELL last = null;
       for (Column<?> c : helper.getGrid().getColumns()) {
         if (c.isVisible()) {
-          ++j;
-          if (getCell(row, c) == getCell()) {
-            break;
+          CELL curr = getCell(row, c);
+          if (curr != last) {
+            ++j;
+            last = curr;
+            if (curr == getCell()) {
+              break;
+            }
           }
         }
       }
