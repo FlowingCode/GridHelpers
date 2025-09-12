@@ -135,13 +135,14 @@ class HeaderFooterStylesHelper implements Serializable {
       int j = -1;
 
       CELL last = null;
+      CELL target = getCell();
       for (Column<?> c : helper.getGrid().getColumns()) {
         if (c.isVisible()) {
           CELL curr = getCell(row, c);
           if (curr != last) {
             ++j;
             last = curr;
-            if (curr == getCell()) {
+            if (curr == target) {
               break;
             }
           }
