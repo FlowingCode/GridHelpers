@@ -143,12 +143,12 @@ class HeaderFooterStylesHelper implements Serializable {
             ++j;
             last = curr;
             if (curr == target) {
-              break;
+              return j;
             }
           }
         }
       }
-      return j;
+      return -1;
     }
 
     @Override
