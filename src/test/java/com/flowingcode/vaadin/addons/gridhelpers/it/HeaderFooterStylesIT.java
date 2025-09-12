@@ -43,7 +43,7 @@ public class HeaderFooterStylesIT extends AbstractViewTest implements HasRpcSupp
   }
 
   @Test
-  public void testHeaderVisible() {
+  public void testHeaderClassesApplied() {
     HeaderRowWrapper row0 = $server.getRow(0);
     row0.join(0, 1).setClassName("row0-cell0");
     row0.join(2, 3).setClassName("row0-cell1");
