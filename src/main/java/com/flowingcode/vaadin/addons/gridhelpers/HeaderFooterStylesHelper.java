@@ -130,7 +130,7 @@ class HeaderFooterStylesHelper implements Serializable {
 
     protected abstract CELL getCell();
 
-    private int getColumnIndex(int rowIndex) {
+    private int getColumnIndex() {
       ROW row = getRowSelector().getRow();
       int j = -1;
 
@@ -153,7 +153,7 @@ class HeaderFooterStylesHelper implements Serializable {
     @Override
     public final Serializable[] getSelector() {
       int i = getRowSelector().getRowIndex();
-      int j = getColumnIndex(i);
+      int j = getColumnIndex();
       return j < 0 ? null : new Serializable[] {getSelectorTemplate(), i, j + 1};
     }
 
