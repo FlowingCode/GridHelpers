@@ -34,4 +34,6 @@ public interface HeaderFooterStylesCallables extends RmiCallable {
 
   HeaderRowWrapper getRow(int rowIndex);
 
+  void setColumnOrder(int... columnIndexes);
+
 }

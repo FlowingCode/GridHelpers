@@ -20,6 +20,7 @@
 package com.flowingcode.vaadin.addons.gridhelpers.it;
 
 import static org.junit.Assert.assertEquals;
+import com.flowingcode.vaadin.addons.gridhelpers.it.HeaderFooterStylesCallables.HeaderCellWrapper;
 import com.flowingcode.vaadin.addons.gridhelpers.it.HeaderFooterStylesCallables.HeaderRowWrapper;
 import com.flowingcode.vaadin.testbench.rpc.HasRpcSupport;
 import com.vaadin.flow.component.grid.testbench.GridElement;
@@ -59,6 +60,20 @@ public class HeaderFooterStylesIT extends AbstractViewTest implements HasRpcSupp
     for (int i = 0; i < 5; i++) {
       assertEquals("row1-cell" + i, grid.getHeaderCell(1, i).getAttribute("class"));
     }
+  }
+
+  @Test
+  public void testHeaderCellMutability() {
+    // https://github.com/FlowingCode/GridHelpers/issues/134
+    // setColumnOrder and join reuse existing HeaderCell instances
+    HeaderRowWrapper row0 = $server.getRow(0);
+    HeaderCellWrapper header0 = row0.join(0, 1);
+    HeaderCellWrapper header1 = row0.join(2, 3);
+    $server.setColumnOrder(2, 3, 0, 1, 4);
+    header0.setClassName("row0-cell0");
+    header1.setClassName("row0-cell1");
+    assertEquals("row0-cell1", grid.getHeaderCell(0, 0).getAttribute("class"));
+    assertEquals("row0-cell0", grid.getHeaderCell(0, 1).getAttribute("class"));
   }
 
 }
