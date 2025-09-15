@@ -30,6 +30,7 @@ import com.vaadin.flow.component.html.Div;
 import com.vaadin.flow.router.Route;
 import elemental.json.JsonObject;
 import elemental.json.JsonValue;
+import java.util.List;
 import java.util.stream.Collectors;
 import java.util.stream.IntStream;
 import lombok.RequiredArgsConstructor;
@@ -50,7 +51,8 @@ public class HeaderFooterStylesView extends Div implements HeaderFooterStylesCal
     getElement().getStyle().set("flex-grow", "1");
     grid = new Grid<>();
     for (int i = 0; i < 5; i++) {
-      grid.addColumn(x -> x).setHeader("col " + i);
+      String key = "col " + i;
+      grid.addColumn(x -> x).setHeader(key).setKey(key);
     }
     grid.prependHeaderRow();
     add(grid);
@@ -106,6 +108,13 @@ public class HeaderFooterStylesView extends Div implements HeaderFooterStylesCal
   public HeaderRowWrapper getRow(int rowIndex) {
     HeaderRow row = grid.getHeaderRows().get(rowIndex);
     return new HeaderRowWrapperImpl(row);
+  }
+
+  @Override
+  public void setColumnOrder(int... columnIndexes) {
+    List<Column<Integer>> columns = grid.getColumns();
+    grid.setColumnOrder(
+        IntStream.of(columnIndexes).mapToObj(columns::get).collect(Collectors.toList()));
   }
 
 }

@@ -29,15 +29,18 @@ import com.vaadin.flow.component.grid.HeaderRow.HeaderCell;
 import com.vaadin.flow.dom.ClassList;
 import com.vaadin.flow.dom.Element;
 import java.io.Serializable;
+import java.lang.reflect.Method;
 import java.util.AbstractSet;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
+import java.util.Objects;
 import java.util.stream.Collectors;
 import lombok.Getter;
 import lombok.RequiredArgsConstructor;
+import lombok.SneakyThrows;
 import lombok.experimental.Delegate;
 import org.apache.commons.lang3.StringUtils;
 
@@ -121,24 +124,54 @@ class HeaderFooterStylesHelper implements Serializable {
 
   }
 
+  private static final Method AbstractCell_getColumn;
+
+  static {
+    Method method = null;
+    try {
+      Class<?> AbstractCell =
+          Class.forName("com.vaadin.flow.component.grid.AbstractRow$AbstractCell");
+      method = AbstractCell.getDeclaredMethod("getColumn");
+      method.setAccessible(true);
+    } catch (ClassNotFoundException | NoSuchMethodException e) {
+      // Will use cell identity; keep field null.
+    }
+
+    AbstractCell_getColumn = method;
+  }
 
   private abstract class CellSelector<ROW, CELL> implements SelectorSupplier {
+
+    @Getter
+    // AbstractColumn (or CELL if reflection is not available)
+    private final Object column;
+
+    CellSelector(CELL cell) {
+      column = Objects.requireNonNull(getColumn(cell));
+    }
+
+    @SneakyThrows
+    protected final Object getColumn(CELL cell) {
+      if (AbstractCell_getColumn != null) {
+        return AbstractCell_getColumn.invoke(cell);
+      } else {
+        return cell;
+      }
+    }
 
     protected abstract RowSelector<ROW> getRowSelector();
 
     protected abstract CELL getCell(ROW row, Column<?> c);
 
-    protected abstract CELL getCell();
-
     private int getColumnIndex() {
       ROW row = getRowSelector().getRow();
       int j = -1;
 
-      CELL last = null;
-      CELL target = getCell();
+      Object last = null;
+      Object target = getColumn();
       for (Column<?> c : helper.getGrid().getColumns()) {
         if (c.isVisible()) {
-          CELL curr = getCell(row, c);
+          Object curr = getColumn(getCell(row, c));
           if (curr != last) {
             ++j;
             last = curr;
@@ -168,13 +201,10 @@ class HeaderFooterStylesHelper implements Serializable {
   private final class HeaderCellSelector extends CellSelector<HeaderRow, HeaderCell> {
 
     @Getter
-    final HeaderCell cell;
-
-    @Getter
     final HeaderRowSelector rowSelector;
 
     public HeaderCellSelector(HeaderCell cell) {
-      this.cell = cell;
+      super(cell);
       for (HeaderRow row : helper.getGrid().getHeaderRows()) {
         if (row.getCells().contains(cell)) {
           rowSelector = new HeaderRowSelector(row);
@@ -195,13 +225,10 @@ class HeaderFooterStylesHelper implements Serializable {
   private final class FooterCellSelector extends CellSelector<FooterRow, FooterCell> {
 
     @Getter
-    final FooterCell cell;
-
-    @Getter
     final FooterRowSelector rowSelector;
 
     public FooterCellSelector(FooterCell cell) {
-      this.cell = cell;
+      super(cell);
       for (FooterRow row : helper.getGrid().getFooterRows()) {
         if (row.getCells().contains(cell)) {
           rowSelector = new FooterRowSelector(row);
