@@ -59,6 +59,11 @@
 				<scope>import</scope>
 				<version>${vaadin.version}</version>
 			</dependency>
+			<dependency>
+				<groupId>com.vaadin</groupId>
+				<artifactId>kubernetes-kit-starter</artifactId>
+				<version>1.0.0</version>
+			</dependency>
             <dependency>
             	<groupId>com.flowingcode.vaadin.addons.demo</groupId>
             	<artifactId>commons-demo</artifactId>
