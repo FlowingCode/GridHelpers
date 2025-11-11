@@ -33,10 +33,10 @@ import com.vaadin.flow.component.radiobutton.RadioButtonGroup;
  * Server side implementation for the flow specific grid radio selection column.
  */
 @Tag("grid-flow-radio-selection-column")
-@JsModule("@vaadin/polymer-legacy-adapter/style-modules.js")
 @JsModule("./fcGridHelper/grid-flow-radio-selection-column.js")
 @Uses(RadioButtonGroup.class)
 // Indirectly ensure @NpmPackage(value = "@vaadin/polymer-legacy-adapter", version = "x.x.x")
+// and @JsModule("@vaadin/polymer-legacy-adapter/style-modules.js")
 @Uses(Grid.class)
 public class GridRadioSelectionColumn extends Component implements HasStyle {
 
