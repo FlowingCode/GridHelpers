@@ -16,8 +16,11 @@ types.d.ts
 /.npmrc
 /frontend/generated
 /frontend/index.html
+/src/main/frontend/generated
+/src/main/frontend/index.html
 /pnpm-lock.yaml
 /pnpmfile.js
 /src/main/dev-bundle
+/src/main/bundles
 vite.generated.ts
 vite.config.ts
