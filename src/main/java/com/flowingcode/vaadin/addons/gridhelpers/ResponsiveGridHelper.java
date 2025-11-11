@@ -2,7 +2,7 @@
  * #%L
  * Grid Helpers Add-on
  * %%
- * Copyright (C) 2022 - 2024 Flowing Code
+ * Copyright (C) 2022 - 2025 Flowing Code
  * %%
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -19,6 +19,7 @@
  */
 package com.flowingcode.vaadin.addons.gridhelpers;
 
+import com.flowingcode.vaadin.jsonmigration.JsonMigration;
 import com.vaadin.flow.component.grid.Grid;
 import com.vaadin.flow.dom.DebouncePhase;
 import com.vaadin.flow.shared.Registration;
@@ -76,7 +77,7 @@ class ResponsiveGridHelper<T> implements Serializable {
   private void initialize() {
     Grid<T> grid = helper.getGrid();
     grid.getElement().addEventListener("fcgh-responsive-step", ev -> {
-      apply((int) ev.getEventData().getNumber("event.detail.step"), false);
+      apply((int) JsonMigration.getEventData(ev).getNumber("event.detail.step"), false);
     }).addEventData("event.detail.step").debounce(200, DebouncePhase.TRAILING);
     sendSteps();
   }
