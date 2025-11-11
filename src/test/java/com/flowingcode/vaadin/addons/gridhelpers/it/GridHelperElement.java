@@ -134,7 +134,7 @@ public class GridHelperElement extends MyGridElement {
     return headerRows.get(rowIndex);
   }
 
-  public WebElement getHeaderCell(int rowIndex, int columnIndex) {
+  public WebElement getHeaderCellAt(int rowIndex, int columnIndex) {
     List<WebElement> headerCells = getHeaderRow(rowIndex).findElements(By.tagName("th"));
     return headerCells.get(columnIndex);
   }
