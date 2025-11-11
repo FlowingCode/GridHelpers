@@ -54,11 +54,11 @@ public class HeaderFooterStylesIT extends AbstractViewTest implements HasRpcSupp
       row1.getCell(i).setClassName("row1-cell" + i);
     }
 
-    assertEquals("row0-cell0", grid.getHeaderCell(0, 0).getAttribute("class"));
-    assertEquals("row0-cell1", grid.getHeaderCell(0, 1).getAttribute("class"));
+    assertEquals("row0-cell0", grid.getHeaderCellAt(0, 0).getAttribute("class"));
+    assertEquals("row0-cell1", grid.getHeaderCellAt(0, 1).getAttribute("class"));
 
     for (int i = 0; i < 5; i++) {
-      assertEquals("row1-cell" + i, grid.getHeaderCell(1, i).getAttribute("class"));
+      assertEquals("row1-cell" + i, grid.getHeaderCellAt(1, i).getAttribute("class"));
     }
   }
 
@@ -72,8 +72,8 @@ public class HeaderFooterStylesIT extends AbstractViewTest implements HasRpcSupp
     $server.setColumnOrder(2, 3, 0, 1, 4);
     header0.setClassName("row0-cell0");
     header1.setClassName("row0-cell1");
-    assertEquals("row0-cell1", grid.getHeaderCell(0, 0).getAttribute("class"));
-    assertEquals("row0-cell0", grid.getHeaderCell(0, 1).getAttribute("class"));
+    assertEquals("row0-cell1", grid.getHeaderCellAt(0, 0).getAttribute("class"));
+    assertEquals("row0-cell0", grid.getHeaderCellAt(0, 1).getAttribute("class"));
   }
 
 }
