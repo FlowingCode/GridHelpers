@@ -34,7 +34,6 @@ import com.vaadin.flow.component.dependency.StyleSheet;
 import com.vaadin.flow.component.grid.Grid;
 import com.vaadin.flow.component.grid.Grid.SelectionMode;
 import com.vaadin.flow.component.html.Div;
-import com.vaadin.flow.component.html.Label;
 import com.vaadin.flow.component.icon.VaadinIcon;
 import com.vaadin.flow.component.notification.Notification;
 import com.vaadin.flow.component.orderedlayout.FlexComponent.JustifyContentMode;
@@ -189,7 +188,8 @@ public class AllFeaturesDemo extends Div {
     heightByRowsField.setStepButtonsVisible(true);
 
     binder.getFields().map(Component.class::cast).forEach(features::add);
-    Label label = new Label("Features");
+
+    CompatibilityLabel label = new CompatibilityLabel("Features");
     label.addClassNames("label");
 
     features.addComponentAtIndex(2, label);
