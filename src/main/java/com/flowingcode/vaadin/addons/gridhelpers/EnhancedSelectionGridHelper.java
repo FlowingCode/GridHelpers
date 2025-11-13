@@ -26,12 +26,12 @@ import com.vaadin.flow.component.UI;
 import com.vaadin.flow.component.grid.Grid;
 import com.vaadin.flow.component.grid.dataview.GridListDataView;
 import com.vaadin.flow.shared.Registration;
-import elemental.json.JsonObject;
 import java.io.Serializable;
 import java.util.Optional;
 import java.util.stream.Collectors;
 import java.util.stream.IntStream;
 import lombok.RequiredArgsConstructor;
+import lombok.experimental.ExtensionMethod;
 
 /**
  * Add support for multiple items selection using click, arrow up/down, shift+click, shift+arrow
@@ -40,6 +40,7 @@ import lombok.RequiredArgsConstructor;
  */
 @SuppressWarnings("serial")
 @RequiredArgsConstructor
+@ExtensionMethod(value = JsonMigration.class, suppressBaseMethods = true)
 class EnhancedSelectionGridHelper<T> implements Serializable {
 
   private static final String KEY_UP_EVENT_SHIFT_KEY = "event.shiftKey";
@@ -103,27 +104,26 @@ class EnhancedSelectionGridHelper<T> implements Serializable {
     });
 
     keyUpRegistration = grid.getElement().addEventListener("keyup", ev -> {
-      JsonObject eventData = JsonMigration.getEventData(ev);
-
-      String keyUp = eventData.getString(KEY_UP_EVENT_KEY);
+      String keyUp = ev.getEventData().getString(KEY_UP_EVENT_KEY);
       boolean arrowsKey = "ArrowDown".equals(keyUp) || "ArrowUp".equals(keyUp);
 
       GridListDataView<T> dataView = grid.getListDataView();
 
       Optional<T> newFocusedItemMaybe = Optional.empty();
-      int newFocusedItemIndex = (int) eventData.getNumber(KEY_UP_ELEMENT_FOCUSED_ITEM_INDEX);
+      int newFocusedItemIndex =
+          (int) ev.getEventData().getNumber(KEY_UP_ELEMENT_FOCUSED_ITEM_INDEX);
       if (newFocusedItemIndex >= 0) {
         newFocusedItemMaybe = dataView.getItems().skip(newFocusedItemIndex).findFirst();
       }
 
       if (newFocusedItemMaybe.isPresent()) {
         T newFocusedItem = newFocusedItemMaybe.get();
-        boolean isSpecialKey = eventData.getBoolean(KEY_UP_EVENT_META_KEY)
-            || eventData.getBoolean(KEY_UP_EVENT_CTRL_KEY)
-            || eventData.getBoolean(KEY_UP_EVENT_ALT_KEY);
+        boolean isSpecialKey = ev.getEventData().getBoolean(KEY_UP_EVENT_META_KEY)
+            || ev.getEventData().getBoolean(KEY_UP_EVENT_CTRL_KEY)
+            || ev.getEventData().getBoolean(KEY_UP_EVENT_ALT_KEY);
 
         Object lastFocusedItem = ComponentUtil.getData(grid, LAST_FOCUSED_ITEM);
-        boolean shiftKey = eventData.getBoolean(KEY_UP_EVENT_SHIFT_KEY);
+        boolean shiftKey = ev.getEventData().getBoolean(KEY_UP_EVENT_SHIFT_KEY);
         if (shiftKey) {
           if (lastFocusedItem == null) {
             ComponentUtil.setData(grid, LAST_FOCUSED_ITEM, newFocusedItem);
