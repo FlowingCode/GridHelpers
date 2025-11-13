@@ -32,9 +32,11 @@ import java.util.NavigableMap;
 import java.util.TreeMap;
 import lombok.Getter;
 import lombok.RequiredArgsConstructor;
+import lombok.experimental.ExtensionMethod;
 
 @SuppressWarnings("serial")
 @RequiredArgsConstructor
+@ExtensionMethod(value = JsonMigration.class, suppressBaseMethods = true)
 class ResponsiveGridHelper<T> implements Serializable {
 
   private final GridHelper<T> helper;
@@ -77,7 +79,7 @@ class ResponsiveGridHelper<T> implements Serializable {
   private void initialize() {
     Grid<T> grid = helper.getGrid();
     grid.getElement().addEventListener("fcgh-responsive-step", ev -> {
-      apply((int) JsonMigration.getEventData(ev).getNumber("event.detail.step"), false);
+      apply((int) ev.getEventData().getNumber("event.detail.step"), false);
     }).addEventData("event.detail.step").debounce(200, DebouncePhase.TRAILING);
     sendSteps();
   }
