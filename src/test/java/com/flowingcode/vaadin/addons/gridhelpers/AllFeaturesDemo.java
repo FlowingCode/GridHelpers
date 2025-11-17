@@ -2,7 +2,7 @@
  * #%L
  * Grid Helpers Add-on
  * %%
- * Copyright (C) 2022 - 2024 Flowing Code
+ * Copyright (C) 2022 - 2025 Flowing Code
  * %%
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -25,6 +25,7 @@ import static com.vaadin.flow.component.grid.Grid.SelectionMode.SINGLE;
 import com.flowingcode.vaadin.addons.GithubLink;
 import com.flowingcode.vaadin.addons.gridhelpers.CheckboxColumn.CheckboxColumnConfiguration;
 import com.flowingcode.vaadin.addons.gridhelpers.CheckboxColumn.CheckboxPosition;
+import com.flowingcode.vaadin.jsonmigration.JsonMigration;
 import com.vaadin.flow.component.Component;
 import com.vaadin.flow.component.Text;
 import com.vaadin.flow.component.button.Button;
@@ -58,7 +59,7 @@ import lombok.experimental.ExtensionMethod;
 @GithubLink("https://github.com/FlowingCode/GridHelpers")
 @StyleSheet("context://gridhelpers/styles.css")
 @JavaScript("context://gridhelpers/gridhelpers-demo.js")
-@ExtensionMethod(GridHelper.class)
+@ExtensionMethod(value = {GridHelper.class, JsonMigration.class}, suppressBaseMethods = true)
 public class AllFeaturesDemo extends Div {
 
   private final CheckboxColumn<Person> activeCheckboxColumn;
@@ -302,7 +303,8 @@ public class AllFeaturesDemo extends Div {
   private void updateHeightByRowsField(Grid<?> grid, IntegerField field) {
     grid.getElement().executeJs("return")
         .then(x -> grid.getElement()
-            .executeJs("return window.Vaadin.Flow.fcGridHelperDemoConnector.getViewportRowCount(this)")
+            .executeJs(
+                "return window.Vaadin.Flow.fcGridHelperDemoConnector.getViewportRowCount(this)")
             .then(Integer.class, rows -> {
               field.setValue(rows);
               field.setMin(1);
