@@ -29,7 +29,6 @@ import java.util.stream.Collectors;
 import java.util.stream.Stream;
 import lombok.Getter;
 import lombok.Setter;
-import org.apache.commons.lang3.StringUtils;
 
 @SuppressWarnings("serial")
 final class GridHelperClassNameGenerator<T> implements SerializableFunction<T, String> {
