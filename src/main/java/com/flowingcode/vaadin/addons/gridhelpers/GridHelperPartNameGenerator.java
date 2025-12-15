@@ -2,7 +2,7 @@
  * #%L
  * Grid Helpers Add-on
  * %%
- * Copyright (C) 2022 - 2024 Flowing Code
+ * Copyright (C) 2022 - 2025 Flowing Code
  * %%
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -31,27 +31,30 @@ import lombok.Getter;
 import lombok.Setter;
 
 @SuppressWarnings("serial")
-final class GridHelperClassNameGenerator<T> implements SerializableFunction<T, String> {
+final class GridHelperPartNameGenerator<T> implements SerializableFunction<T, String> {
 
-  private Map<Class<?>, SerializableFunction<T, String>> helperClassNameGenerators =
+  private Map<Class<?>, SerializableFunction<T, String>> helperPartNameGenerators =
       new HashMap<>();
 
-  @Getter @Setter private SerializableFunction<T, String> gridClassNameGenerator;
+  @Getter
+  @Setter
+  private SerializableFunction<T, String> gridPartNameGenerator;
 
   private transient boolean invoked;
 
-  void setHelperClassNameGenerator(Class<?> clazz, SerializableFunction<T, String> generator) {
+  void setHelperPartNameGenerator(Class<?> clazz, SerializableFunction<T, String> generator) {
     if (generator != null) {
-      helperClassNameGenerators.put(clazz, generator);
+      helperPartNameGenerators.put(clazz, generator);
     } else {
-      helperClassNameGenerators.remove(clazz);
+      helperPartNameGenerators.remove(clazz);
     }
   }
 
   private Stream<SerializableFunction<T, String>> generators() {
+
     return Stream.concat(
-        Optional.ofNullable(gridClassNameGenerator).map(Stream::of).orElseGet(Stream::empty),
-        helperClassNameGenerators.values().stream());
+        Optional.ofNullable(gridPartNameGenerator).map(Stream::of).orElseGet(Stream::empty),
+        helperPartNameGenerators.values().stream());
   }
 
   @Override
