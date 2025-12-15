@@ -433,18 +433,54 @@ public final class GridHelper<T> implements Serializable {
   private final HeaderFooterStylesHelper headerFooterStylesHelper =
       new HeaderFooterStylesHelper(this);
 
+  /**
+   * Returns a helper for managing CSS styles on cells within a header row.
+   *
+   * @param grid the grid containing the header row
+   * @param row  the header row to style
+   * @return a {@link GridStylesHelper} for managing styles on the header row's cells
+   * @deprecated Use {@link HeaderCell#setPartName(String)} and {@link HeaderCell#getPartName()}
+   */
+  @Deprecated
   public static GridStylesHelper getHeaderStyles(Grid<?> grid, HeaderRow row) {
     return getHelper(grid).headerFooterStylesHelper.getStyles(row);
   }
 
+  /**
+   * Returns a helper for managing CSS styles on cells within a footer row.
+   *
+   * @param grid the grid containing the footer row
+   * @param row  the footer row to style
+   * @return a {@link GridStylesHelper} for managing styles on the footer row's cells
+   * @deprecated Use {@link FooterCell#setPartName(String)} and {@link FooterCell#getPartName()}
+   */
+  @Deprecated
   public static GridStylesHelper getFooterStyles(Grid<?> grid, FooterRow row) {
     return getHelper(grid).headerFooterStylesHelper.getStyles(row);
   }
 
+  /**
+   * Returns a helper for managing CSS styles on a specific header cell.
+   *
+   * @param grid the grid containing the header cell
+   * @param cell the header cell to style
+   * @return a {@link GridStylesHelper} for managing styles on the header cell
+   * @deprecated Use {@link HeaderCell#setPartName(String)} and {@link HeaderCell#getPartName()}
+   */
+  @Deprecated
   public static GridStylesHelper getHeaderStyles(Grid<?> grid, HeaderCell cell) {
     return getHelper(grid).headerFooterStylesHelper.getStyles(cell);
   }
 
+  /**
+   * Returns a helper for managing CSS styles on a specific footer cell.
+   *
+   * @param grid the grid containing the footer cell
+   * @param cell the footer cell to style
+   * @return a {@link GridStylesHelper} for managing styles on the footer cell
+   * @deprecated Use {@link FooterCell#setPartName(String)} and {@link FooterCell#getPartName()}
+   */
+  @Deprecated
   public static GridStylesHelper getFooterStyles(Grid<?> grid, FooterCell cell) {
     return getHelper(grid).headerFooterStylesHelper.getStyles(cell);
   }
