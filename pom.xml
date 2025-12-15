@@ -10,15 +10,16 @@
 	<url>https://www.flowingcode.com/en/open-source/</url>
 
 	<properties>
-		<vaadin.version>23.3.35</vaadin.version>
-		<maven.compiler.source>11</maven.compiler.source>
-		<maven.compiler.target>11</maven.compiler.target>
+		<vaadin.version>24.8.14</vaadin.version>
+		<maven.compiler.source>17</maven.compiler.source>
+		<maven.compiler.target>17</maven.compiler.target>
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
 		<project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
 		<drivers.dir>${project.basedir}/drivers</drivers.dir>
-		<jetty.version>9.4.36.v20210114</jetty.version>
+		<jetty.version>11.0.26</jetty.version>
 		<webdrivermanager.version>6.1.0</webdrivermanager.version>
-		<driver-binary-downloader-maven-plugin.version>1.0.17</driver-binary-downloader-maven-plugin.version>
+		<driver-binary-downloader-maven-plugin.version>1.0.18</driver-binary-downloader-maven-plugin.version>
+		<frontend.hotdeploy>true</frontend.hotdeploy>
 	</properties>
 
 	<organization>
@@ -62,7 +63,7 @@
             <dependency>
             	<groupId>com.flowingcode.vaadin.addons.demo</groupId>
             	<artifactId>commons-demo</artifactId>
-            	<version>3.8.0</version>
+            	<version>4.3.0</version>
             </dependency>
 		</dependencies>
 	</dependencyManagement>
@@ -546,43 +547,6 @@
 			</build>
 		</profile>
 
-		<profile>
-			<id>v23</id>
-			<properties>
-				<vaadin.version>23.3.5</vaadin.version>
-				<maven.compiler.source>11</maven.compiler.source>
-				<maven.compiler.target>11</maven.compiler.target>				
-			</properties>
-		</profile>
-
-		<profile>
-			<id>v24</id>
-			<properties>
-				<maven.compiler.source>17</maven.compiler.source>
-				<maven.compiler.target>17</maven.compiler.target>
-				<vaadin.version>24.2.6</vaadin.version>
-				<jetty.version>11.0.12</jetty.version>
-				<frontend.hotdeploy>true</frontend.hotdeploy>
-				<webdrivermanager.version>5.6.3</webdrivermanager.version>
-				<driver-binary-downloader-maven-plugin.version>1.0.18</driver-binary-downloader-maven-plugin.version>
-			</properties>
-			
-			<dependencies>
-				<dependency>
-				    <groupId>org.seleniumhq.selenium</groupId>
-				    <artifactId>selenium-java</artifactId>
-				    <version>4.17.0</version>
-				    <scope>test</scope>
-				</dependency>
-				<dependency>
-				<groupId>com.flowingcode.vaadin.addons.demo</groupId>
-				<artifactId>commons-demo</artifactId>
-					<version>4.2.0</version>
-					<scope>test</scope>
-				</dependency>
-			</dependencies>
-		</profile>
-
         	<profile>
             		<id>release</id>
             		<build>
@@ -602,7 +566,7 @@
 			<properties>
 				<maven.compiler.source>21</maven.compiler.source>
 				<maven.compiler.target>21</maven.compiler.target>
-				<vaadin.version>25.0.0-beta7</vaadin.version>
+				<vaadin.version>25.0.0-rc1</vaadin.version>
 				<jetty.version>11.0.26</jetty.version>
 			</properties>
 			<dependencies>
@@ -611,6 +575,10 @@
 					<artifactId>commons-demo</artifactId>
 					<version>5.0.0</version>
 					<scope>test</scope>
+				</dependency>
+				<dependency>
+					<groupId>com.vaadin</groupId>
+					<artifactId>vaadin-dev</artifactId>
 				</dependency>
 			</dependencies>
 		</profile>
