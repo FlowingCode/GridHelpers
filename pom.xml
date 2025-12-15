@@ -80,16 +80,6 @@
             <id>Vaadin Directory</id>
             <url>https://maven.vaadin.com/vaadin-addons</url>
         </repository>
-        <!-- Repository needed for prerelease versions of Vaadin -->
-        <repository>
-            <id>Vaadin prereleases</id>
-            <url>https://maven.vaadin.com/vaadin-prereleases</url>
-        </repository>
-        <!-- Repository needed for the snapshot versions of Vaadin -->
-        <repository>
-            <id>vaadin-snapshots</id>
-            <url>https://oss.sonatype.org/content/repositories/vaadin-snapshots/</url>
-        </repository>
 			<repository>
 				<id>FlowingCode Snapshots</id>
 				<url>https://maven.flowingcode.com/snapshots</url>
@@ -101,26 +91,6 @@
 			</releases>
 		</repository>
 	</repositories>
-
-    <pluginRepositories>
-        <pluginRepository>
-            <id>central</id>
-            <url>https://repo.maven.apache.org/maven2</url>
-            <snapshots>
-                <enabled>false</enabled>
-            </snapshots>
-        </pluginRepository>
-        <!-- Repository needed for prerelease versions of Vaadin -->
-        <pluginRepository>
-            <id>Vaadin prereleases</id>
-            <url>https://maven.vaadin.com/vaadin-prereleases</url>
-        </pluginRepository>
-        <pluginRepository>
-            <id>vaadin-snapshots</id>
-            <url>https://oss.sonatype.org/content/repositories/vaadin-snapshots/</url>
-            <releases><enabled>false</enabled></releases>
-        </pluginRepository>
-    </pluginRepositories>
 
 	<dependencies>
 	    <dependency>
@@ -569,18 +539,6 @@
 				<vaadin.version>25.0.0-rc1</vaadin.version>
 				<jetty.version>11.0.26</jetty.version>
 			</properties>
-			<repositories>
-					<repository>
-							<id>vaadin-prerelease</id>
-							<url>https://maven.vaadin.com/vaadin-prereleases</url>
-					</repository>
-			</repositories>
-			<pluginRepositories>
-					<pluginRepository>
-							<id>vaadin-prerelease</id>
-							<url>https://maven.vaadin.com/vaadin-prereleases</url>
-					</pluginRepository>
-			</pluginRepositories>
 			<dependencies>
 				<dependency>
 					<groupId>com.flowingcode.vaadin.addons.demo</groupId>
