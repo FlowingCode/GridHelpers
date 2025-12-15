@@ -2,7 +2,7 @@
  * #%L
  * Grid Helpers Add-on
  * %%
- * Copyright (C) 2022 - 2024 Flowing Code
+ * Copyright (C) 2022 - 2025 Flowing Code
  * %%
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -59,11 +59,11 @@ class SelectionFilterHelper<T> implements Serializable {
     currentSingleSelectedItem = null;
     if (predicate != null) {
       deselectIf(predicate.negate());
-      helper.setHelperClassNameGenerator(
+      helper.setHelperPartNameGenerator(
           this.getClass(), row -> predicate.test(row) ? null : "fcGh-noselect");
       selectionListenerRegistration = grid.addSelectionListener(this::onSelection);
     } else {
-      helper.setHelperClassNameGenerator(this.getClass(), null);
+      helper.setHelperPartNameGenerator(this.getClass(), null);
     }
   }
 
