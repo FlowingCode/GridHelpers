@@ -2,7 +2,7 @@
  * #%L
  * Grid Helpers Add-on
  * %%
- * Copyright (C) 2022 - 2025 Flowing Code
+ * Copyright (C) 2022 - 2026 Flowing Code
  * %%
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -21,13 +21,13 @@ package com.flowingcode.vaadin.addons.gridhelpers.it;
 
 import com.flowingcode.vaadin.addons.gridhelpers.GridHelper;
 import com.flowingcode.vaadin.addons.gridhelpers.GridStylesHelper;
-import com.vaadin.flow.component.ClientCallable;
+import com.flowingcode.vaadin.jsonmigration.InstrumentedRoute;
+import com.flowingcode.vaadin.jsonmigration.LegacyClientCallable;
 import com.vaadin.flow.component.grid.Grid;
 import com.vaadin.flow.component.grid.Grid.Column;
 import com.vaadin.flow.component.grid.HeaderRow;
 import com.vaadin.flow.component.grid.HeaderRow.HeaderCell;
 import com.vaadin.flow.component.html.Div;
-import com.vaadin.flow.router.Route;
 import elemental.json.JsonObject;
 import elemental.json.JsonValue;
 import java.util.List;
@@ -38,7 +38,7 @@ import lombok.experimental.Delegate;
 import lombok.experimental.ExtensionMethod;
 
 @SuppressWarnings("serial")
-@Route(HeaderFooterStylesView.ROUTE)
+@InstrumentedRoute(HeaderFooterStylesView.ROUTE)
 @ExtensionMethod(GridHelper.class)
 public class HeaderFooterStylesView extends Div implements HeaderFooterStylesCallables {
 
@@ -59,7 +59,7 @@ public class HeaderFooterStylesView extends Div implements HeaderFooterStylesCal
   }
 
   @Override
-  @ClientCallable
+  @LegacyClientCallable
   public JsonValue $call(JsonObject invocation) {
     return HeaderFooterStylesCallables.super.$call(invocation);
   }

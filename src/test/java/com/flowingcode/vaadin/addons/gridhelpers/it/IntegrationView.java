@@ -2,7 +2,7 @@
  * #%L
  * Grid Helpers Add-on
  * %%
- * Copyright (C) 2022 - 2024 Flowing Code
+ * Copyright (C) 2022 - 2026 Flowing Code
  * %%
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -23,15 +23,15 @@ import com.flowingcode.vaadin.addons.gridhelpers.GridHelper;
 import com.flowingcode.vaadin.addons.gridhelpers.GridRadioSelectionColumn;
 import com.flowingcode.vaadin.addons.gridhelpers.Person;
 import com.flowingcode.vaadin.addons.gridhelpers.TestData;
+import com.flowingcode.vaadin.jsonmigration.InstrumentedRoute;
+import com.flowingcode.vaadin.jsonmigration.LegacyClientCallable;
 import com.flowingcode.vaadin.testbench.rpc.JsonArrayList;
-import com.vaadin.flow.component.ClientCallable;
 import com.vaadin.flow.component.grid.Grid;
 import com.vaadin.flow.component.grid.Grid.Column;
 import com.vaadin.flow.component.grid.Grid.SelectionMode;
 import com.vaadin.flow.component.html.Div;
 import com.vaadin.flow.component.html.Span;
 import com.vaadin.flow.data.provider.ListDataProvider;
-import com.vaadin.flow.router.Route;
 import elemental.json.JsonObject;
 import elemental.json.JsonValue;
 import java.util.List;
@@ -40,7 +40,7 @@ import lombok.Getter;
 import lombok.experimental.ExtensionMethod;
 
 @SuppressWarnings("serial")
-@Route("it")
+@InstrumentedRoute("it")
 @ExtensionMethod(GridHelper.class)
 public class IntegrationView extends Div implements IntegrationViewCallables {
 
@@ -77,7 +77,7 @@ public class IntegrationView extends Div implements IntegrationViewCallables {
   }
 
   @Override
-  @ClientCallable
+  @LegacyClientCallable
   public JsonValue $call(JsonObject invocation) {
     return IntegrationViewCallables.super.$call(invocation);
   }
