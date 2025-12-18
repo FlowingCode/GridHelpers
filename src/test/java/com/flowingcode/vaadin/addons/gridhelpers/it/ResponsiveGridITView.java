@@ -2,7 +2,7 @@
  * #%L
  * Grid Helpers Add-on
  * %%
- * Copyright (C) 2022 - 2024 Flowing Code
+ * Copyright (C) 2022 - 2026 Flowing Code
  * %%
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -22,10 +22,10 @@ package com.flowingcode.vaadin.addons.gridhelpers.it;
 import com.flowingcode.vaadin.addons.gridhelpers.GridHelper;
 import com.flowingcode.vaadin.addons.gridhelpers.GridResponsiveStep;
 import com.flowingcode.vaadin.addons.gridhelpers.GridResponsiveStep.GridResponsiveStepListenerRegistration;
-import com.vaadin.flow.component.ClientCallable;
+import com.flowingcode.vaadin.jsonmigration.InstrumentedRoute;
+import com.flowingcode.vaadin.jsonmigration.LegacyClientCallable;
 import com.vaadin.flow.component.grid.Grid;
 import com.vaadin.flow.component.orderedlayout.VerticalLayout;
-import com.vaadin.flow.router.Route;
 import elemental.json.JsonObject;
 import elemental.json.JsonValue;
 import java.util.List;
@@ -36,7 +36,7 @@ import lombok.RequiredArgsConstructor;
 import lombok.experimental.ExtensionMethod;
 
 @ExtensionMethod(GridHelper.class)
-@Route(ResponsiveGridITView.ROUTE)
+@InstrumentedRoute(ResponsiveGridITView.ROUTE)
 public class ResponsiveGridITView extends VerticalLayout implements ResponsiveGridITViewCallables {
 
   public static final String ROUTE = "it/responsive";
@@ -60,7 +60,7 @@ public class ResponsiveGridITView extends VerticalLayout implements ResponsiveGr
   }
 
   @Override
-  @ClientCallable
+  @LegacyClientCallable
   public JsonValue $call(JsonObject invocation) {
     return ResponsiveGridITViewCallables.super.$call(invocation);
   }
