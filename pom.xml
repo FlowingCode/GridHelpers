@@ -605,18 +605,6 @@
 				<vaadin.version>25.0.0-beta7</vaadin.version>
 				<jetty.version>11.0.26</jetty.version>
 			</properties>
-			<repositories>
-					<repository>
-							<id>vaadin-prerelease</id>
-							<url>https://maven.vaadin.com/vaadin-prereleases</url>
-					</repository>
-			</repositories>
-			<pluginRepositories>
-					<pluginRepository>
-							<id>vaadin-prerelease</id>
-							<url>https://maven.vaadin.com/vaadin-prereleases</url>
-					</pluginRepository>
-			</pluginRepositories>
 			<dependencies>
 				<dependency>
 					<groupId>com.flowingcode.vaadin.addons.demo</groupId>
