@@ -63,7 +63,7 @@
             <dependency>
             	<groupId>com.flowingcode.vaadin.addons.demo</groupId>
             	<artifactId>commons-demo</artifactId>
-            	<version>4.3.0</version>
+            	<version>5.0.0</version>
             </dependency>
 		</dependencies>
 	</dependencyManagement>
@@ -540,12 +540,6 @@
 				<jetty.version>11.0.26</jetty.version>
 			</properties>
 			<dependencies>
-				<dependency>
-					<groupId>com.flowingcode.vaadin.addons.demo</groupId>
-					<artifactId>commons-demo</artifactId>
-					<version>5.0.0</version>
-					<scope>test</scope>
-				</dependency>
 				<dependency>
 					<groupId>com.vaadin</groupId>
 					<artifactId>vaadin-dev</artifactId>
