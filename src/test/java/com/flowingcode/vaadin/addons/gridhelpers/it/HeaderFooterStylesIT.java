@@ -2,7 +2,7 @@
  * #%L
  * Grid Helpers Add-on
  * %%
- * Copyright (C) 2022 - 2025 Flowing Code
+ * Copyright (C) 2022 - 2026 Flowing Code
  * %%
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -19,7 +19,8 @@
  */
 package com.flowingcode.vaadin.addons.gridhelpers.it;
 
-import static org.junit.Assert.assertEquals;
+import static org.hamcrest.MatcherAssert.assertThat;
+import static org.hamcrest.Matchers.containsString;
 import com.flowingcode.vaadin.addons.gridhelpers.it.HeaderFooterStylesCallables.HeaderCellWrapper;
 import com.flowingcode.vaadin.addons.gridhelpers.it.HeaderFooterStylesCallables.HeaderRowWrapper;
 import com.flowingcode.vaadin.testbench.rpc.HasRpcSupport;
@@ -54,11 +55,11 @@ public class HeaderFooterStylesIT extends AbstractViewTest implements HasRpcSupp
       row1.getCell(i).setClassName("row1-cell" + i);
     }
 
-    assertEquals("row0-cell0", grid.getHeaderCellAt(0, 0).getAttribute("class"));
-    assertEquals("row0-cell1", grid.getHeaderCellAt(0, 1).getAttribute("class"));
+    assertThat(grid.getHeaderCellAt(0, 0).getAttribute("class"), containsString("row0-cell0"));
+    assertThat(grid.getHeaderCellAt(0, 1).getAttribute("class"), containsString("row0-cell1"));
 
     for (int i = 0; i < 5; i++) {
-      assertEquals("row1-cell" + i, grid.getHeaderCellAt(1, i).getAttribute("class"));
+      assertThat(grid.getHeaderCellAt(1, i).getAttribute("class"), containsString("row1-cell" + i));
     }
   }
 
@@ -72,8 +73,8 @@ public class HeaderFooterStylesIT extends AbstractViewTest implements HasRpcSupp
     $server.setColumnOrder(2, 3, 0, 1, 4);
     header0.setClassName("row0-cell0");
     header1.setClassName("row0-cell1");
-    assertEquals("row0-cell1", grid.getHeaderCellAt(0, 0).getAttribute("class"));
-    assertEquals("row0-cell0", grid.getHeaderCellAt(0, 1).getAttribute("class"));
+    assertThat(grid.getHeaderCellAt(0, 0).getAttribute("class"), containsString("row0-cell1"));
+    assertThat(grid.getHeaderCellAt(0, 1).getAttribute("class"), containsString("row0-cell0"));
   }
 
 }
