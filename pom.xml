@@ -218,6 +218,11 @@
 				<configuration>
 					<licenseName>apache_v2</licenseName>
 					<addJavaLicenseAfterPackage>false</addJavaLicenseAfterPackage>
+					<excludes>
+						<exclude>**/main/dev-bundle/**</exclude>
+						<exclude>**/main/bundles/**</exclude>
+						<exclude>**/main/frontend/**</exclude>
+					</excludes>
 				</configuration>
 			</plugin>
             <plugin>
