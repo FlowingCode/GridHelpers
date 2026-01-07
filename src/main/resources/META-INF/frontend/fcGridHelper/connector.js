@@ -2,7 +2,7 @@
  * #%L
  * Grid Helpers Add-on
  * %%
- * Copyright (C) 2022 - 2024 Flowing Code
+ * Copyright (C) 2022 - 2026 Flowing Code
  * %%
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -64,13 +64,22 @@ import { Grid } from '@vaadin/grid/src/vaadin-grid.js';
 	
 				grid.fcGridHelper._heightByRowsObserver.observe(grid);
 				
-				grid.removeEventListener('loading-changed', grid.fcGridHelper._heightByRowsListener);
 				
-				grid.fcGridHelper._heightByRowsListener = ()=>{
-					if (!grid.loading) grid.fcGridHelper._updateHeightByRows(n);
-				};
+				if (grid.fcGridHelper._heightByRowsMutationObserver) {
+					grid.fcGridHelper._heightByRowsMutationObserver.disconnect();
+				}
 				
-				grid.addEventListener('loading-changed', grid.fcGridHelper._heightByRowsListener);
+				grid.fcGridHelper._heightByRowsMutationObserver = new MutationObserver(mutationsList => {
+					for (const mutation of mutationsList) {
+						if (mutation.type === 'childList') {
+							grid.fcGridHelper._updateHeightByRows(n);
+							break;
+						};
+					}
+				});
+				
+				let tbody = grid.shadowRoot.querySelector("tbody#items");
+				grid.fcGridHelper._heightByRowsMutationObserver.observe(tbody, {childList: true});
 			},
 			
 			_updateHeightByRows : function(n) {
