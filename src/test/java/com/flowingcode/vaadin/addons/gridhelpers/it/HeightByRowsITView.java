@@ -72,6 +72,8 @@ public class HeightByRowsITView extends VerticalLayout
 
     if (!params.contains(EMPTY)) {
       grid.setItems(IntStream.range(1, 100).mapToObj(Integer::valueOf).toArray(Integer[]::new));
+    } else {
+      grid.getElement().getStyle().set("min-height", "0");
     }
 
     params.stream()
