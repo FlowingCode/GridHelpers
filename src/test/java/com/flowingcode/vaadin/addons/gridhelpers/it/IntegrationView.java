@@ -26,6 +26,7 @@ import com.flowingcode.vaadin.addons.gridhelpers.TestData;
 import com.flowingcode.vaadin.jsonmigration.InstrumentedRoute;
 import com.flowingcode.vaadin.jsonmigration.LegacyClientCallable;
 import com.flowingcode.vaadin.testbench.rpc.JsonArrayList;
+import com.flowingcode.vaadin.testbench.rpc.Version;
 import com.vaadin.flow.component.grid.Grid;
 import com.vaadin.flow.component.grid.Grid.Column;
 import com.vaadin.flow.component.grid.Grid.SelectionMode;
@@ -80,6 +81,11 @@ public class IntegrationView extends Div implements IntegrationViewCallables {
   @LegacyClientCallable
   public JsonValue $call(JsonObject invocation) {
     return IntegrationViewCallables.super.$call(invocation);
+  }
+
+  @Override
+  public Version getVersion() {
+    return new Version();
   }
 
   private List<Person> getItems() {

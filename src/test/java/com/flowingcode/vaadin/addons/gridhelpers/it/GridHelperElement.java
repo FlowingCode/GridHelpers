@@ -2,7 +2,7 @@
  * #%L
  * Grid Helpers Add-on
  * %%
- * Copyright (C) 2022 - 2025 Flowing Code
+ * Copyright (C) 2022 - 2026 Flowing Code
  * %%
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -19,24 +19,39 @@
  */
 package com.flowingcode.vaadin.addons.gridhelpers.it;
 
+import com.flowingcode.vaadin.testbench.rpc.Version;
 import com.vaadin.flow.component.checkbox.testbench.CheckboxElement;
 import com.vaadin.flow.component.grid.testbench.GridElement;
 import com.vaadin.flow.component.menubar.testbench.MenuBarElement;
 import com.vaadin.testbench.ElementQuery;
+import com.vaadin.testbench.ElementQuery.AttributeMatch.Comparison;
 import com.vaadin.testbench.TestBenchElement;
 import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
 import java.util.NoSuchElementException;
 import java.util.Optional;
+import lombok.NonNull;
 import org.openqa.selenium.By;
 import org.openqa.selenium.TimeoutException;
 import org.openqa.selenium.WebElement;
 
 public class GridHelperElement extends MyGridElement {
 
+  private Version version;
+
+  private GridHelperElement(GridHelperElement e, Version version) {
+    init(e.getWrappedElement(), e.getCommandExecutor());
+    this.version = version;
+  }
+
   public GridHelperElement(GridElement e) {
     init(e.getWrappedElement(), e.getCommandExecutor());
+    version = null;
+  }
+
+  public GridHelperElement withVersion(@NonNull Version version) {
+    return new GridHelperElement(this, version);
   }
 
   @Override
@@ -63,8 +78,15 @@ public class GridHelperElement extends MyGridElement {
 
   public List<CheckboxElement> getColumnToggleElements() {
     try {
-      return new ElementQuery<>(TestBenchElement.class,
-          "vaadin-context-menu-overlay, vaadin-menu-bar-overlay")
+      ElementQuery<TestBenchElement> query;
+      if (version == null || version.getMajorVersion() < 25) {
+        query = new ElementQuery<>(TestBenchElement.class,
+            "vaadin-context-menu-overlay, vaadin-menu-bar-overlay");
+      } else {
+        query = new ElementQuery<>(TestBenchElement.class, "vaadin-menu-bar")
+            .withAttribute("theme", "gridHelperToggle", Comparison.CONTAINS_WORD);
+      }
+      return query
           .context(getDriver())
           .waitForFirst(100)
           .$(CheckboxElement.class).all();
