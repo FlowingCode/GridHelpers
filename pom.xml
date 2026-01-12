@@ -4,7 +4,7 @@
 
 	<groupId>org.vaadin.addons.flowingcode</groupId>
 	<artifactId>grid-helpers</artifactId>
-	<version>2.0.0</version>
+	<version>2.0.1-SNAPSHOT</version>
 	<name>Grid Helpers Add-on</name>
 	<description>Grid Helpers Add-on for Vaadin Flow</description>
 	<url>https://www.flowingcode.com/en/open-source/</url>
@@ -40,7 +40,7 @@
 		<url>https://github.com/FlowingCode/GridHelpers</url>
 		<connection>scm:git:git://github.com/FlowingCode/GridHelpers.git</connection>
 		<developerConnection>scm:git:ssh://git@github.com:/FlowingCode/GridHelpers.git</developerConnection>
-		<tag>grid-helpers-2.0.0</tag>
+		<tag>master</tag>
 	</scm>
 	
         <developers>
