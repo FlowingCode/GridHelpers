@@ -19,6 +19,7 @@
 		<jetty.version>9.4.36.v20210114</jetty.version>
 		<webdrivermanager.version>6.1.0</webdrivermanager.version>
 		<driver-binary-downloader-maven-plugin.version>1.0.17</driver-binary-downloader-maven-plugin.version>
+        <flowingcode.commons.demo.version>3.8.0</flowingcode.commons.demo.version>
 	</properties>
 
 	<organization>
@@ -59,11 +60,7 @@
 				<scope>import</scope>
 				<version>${vaadin.version}</version>
 			</dependency>
-            <dependency>
-            	<groupId>com.flowingcode.vaadin.addons.demo</groupId>
-            	<artifactId>commons-demo</artifactId>
-            	<version>3.8.0</version>
-            </dependency>
+
 		</dependencies>
 	</dependencyManagement>
 
@@ -137,6 +134,7 @@
         <dependency>
 			<groupId>com.flowingcode.vaadin.addons.demo</groupId>
 			<artifactId>commons-demo</artifactId>
+			<version>${flowingcode.commons.demo.version}</version>
 			<scope>test</scope>
 		</dependency>
 		<dependency>
@@ -550,6 +548,7 @@
 				<frontend.hotdeploy>true</frontend.hotdeploy>
 				<webdrivermanager.version>5.6.3</webdrivermanager.version>
 				<driver-binary-downloader-maven-plugin.version>1.0.18</driver-binary-downloader-maven-plugin.version>
+                <flowingcode.commons.demo.version>4.2.0</flowingcode.commons.demo.version>
 			</properties>
 			
 			<dependencies>
@@ -558,12 +557,6 @@
 				    <artifactId>selenium-java</artifactId>
 				    <version>4.17.0</version>
 				    <scope>test</scope>
-				</dependency>
-				<dependency>
-				<groupId>com.flowingcode.vaadin.addons.demo</groupId>
-				<artifactId>commons-demo</artifactId>
-					<version>4.2.0</version>
-					<scope>test</scope>
 				</dependency>
 			</dependencies>
 		</profile>
