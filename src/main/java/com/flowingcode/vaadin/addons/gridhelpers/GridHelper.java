@@ -78,7 +78,45 @@ public final class GridHelper<T> implements Serializable {
 
   /** Compact row styling for Vaadin Grid */
   // https://cookbook.vaadin.com/grid-dense-theme
-  public static final String DENSE_THEME = "fcGh-dense";
+  private static final String DENSE_THEME_NAME = "fcGh-dense";
+
+  /**
+   * Compact row styling for Vaadin Grid.
+   *
+   * @deprecated Use {@link #setDenseTheme(Grid, boolean)} instead. Direct use of this constant
+   *     bypasses the bytecode reference to {@code GridHelper}, which prevents the Vaadin production
+   *     bundle scanner from discovering the required {@code @CssImport} annotations.
+   */
+  @Deprecated(since = "2.1.0", forRemoval = true)
+  public static final String DENSE_THEME = DENSE_THEME_NAME;
+
+  /**
+   * Adds or removes compact row styling on the given grid.
+   *
+   * <p>Prefer this method over {@code grid.addThemeName(GridHelper.DENSE_THEME)} because it
+   * creates a bytecode reference to {@code GridHelper}, ensuring that the Vaadin production
+   * bundle scanner discovers the required {@code @CssImport} annotations.
+   *
+   * @param grid the grid to style
+   * @param dense {@code true} to enable dense theme, {@code false} to remove it
+   */
+  public static void setDenseTheme(Grid<?> grid, boolean dense) {
+    if (dense) {
+      grid.addThemeName(DENSE_THEME_NAME);
+    } else {
+      grid.removeThemeName(DENSE_THEME_NAME);
+    }
+  }
+
+  /**
+   * Returns whether the dense theme is currently applied to the given grid.
+   *
+   * @param grid the grid to check
+   * @return {@code true} if the dense theme is applied
+   */
+  public static boolean isDenseTheme(Grid<?> grid) {
+    return grid.hasThemeName(DENSE_THEME_NAME);
+  }
 
   @Getter(value = AccessLevel.PACKAGE)
   private final Grid<T> grid;

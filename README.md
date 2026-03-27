@@ -84,7 +84,7 @@ The class `GridHelper` provides several static methods that receive a `Grid` or 
 
 ```
 grid.setSelectionMode(SelectionMode.MULTI);
-grid.addThemeName(GridHelper.DENSE_THEME);
+GridHelper.setDenseTheme(grid, true);
 GridHelper.setSelectOnClick(grid, true);
 GridHelper.setArrowSelectionEnabled(grid, true);
 GridHelper.setSelectionColumnHidden(grid, true);

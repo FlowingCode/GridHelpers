@@ -263,15 +263,11 @@ public class AllFeaturesDemo extends Div {
   }
 
   private void setDenseTheme(Grid<Person> grid, boolean value) {
-    if (value) {
-      grid.addThemeName(GridHelper.DENSE_THEME);
-    } else {
-      grid.removeThemeName(GridHelper.DENSE_THEME);
-    }
+    GridHelper.setDenseTheme(grid, value);
   }
 
   private boolean hasDenseTheme(Grid<Person> grid) {
-    return grid.hasThemeName(GridHelper.DENSE_THEME);
+    return GridHelper.isDenseTheme(grid);
   }
 
   private void setHeaderHidden(Grid<Person> grid, boolean value) {
