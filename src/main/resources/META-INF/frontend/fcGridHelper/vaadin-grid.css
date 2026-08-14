@@ -46,7 +46,8 @@
   --fcgh-toggle-right: 0;
 }
 
-:host([overflow~="right"]), :host([overflow~="left"]) {
+:host([overflow~="right"]), :host([overflow~="left"]),
+:host([overflow~="start"]), :host([overflow~="end"])  {
   --fcgh-toggle-right: 24px;
 }
 
