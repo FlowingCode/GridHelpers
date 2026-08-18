@@ -29,7 +29,12 @@ import { Grid } from '@vaadin/grid/src/vaadin-grid.js';
 (function () { 
   window.Vaadin.Flow.fcGridHelperConnector = {
     initLazy: grid => {
-    
+        if (!grid.shadowRoot.querySelector('slot[name="fc-column-toggle"]')) {
+            const slot = document.createElement('slot');
+            slot.setAttribute('name','fc-column-toggle');
+            grid.shadowRoot.appendChild(slot);
+        }
+
     	//https://cookbook.vaadin.com/grid-arrow-selection
     	grid.addEventListener('keyup', function(e) {
     		if (e.keyCode == 32) return;

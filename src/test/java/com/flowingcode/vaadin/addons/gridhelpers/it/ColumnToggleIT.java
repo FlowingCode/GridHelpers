@@ -52,11 +52,22 @@ public class ColumnToggleIT extends AbstractViewTest implements HasRpcSupport {
 
     $server.setColumnToggleVisible(true);
     assertNotNull("ColumnToggle should be present", grid.getColumnToggleButton());
-    assertThat(grid.getVisibleColumns(), hasSize(nColumns + 1));
+    assertThat(grid.getVisibleColumns(), hasSize(nColumns));
 
     $server.setColumnToggleVisible(false);
     assertNull("ColumnToggle should be absent", grid.getColumnToggleButton());
     assertThat(grid.getVisibleColumns(), hasSize(nColumns));
+  }
+
+  @Test
+  public void testColumnToggleSlot() {
+    $server.setColumnToggleVisible(true);
+    assertNotNull("ColumnToggle should be present", grid.getColumnToggle());
+    assertEquals("fc-column-toggle", grid.getColumnToggleSlotName());
+
+    $server.setColumnToggleVisible(false);
+    assertNull("ColumnToggle should be absent", grid.getColumnToggle());
+    assertNull(grid.getColumnToggleSlotName());
   }
 
   @Test
@@ -66,9 +77,7 @@ public class ColumnToggleIT extends AbstractViewTest implements HasRpcSupport {
     $server.setColumnToggleVisible(true);
     grid.getColumnToggleButton().click();
 
-    // the toggle is rendered in its own column
     assertThat(grid.getColumnToggleElements(), hasSize(nColumns));
-    assertThat(grid.getVisibleColumns(), hasSize(++nColumns));
 
     grid.getColumnToggleElements().get(0).setChecked(false);
     assertThat(grid.getVisibleColumns(), hasSize(nColumns - 1));

@@ -2,7 +2,7 @@
  * #%L
  * Grid Helpers Add-on
  * %%
- * Copyright (C) 2022 - 2024 Flowing Code
+ * Copyright (C) 2022 - 2026 Flowing Code
  * %%
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -54,7 +54,7 @@ class ColumnToggleHelper<T> implements Serializable {
 
   private final GridHelper<T> helper;
 
-  private Column<?> menuToggleColumn;
+  private MenuBar menuToggle;
 
   public void setColumnToggleVisible(boolean visible) {
     // https://cookbook.vaadin.com/grid-column-toggle
@@ -66,7 +66,7 @@ class ColumnToggleHelper<T> implements Serializable {
   }
 
   public boolean isColumnToggleVisible() {
-    return menuToggleColumn != null && menuToggleColumn.isVisible();
+    return menuToggle != null;
   }
 
   private void showColumnToggle() {
@@ -74,18 +74,20 @@ class ColumnToggleHelper<T> implements Serializable {
         .ifPresent(
             toggle -> {
               Grid<?> grid = helper.getGrid();
-              if (menuToggleColumn == null) {
-                menuToggleColumn = grid.addColumn(t -> "").setWidth("auto").setFlexGrow(0);
-              } else {
-                menuToggleColumn.setVisible(true);
-              }
-              grid.getHeaderRows().get(0).getCell(menuToggleColumn).setComponent(toggle);
+              removeMenuToggle();
+              menuToggle = toggle;
+              grid.getElement().appendChild(toggle.getElement());
             });
   }
 
   private void hideColumnToggle() {
-    if (menuToggleColumn != null) {
-      menuToggleColumn.setVisible(false);
+    removeMenuToggle();
+  }
+
+  private void removeMenuToggle() {
+    if (menuToggle != null) {
+      menuToggle.getElement().removeFromParent();
+      menuToggle = null;
     }
   }
 
@@ -93,6 +95,7 @@ class ColumnToggleHelper<T> implements Serializable {
     Grid<T> grid = helper.getGrid();
 
     MenuBar menuBar = new MenuBar();
+    menuBar.getThemeNames().add(MenuBarVariant.LUMO_TERTIARY.getVariantName());
     menuBar.getThemeNames().add(MenuBarVariant.LUMO_TERTIARY_INLINE.getVariantName());
     MenuItem menuItem = menuBar.addItem(VaadinIcon.ELLIPSIS_DOTS_V.create());
     SubMenu subMenu = menuItem.getSubMenu();
@@ -110,6 +113,7 @@ class ColumnToggleHelper<T> implements Serializable {
     }
 
     menuBar.getThemeNames().add(GRID_HELPER_TOGGLE_THEME);
+    menuBar.getElement().setAttribute("slot", "fc-column-toggle");
     return Optional.of(menuBar).filter(_menuBar -> !_menuBar.getItems().isEmpty());
   }
 
@@ -170,7 +174,4 @@ class ColumnToggleHelper<T> implements Serializable {
     }
   }
 
-  Column<?> getMenuToggleColumn() {
-    return menuToggleColumn;
-  }
 }

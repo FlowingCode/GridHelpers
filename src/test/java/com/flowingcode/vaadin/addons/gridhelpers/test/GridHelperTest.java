@@ -184,11 +184,11 @@ public class GridHelperTest {
   }
 
   @Test
-  public void testMenuToggleColumn() {
+  public void testMenuToggleSlot() {
     grid.setColumnToggleVisible(true);
 
-    Column<Bean> toggleColumn=grid.getColumns().get(grid.getColumns().size()-1);
-    assertTrue(GridHelper.isMenuToggleColumn(toggleColumn));
+    assertTrue(grid.getElement().getChildren()
+        .anyMatch(e -> "fc-column-toggle".equals(e.getAttribute("slot"))));
   }
 
   @Test

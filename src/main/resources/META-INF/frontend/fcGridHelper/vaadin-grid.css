@@ -42,15 +42,6 @@
   min-height: calc(var(--lumo-size-xxs) - var(--_lumo-grid-border-width));
 }
 
-:host {
-  --fcgh-toggle-right: 0;
-}
-
-:host([overflow~="right"]), :host([overflow~="left"]),
-:host([overflow~="start"]), :host([overflow~="end"])  {
-  --fcgh-toggle-right: 24px;
-}
-
 table[aria-multiselectable="true"] [part~="fcGh-noselect"][first-column] ::slotted(*) {
   opacity: var(--fcgh-noselect-opacity, 0.5);
   pointer-events: none;

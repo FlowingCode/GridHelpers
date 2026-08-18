@@ -2,7 +2,7 @@
  * #%L
  * Grid Helpers Add-on
  * %%
- * Copyright (C) 2022 - 2025 Flowing Code
+ * Copyright (C) 2022 - 2026 Flowing Code
  * %%
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -43,6 +43,7 @@ import com.vaadin.flow.function.SerializablePredicate;
 import com.vaadin.flow.shared.Registration;
 import java.io.Serializable;
 import java.util.Collection;
+import java.util.Objects;
 import lombok.AccessLevel;
 import lombok.Getter;
 import org.slf4j.Logger;
@@ -50,7 +51,6 @@ import org.slf4j.LoggerFactory;
 
 @SuppressWarnings("serial")
 @JsModule("./fcGridHelper/connector.js")
-@CssImport(value = "./fcGridHelper/vaadin-menu-bar.css", themeFor = "vaadin-menu-bar")
 @CssImport(value = GridHelper.GRID_STYLES, themeFor = "vaadin-grid")
 @CssImport(
     value = "./fcGridHelper/vaadin-context-menu-item.css",
@@ -67,6 +67,7 @@ import org.slf4j.LoggerFactory;
 @CssImport(
     value = "./fcGridHelper/vaadin-checkbox.css",
     themeFor = "vaadin-checkbox")
+@CssImport(value = "./fcGridHelper/styles.css")
 public final class GridHelper<T> implements Serializable {
 
   private static final Logger logger = LoggerFactory.getLogger(GridHelper.class);
@@ -362,8 +363,20 @@ public final class GridHelper<T> implements Serializable {
     return getHelper(column.getGrid()).columnToggleHelper.getHidingToggleCaption(column);
   }
 
+  /**
+   * Returns whether the given column renders the column toggle.
+   *
+   * @param column the column to test, not {@code null}
+   * @return always {@code false}
+   * @throws NullPointerException if {@code column} is {@code null}
+   * @deprecated Since 2.2.0, the column toggle is rendered in the {@code fc-column-toggle} slot
+   *             instead of in a dedicated column, so no column is a menu toggle column and this
+   *             method always returns {@code false}.
+   */
+  @Deprecated(forRemoval = true, since = "2.2.0")
   public static boolean isMenuToggleColumn(Column<?> column) {
-    return column == getHelper(column).columnToggleHelper.getMenuToggleColumn();
+    Objects.requireNonNull(column);
+    return false;
   }
 
   // Empty Label

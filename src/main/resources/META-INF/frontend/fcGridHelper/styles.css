@@ -2,7 +2,7 @@
  * #%L
  * Grid Helpers Add-on
  * %%
- * Copyright (C) 2022 - 2024 Flowing Code
+ * Copyright (C) 2022 - 2026 Flowing Code
  * %%
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -17,15 +17,18 @@
  * limitations under the License.
  * #L%
  */
-
-:host([theme~="gridHelperToggle"]) {
+vaadin-menu-bar[theme~="gridHelperToggle"][slot] {
   position: absolute;
-  top: 0;
-  right: var(--fcgh-toggle-right);
-  height: 100%;
+  top: -4px;
+  right: calc( 6px - var(--vaadin-aura-theme,0)*1px);
 }
 
-:host([theme~="gridHelperToggle"]) [part="container"] {
-  vertical-align: middle;
-  height: 100%;
+vaadin-menu-bar[theme~="gridHelperToggle"][slot] vaadin-menu-bar-button::part(suffix) {
+  display:none;
 }
+
+vaadin-menu-bar[theme~="gridHelperToggle"][slot] > vaadin-menu-bar-button {
+  padding: calc(var(--vaadin-aura-theme, 0) * 2px);
+  --lumo-size-m: 0;
+}
+

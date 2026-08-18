@@ -76,6 +76,26 @@ public class GridHelperElement extends MyGridElement {
     }
   }
 
+  /**
+   * Returns the column toggle menu bar, which is slotted into the grid, or {@code null} if the
+   * column toggle is not visible.
+   */
+  public TestBenchElement getColumnToggle() {
+    List<WebElement> elements =
+        findElements(By.cssSelector("vaadin-menu-bar[theme~='gridHelperToggle']"));
+    return (TestBenchElement) elements.stream().findFirst().orElse(null);
+  }
+
+  /**
+   * Returns the name of the slot that the column toggle is assigned to, or {@code null} if the
+   * column toggle is not visible or is not assigned to any slot.
+   */
+  public String getColumnToggleSlotName() {
+    return (String) executeScript(
+        "const toggle = this.querySelector('vaadin-menu-bar[theme~=\"gridHelperToggle\"]');"
+            + "return toggle && toggle.assignedSlot && toggle.assignedSlot.name;");
+  }
+
   public List<CheckboxElement> getColumnToggleElements() {
     try {
       ElementQuery<TestBenchElement> query;
