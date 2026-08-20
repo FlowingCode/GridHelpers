@@ -38,6 +38,7 @@ import com.vaadin.flow.component.grid.GridSingleSelectionModel;
 import com.vaadin.flow.component.grid.HeaderRow;
 import com.vaadin.flow.component.grid.HeaderRow.HeaderCell;
 import com.vaadin.flow.component.grid.ItemClickEvent;
+import com.vaadin.flow.component.icon.IconFactory;
 import com.vaadin.flow.function.SerializableFunction;
 import com.vaadin.flow.function.SerializablePredicate;
 import com.vaadin.flow.shared.Registration;
@@ -308,6 +309,28 @@ public final class GridHelper<T> implements Serializable {
   /** Returns whether the menu to toggle the visibility of grid columns is visible. */
   public static boolean isColumnToggleVisible(Grid<?> grid) {
     return getHelper(grid).columnToggleHelper.isColumnToggleVisible();
+  }
+
+  /**
+   * Sets the icon of the menu that toggles the visibility of grid columns.
+   *
+   * @param grid the grid to be configured
+   * @param icon the component that is rendered in the column toggle
+   * @throws NullPointerException if {@code icon} is {@code null}
+   */
+  public static void setColumnToggleIcon(Grid<?> grid, Component icon) {
+    getHelper(grid).columnToggleHelper.setColumnToggleIcon(icon);
+  }
+
+  /**
+   * Sets the icon of the menu that toggles the visibility of grid columns.
+   *
+   * @param grid the grid to be configured
+   * @param icon the factory of the icon that is rendered in the column toggle
+   * @throws NullPointerException if {@code icon} is {@code null}
+   */
+  public static void setColumnToggleIcon(Grid<?> grid, IconFactory icon) {
+    setColumnToggleIcon(grid, icon.create());
   }
 
   /**

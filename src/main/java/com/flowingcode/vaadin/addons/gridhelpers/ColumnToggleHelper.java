@@ -26,6 +26,7 @@
 
 package com.flowingcode.vaadin.addons.gridhelpers;
 
+import com.vaadin.flow.component.Component;
 import com.vaadin.flow.component.ComponentEventListener;
 import com.vaadin.flow.component.ComponentUtil;
 import com.vaadin.flow.component.checkbox.Checkbox;
@@ -38,6 +39,7 @@ import com.vaadin.flow.component.menubar.MenuBar;
 import com.vaadin.flow.component.menubar.MenuBarVariant;
 import com.vaadin.flow.shared.Registration;
 import java.io.Serializable;
+import java.util.Objects;
 import java.util.Optional;
 import lombok.NonNull;
 import lombok.RequiredArgsConstructor;
@@ -56,6 +58,8 @@ class ColumnToggleHelper<T> implements Serializable {
 
   private MenuBar menuToggle;
 
+  private Component icon;
+
   public void setColumnToggleVisible(boolean visible) {
     // https://cookbook.vaadin.com/grid-column-toggle
     if (visible) {
@@ -67,6 +71,20 @@ class ColumnToggleHelper<T> implements Serializable {
 
   public boolean isColumnToggleVisible() {
     return menuToggle != null;
+  }
+
+  private Component getColumnToggleIcon() {
+    if (icon == null) {
+      icon = VaadinIcon.ELLIPSIS_DOTS_V.create();
+    }
+    return icon;
+  }
+
+  public void setColumnToggleIcon(Component icon) {
+    this.icon = Objects.requireNonNull(icon);
+    if (isColumnToggleVisible()) {
+      showColumnToggle();
+    }
   }
 
   private void showColumnToggle() {
@@ -97,7 +115,7 @@ class ColumnToggleHelper<T> implements Serializable {
     MenuBar menuBar = new MenuBar();
     menuBar.getThemeNames().add(MenuBarVariant.LUMO_TERTIARY.getVariantName());
     menuBar.getThemeNames().add(MenuBarVariant.LUMO_TERTIARY_INLINE.getVariantName());
-    MenuItem menuItem = menuBar.addItem(VaadinIcon.ELLIPSIS_DOTS_V.create());
+    MenuItem menuItem = menuBar.addItem(getColumnToggleIcon());
     SubMenu subMenu = menuItem.getSubMenu();
 
     for (Column<T> column : grid.getColumns()) {

@@ -24,6 +24,7 @@ import com.flowingcode.vaadin.addons.demo.DemoSource;
 import com.vaadin.flow.component.grid.Grid;
 import com.vaadin.flow.component.grid.Grid.Column;
 import com.vaadin.flow.component.html.Div;
+import com.vaadin.flow.component.icon.VaadinIcon;
 import com.vaadin.flow.component.notification.Notification;
 import com.vaadin.flow.router.PageTitle;
 import com.vaadin.flow.router.Route;
@@ -43,6 +44,7 @@ public class ColumnToggleMenuDemo extends Div {
     Column<Person> lastNameColumn = grid.addColumn(Person::getLastName).setHeader("Last name");
     Column<Person> countryColumn = grid.addColumn(Person::getCountry).setHeader("Country");
 
+    GridHelper.setColumnToggleIcon(grid, VaadinIcon.CARET_DOWN);
     GridHelper.setHidingToggleCaption(firstNameColumn, "First name");
     GridHelper.setHidingToggleCaption(lastNameColumn, "Last name");
     GridHelper.setHidingToggleCaption(countryColumn, "Country");

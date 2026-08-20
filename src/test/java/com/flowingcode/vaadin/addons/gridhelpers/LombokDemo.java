@@ -24,9 +24,9 @@ import com.flowingcode.vaadin.addons.demo.DemoSource;
 import com.vaadin.flow.component.grid.Grid;
 import com.vaadin.flow.component.grid.Grid.SelectionMode;
 import com.vaadin.flow.component.html.Div;
+import com.vaadin.flow.component.icon.VaadinIcon;
 import com.vaadin.flow.router.PageTitle;
 import com.vaadin.flow.router.Route;
-
 import lombok.experimental.ExtensionMethod;
 
 @PageTitle("Using Lombok")
@@ -55,6 +55,7 @@ public class LombokDemo extends Div {
     grid.getColumns().forEach(c -> c.setAutoWidth(true));
 
     grid.setColumnToggleVisible(true);
+    grid.setColumnToggleIcon(VaadinIcon.CARET_DOWN);
     grid.setSelectionColumnFrozen(true);
     grid.setSelectOnClick(true);
     grid.setSelectionFilter(Person::isActive);
