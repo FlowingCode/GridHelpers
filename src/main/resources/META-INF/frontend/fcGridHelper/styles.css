@@ -19,8 +19,18 @@
  */
 vaadin-menu-bar[theme~="gridHelperToggle"][slot] {
   position: absolute;
-  top: -4px;
-  right: calc( 6px - var(--vaadin-aura-theme,0)*1px);
+  top: 0;
+  right: 12px;
+  display: flex;
+  height: var(--_fc-grid-helper--header-row-height, unset);
+  align-items: var(--fc-grid-helper-toggle--align-items, start);
+  --_fc-grid-helper-toggle--background: var(--fc-grid-helper-toggle--background,
+      var(--lumo-base-color, var(--vaadin-background-color, unset)));
+}
+
+[theme~="fcGh-dense"] > vaadin-menu-bar[theme~="gridHelperToggle"][slot] {
+  align-items: var(--fc-grid-helper-toggle--align-items, center);
+  top: -1px;
 }
 
 vaadin-menu-bar[theme~="gridHelperToggle"][slot] vaadin-menu-bar-button::part(suffix) {
@@ -28,7 +38,33 @@ vaadin-menu-bar[theme~="gridHelperToggle"][slot] vaadin-menu-bar-button::part(su
 }
 
 vaadin-menu-bar[theme~="gridHelperToggle"][slot] > vaadin-menu-bar-button {
-  padding: calc(var(--vaadin-aura-theme, 0) * 2px);
+  padding: 0;
+  margin: 1px 0;
+  border: 0;
+  border-radius: 0;
   --lumo-size-m: 0;
+  --_fc-grid-helper-toggle--button-size: var(--fc-grid-helper-toggle--button-size, 16px);
+  height: var(--_fc-grid-helper-toggle--button-size);
 }
 
+vaadin-menu-bar[theme~="gridHelperToggle"][slot] > vaadin-menu-bar-button > vaadin-menu-bar-item::part(content) {
+  font-size: var(--fc-grid-helper-toggle--font-size, 80%);
+  gap: var(--fc-grid-helper-toggle--gap, 4px);
+  flex-direction: var(--fc-grid-helper-toggle--flex-direction, row-reverse);
+}
+
+vaadin-menu-bar[theme~="gridHelperToggle"][slot] > vaadin-menu-bar-button vaadin-icon {
+  --vaadin-icon-visual-size: var(--_fc-grid-helper-toggle--button-size);
+  --lumo-icon-size-m: var(--_fc-grid-helper-toggle--button-size);
+  --vaadin-icon-size: var(--_fc-grid-helper-toggle--button-size);
+  padding: 0;
+  background: var(--_fc-grid-helper-toggle--background);
+}
+
+[theme~="fcGh-dense"] > vaadin-menu-bar[theme~="gridHelperToggle"][slot] > vaadin-menu-bar-button {
+	background: var(--_fc-grid-helper-toggle--background);
+}
+    
+vaadin-menu-bar[theme~="gridHelperToggle"][slot] > vaadin-menu-bar-button::before {
+  display: none;
+}

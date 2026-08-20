@@ -63,3 +63,7 @@ table[aria-multiselectable="true"] [part~="fcGh-noselect"][first-column] ::slott
 	height : var(--height-by-rows);
 	max-height : var(--height-by-rows);
 }
+
+:host [part~='last-column-cell'] ::slotted(vaadin-grid-cell-content) {
+	padding-right: calc(var(--fc-grid-helper-toggle--button-size, 16px) - 2px);
+}

@@ -29,6 +29,13 @@ import { Grid } from '@vaadin/grid/src/vaadin-grid.js';
 (function () { 
   window.Vaadin.Flow.fcGridHelperConnector = {
     initLazy: grid => {
+        // initLazy runs on every attach, and grid.fcGridHelper is replaced below,
+        // so the observers of the previous initialization have to be released here
+        if (grid.fcGridHelper) {
+            grid.fcGridHelper._toggleHeightResizeObserver.disconnect();
+            grid.fcGridHelper._toggleHeightMutationObserver?.disconnect();
+        }
+
         if (!grid.shadowRoot.querySelector('slot[name="fc-column-toggle"]')) {
             const slot = document.createElement('slot');
             slot.setAttribute('name','fc-column-toggle');
@@ -143,9 +150,57 @@ import { Grid } from '@vaadin/grid/src/vaadin-grid.js';
 					observer.width=undefined;
 					grid.dispatchEvent(new CustomEvent("fcgh-responsive-step", { detail: {step: -1} }));
 				}
+			},
+
+			_toggleHeightResizeObserver : new ResizeObserver(() => {
+				grid.fcGridHelper._updateToggleHeight();
+			}),
+
+			// keep --_fc-grid-helper--header-row-height in sync with the first visible header row,
+			// so that the column toggle defaults to the height of that row
+			_observeToggleHeight : function() {
+				const thead = grid.shadowRoot.querySelector("thead#header");
+				if (!thead) return;
+
+				if (!grid.fcGridHelper._toggleHeightMutationObserver) {
+					grid.fcGridHelper._toggleHeightMutationObserver = new MutationObserver(() => {
+						grid.fcGridHelper._updateToggleHeight();
+					});
+					grid.fcGridHelper._toggleHeightMutationObserver.observe(thead,
+						{childList: true, subtree: true, attributes: true, attributeFilter: ['hidden']});
+				}
+
+				grid.fcGridHelper._updateToggleHeight();
+			},
+
+			_updateToggleHeight : function() {
+				const row = grid.shadowRoot.querySelector("thead#header tr:not([hidden])");
+				const observer = grid.fcGridHelper._toggleHeightResizeObserver;
+
+				if (row !== grid.fcGridHelper._toggleHeightRow) {
+					if (grid.fcGridHelper._toggleHeightRow) {
+						observer.unobserve(grid.fcGridHelper._toggleHeightRow);
+					}
+					grid.fcGridHelper._toggleHeightRow = row;
+					if (row) {
+						observer.observe(row);
+					}
+				}
+
+				const height = row ? row.getBoundingClientRect().height : 0;
+				if (height !== grid.fcGridHelper._toggleHeight) {
+					grid.fcGridHelper._toggleHeight = height;
+					if (height > 0) {
+						grid.style.setProperty('--_fc-grid-helper--header-row-height', height+'px');
+					} else {
+						grid.style.removeProperty('--_fc-grid-helper--header-row-height');
+					}
+				}
 			}
-			
+
 		};
+
+		grid.fcGridHelper._observeToggleHeight();
     }
 	
   }

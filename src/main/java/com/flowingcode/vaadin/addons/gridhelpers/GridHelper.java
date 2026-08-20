@@ -39,16 +39,14 @@ import com.vaadin.flow.component.grid.HeaderRow;
 import com.vaadin.flow.component.grid.HeaderRow.HeaderCell;
 import com.vaadin.flow.component.grid.ItemClickEvent;
 import com.vaadin.flow.component.icon.IconFactory;
+import com.vaadin.flow.dom.Style;
 import com.vaadin.flow.function.SerializableFunction;
 import com.vaadin.flow.function.SerializablePredicate;
 import com.vaadin.flow.shared.Registration;
 import java.io.Serializable;
 import java.util.Collection;
-import java.util.Objects;
 import lombok.AccessLevel;
 import lombok.Getter;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 @SuppressWarnings("serial")
 @JsModule("./fcGridHelper/connector.js")
@@ -70,8 +68,6 @@ import org.slf4j.LoggerFactory;
     themeFor = "vaadin-checkbox")
 @CssImport(value = "./fcGridHelper/styles.css")
 public final class GridHelper<T> implements Serializable {
-
-  private static final Logger logger = LoggerFactory.getLogger(GridHelper.class);
 
   private static final String ARROW_SELECTION_PROPERTY = "_fcghArrowSelection";
   private static final String ENHANCED_SELECTION_PROPERTY = "_fcghEnhancedSelection";
@@ -142,11 +138,6 @@ public final class GridHelper<T> implements Serializable {
     if (grid.isAttached()) {
       initConnector();
     }
-  }
-
-  @SuppressWarnings("unchecked")
-  private static <T> GridHelper<T> getHelper(Column<T> column) {
-    return getHelper((Grid<T>) column.getGrid());
   }
 
   private static <T> GridHelper<T> getHelper(Grid<T> grid) {
@@ -334,6 +325,28 @@ public final class GridHelper<T> implements Serializable {
   }
 
   /**
+   * Sets the text that is rendered next to the icon of the menu that toggles the visibility of grid
+   * columns.
+   *
+   * @param grid the grid to be configured
+   * @param label the text to show after the icon, or {@code null} to show the icon alone
+   */
+  public static void setColumnToggleLabel(Grid<?> grid, String label) {
+    getHelper(grid).columnToggleHelper.setColumnToggleLabel(label);
+  }
+
+  /**
+   * Sets the vertical alignment of the menu that toggles the visibility of grid columns, relative to
+   * the first header row.
+   *
+   * @param grid the grid to be configured
+   * @param alignment the alignment of the column toggle, or {@code null} to restore the default
+   */
+  public static void setColumnToggleAlignment(Grid<?> grid, Style.AlignItems alignment) {
+    getHelper(grid).columnToggleHelper.setColumnToggleAlignment(alignment);
+  }
+
+  /**
    * Returns whether this column can be hidden by the user. Default is {@code false}.
    *
    * @return {@code true} if the user can hide the column, {@code false} if not.
@@ -386,19 +399,7 @@ public final class GridHelper<T> implements Serializable {
     return getHelper(column.getGrid()).columnToggleHelper.getHidingToggleCaption(column);
   }
 
-  /**
-   * Returns whether the given column renders the column toggle.
-   *
-   * @param column the column to test, not {@code null}
-   * @return always {@code false}
-   * @throws NullPointerException if {@code column} is {@code null}
-   * @deprecated Since 2.2.0, the column toggle is rendered in the {@code fc-column-toggle} slot
-   *             instead of in a dedicated column, so no column is a menu toggle column and this
-   *             method always returns {@code false}.
-   */
-  @Deprecated(forRemoval = true, since = "2.2.0")
   public static boolean isMenuToggleColumn(Column<?> column) {
-    Objects.requireNonNull(column);
     return false;
   }
 
