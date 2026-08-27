@@ -143,17 +143,20 @@ public class GridHelperElement extends MyGridElement {
    * element or a cell whose slot is not rendered yet is not reported as an absent child.
    */
   private TestBenchElement getSlottedCellChild(int rowIndex, String tagName) {
-    return new FluentWait<>(getDriver())
-        .withTimeout(Duration.ofSeconds(2))
-        .pollingEvery(Duration.ofMillis(50))
-        .ignoring(org.openqa.selenium.NoSuchElementException.class,
-            StaleElementReferenceException.class)
-        .until(driver -> {
-          TestBenchElement cell = getSlottedCell(getRow(rowIndex));
-          return cell.findElements(By.tagName(tagName)).stream().findFirst()
-              .map(TestBenchElement.class::cast);
-        })
-        .orElse(null);
+    try {
+      return new FluentWait<>(getDriver())
+          .withTimeout(Duration.ofSeconds(2))
+          .pollingEvery(Duration.ofMillis(50))
+          .ignoring(org.openqa.selenium.NoSuchElementException.class,
+              StaleElementReferenceException.class)
+          .until(driver -> {
+            TestBenchElement cell = getSlottedCell(getRow(rowIndex));
+            return cell.findElements(By.tagName(tagName)).stream().findFirst()
+                .map(TestBenchElement.class::cast).orElse(null);
+          });
+    } catch (TimeoutException e) {
+      return null;
+    }
   }
 
   private TestBenchElement getSlottedCell(WebElement e) {
