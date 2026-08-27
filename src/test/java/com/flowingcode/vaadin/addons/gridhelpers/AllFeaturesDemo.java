@@ -35,8 +35,11 @@ import com.vaadin.flow.component.dependency.StyleSheet;
 import com.vaadin.flow.component.grid.Grid;
 import com.vaadin.flow.component.grid.Grid.SelectionMode;
 import com.vaadin.flow.component.html.Div;
+import com.vaadin.flow.component.html.Span;
+import com.vaadin.flow.component.icon.Icon;
 import com.vaadin.flow.component.icon.VaadinIcon;
 import com.vaadin.flow.component.notification.Notification;
+import com.vaadin.flow.component.orderedlayout.FlexComponent.Alignment;
 import com.vaadin.flow.component.orderedlayout.FlexComponent.JustifyContentMode;
 import com.vaadin.flow.component.orderedlayout.HorizontalLayout;
 import com.vaadin.flow.component.orderedlayout.VerticalLayout;
@@ -44,6 +47,8 @@ import com.vaadin.flow.component.select.Select;
 import com.vaadin.flow.component.splitlayout.SplitLayout;
 import com.vaadin.flow.component.textfield.IntegerField;
 import com.vaadin.flow.data.binder.Binder;
+import com.vaadin.flow.data.renderer.ComponentRenderer;
+import com.vaadin.flow.dom.Style.AlignItems;
 import com.vaadin.flow.router.PageTitle;
 import com.vaadin.flow.router.Route;
 import java.util.Arrays;
@@ -51,6 +56,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.stream.IntStream;
+import lombok.AllArgsConstructor;
 import lombok.experimental.ExtensionMethod;
 
 @SuppressWarnings("serial")
@@ -100,6 +106,7 @@ public class AllFeaturesDemo extends Div {
     grid.setItems(TestData.initializeData());
     grid.setSelectionMode(SelectionMode.MULTI);
 
+    ToggleIcon.DEFAULT.apply(grid);
     grid.getElement().getStyle().set("flex-grow", "1");
 
     GridHelper.getHeaderStyles(grid, grid.getHeaderRows().get(0).getCells().get(1))
@@ -188,6 +195,20 @@ public class AllFeaturesDemo extends Div {
     updateHeightByRowsField(grid, heightByRowsField);
     heightByRowsField.setStepButtonsVisible(true);
 
+    Select<ToggleIcon> toggleIconSelect = new Select<>();
+    toggleIconSelect.setLabel("Column toggle icon");
+    toggleIconSelect.setItems(ToggleIcon.values());
+    toggleIconSelect.setRenderer(new ComponentRenderer<>(item -> {
+      Icon itemIcon = item.icon.create();
+      itemIcon.setSize("var(--lumo-icon-size-s)");
+      HorizontalLayout itemLayout = new HorizontalLayout(itemIcon, new Span(item.caption));
+      itemLayout.setAlignItems(Alignment.CENTER);
+      itemLayout.setSpacing(false);
+      itemLayout.getThemeList().add("spacing-s");
+      return itemLayout;
+    }));
+    binder.forField(toggleIconSelect).bind(this::getColumnToggleIcon, this::setColumnToggleIcon);
+
     binder.getFields().map(Component.class::cast).forEach(features::add);
 
     CompatibilityLabel label = new CompatibilityLabel("Features");
@@ -210,7 +231,36 @@ public class AllFeaturesDemo extends Div {
     grid.addToolbarFooter(hl);
   }
 
+  @AllArgsConstructor
+  private enum ToggleIcon {
+    DEFAULT("Default icon", VaadinIcon.GRID_H, null, null),
+    ELLIPSIS_DOTS("Ellipsis icon, centered", VaadinIcon.ELLIPSIS_DOTS_V, AlignItems.CENTER, null),
+    CARET_DOWN("Caret down, with label", VaadinIcon.CARET_DOWN, null, "Columns");
+
+    private final String caption;
+
+    private final VaadinIcon icon;
+
+    private final AlignItems alignment;
+
+    private final String label;
+
+    @Override
+    public String toString() {
+      return caption;
+    }
+
+    void apply(Grid<?> grid) {
+      grid.setColumnToggleIcon(icon);
+      grid.setColumnToggleAlignment(alignment);
+      grid.setColumnToggleLabel(label);
+    }
+
+  }
+
   private final Map<Checkbox, List<SelectionMode>> checkboxes = new HashMap<>();
+
+  private ToggleIcon toggleIcon = ToggleIcon.DEFAULT;
 
   private Checkbox newCheckbox(String labelText, SelectionMode... modes) {
     Checkbox checkbox = new Checkbox(labelText);
@@ -260,6 +310,15 @@ public class AllFeaturesDemo extends Div {
 
   private boolean hasSelectionFilter(Grid<Person> grid) {
     return grid.getSelectionFilter() != null;
+  }
+
+  private ToggleIcon getColumnToggleIcon(Grid<Person> grid) {
+    return toggleIcon;
+  }
+
+  private void setColumnToggleIcon(Grid<Person> grid, ToggleIcon value) {
+    toggleIcon = value;
+    value.apply(grid);
   }
 
   private void setDenseTheme(Grid<Person> grid, boolean value) {

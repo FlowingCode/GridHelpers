@@ -18,6 +18,10 @@
  * #L%
  */
 
+.grid-helpers-all-features vaadin-grid:not([theme~="fcGh-dense"]) vaadin-menu-bar-button:has([icon="vaadin:caret-down"]) {
+  margin-top: -1px;
+}
+
 label.label {
 	color: var(--lumo-body-text-color);
 	font-size: var(--lumo-font-size-s);
