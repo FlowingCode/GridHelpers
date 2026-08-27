@@ -23,11 +23,13 @@ vaadin-menu-bar[theme~="gridHelperToggle"][slot] {
   right: 12px;
   display: flex;
   height: var(--_fc-grid-helper--header-row-height, unset);
+  align-items: var(--fc-grid-helper-toggle--align-items, start);
   --_fc-grid-helper-toggle--background: var(--fc-grid-helper-toggle--background,
       var(--lumo-base-color, var(--vaadin-background-color, unset)));
 }
 
 [theme~="fcGh-dense"] > vaadin-menu-bar[theme~="gridHelperToggle"][slot] {
+  align-items: var(--fc-grid-helper-toggle--align-items, center);
   top: calc(var(--vaadin-aura-theme, 0) * 2px - 1px);
 }
 

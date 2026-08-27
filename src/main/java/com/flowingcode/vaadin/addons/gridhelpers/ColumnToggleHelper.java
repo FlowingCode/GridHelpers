@@ -37,8 +37,11 @@ import com.vaadin.flow.component.grid.Grid.Column;
 import com.vaadin.flow.component.icon.VaadinIcon;
 import com.vaadin.flow.component.menubar.MenuBar;
 import com.vaadin.flow.component.menubar.MenuBarVariant;
+import com.vaadin.flow.dom.Style;
+import com.vaadin.flow.dom.Style.AlignItems;
 import com.vaadin.flow.shared.Registration;
 import java.io.Serializable;
+import java.util.Locale;
 import java.util.Objects;
 import java.util.Optional;
 import lombok.NonNull;
@@ -49,6 +52,8 @@ import lombok.RequiredArgsConstructor;
 class ColumnToggleHelper<T> implements Serializable {
 
   private static final String GRID_HELPER_TOGGLE_THEME = "gridHelperToggle";
+
+  private static final String TOGGLE_ALIGN_ITEMS_PROPERTY = "--fc-grid-helper-toggle--align-items";
 
   private static final String TOGGLE_CAPTION_DATA = GridHelper.class.getName() + "#TOGGLE_CAPTION";
 
@@ -84,6 +89,18 @@ class ColumnToggleHelper<T> implements Serializable {
     this.icon = Objects.requireNonNull(icon);
     if (isColumnToggleVisible()) {
       showColumnToggle();
+    }
+  }
+
+  public void setColumnToggleAlignment(AlignItems alignment) {
+    // the custom property is set on the grid and inherited by the slotted menu bar,
+    // so that it survives the re-creation of the toggle
+    Style style = helper.getGrid().getStyle();
+    if (alignment == null) {
+      style.remove(TOGGLE_ALIGN_ITEMS_PROPERTY);
+    } else {
+      style.set(
+          TOGGLE_ALIGN_ITEMS_PROPERTY, alignment.name().replace('_', '-').toLowerCase(Locale.ROOT));
     }
   }
 

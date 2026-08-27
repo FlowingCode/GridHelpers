@@ -39,6 +39,7 @@ import com.vaadin.flow.component.grid.HeaderRow;
 import com.vaadin.flow.component.grid.HeaderRow.HeaderCell;
 import com.vaadin.flow.component.grid.ItemClickEvent;
 import com.vaadin.flow.component.icon.IconFactory;
+import com.vaadin.flow.dom.Style;
 import com.vaadin.flow.function.SerializableFunction;
 import com.vaadin.flow.function.SerializablePredicate;
 import com.vaadin.flow.shared.Registration;
@@ -322,6 +323,17 @@ public final class GridHelper<T> implements Serializable {
    */
   public static void setColumnToggleIcon(Grid<?> grid, IconFactory icon) {
     setColumnToggleIcon(grid, icon.create());
+  }
+
+  /**
+   * Sets the vertical alignment of the menu that toggles the visibility of grid columns, relative to
+   * the first header row.
+   *
+   * @param grid the grid to be configured
+   * @param alignment the alignment of the column toggle, or {@code null} to restore the default
+   */
+  public static void setColumnToggleAlignment(Grid<?> grid, Style.AlignItems alignment) {
+    getHelper(grid).columnToggleHelper.setColumnToggleAlignment(alignment);
   }
 
   /**
