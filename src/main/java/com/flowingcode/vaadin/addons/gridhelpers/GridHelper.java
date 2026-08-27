@@ -144,11 +144,6 @@ public final class GridHelper<T> implements Serializable {
     }
   }
 
-  @SuppressWarnings("unchecked")
-  private static <T> GridHelper<T> getHelper(Column<T> column) {
-    return getHelper((Grid<T>) column.getGrid());
-  }
-
   private static <T> GridHelper<T> getHelper(Grid<T> grid) {
     @SuppressWarnings("unchecked")
     GridHelper<T> helper = ComponentUtil.getData(grid, GridHelper.class);
