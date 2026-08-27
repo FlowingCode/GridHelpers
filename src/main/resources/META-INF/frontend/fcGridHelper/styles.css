@@ -47,6 +47,12 @@ vaadin-menu-bar[theme~="gridHelperToggle"][slot] > vaadin-menu-bar-button {
   height: var(--_fc-grid-helper-toggle--button-size);
 }
 
+vaadin-menu-bar[theme~="gridHelperToggle"][slot] > vaadin-menu-bar-button > vaadin-menu-bar-item::part(content) {
+  font-size: var(--fc-grid-helper-toggle--font-size, 80%);
+  gap: var(--fc-grid-helper-toggle--gap, 4px);
+  flex-direction: var(--fc-grid-helper-toggle--flex-direction, row-reverse);
+}
+
 vaadin-menu-bar[theme~="gridHelperToggle"][slot] > vaadin-menu-bar-button vaadin-icon {
   --vaadin-icon-visual-size: var(--_fc-grid-helper-toggle--button-size);
   --lumo-icon-size-m: var(--_fc-grid-helper-toggle--button-size);

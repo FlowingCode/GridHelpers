@@ -326,6 +326,17 @@ public final class GridHelper<T> implements Serializable {
   }
 
   /**
+   * Sets the text that is rendered next to the icon of the menu that toggles the visibility of grid
+   * columns.
+   *
+   * @param grid the grid to be configured
+   * @param label the text to show before the icon, or {@code null} to show the icon alone
+   */
+  public static void setColumnToggleLabel(Grid<?> grid, String label) {
+    getHelper(grid).columnToggleHelper.setColumnToggleLabel(label);
+  }
+
+  /**
    * Sets the vertical alignment of the menu that toggles the visibility of grid columns, relative to
    * the first header row.
    *

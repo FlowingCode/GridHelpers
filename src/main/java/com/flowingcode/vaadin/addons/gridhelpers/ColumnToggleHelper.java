@@ -34,6 +34,7 @@ import com.vaadin.flow.component.contextmenu.MenuItem;
 import com.vaadin.flow.component.contextmenu.SubMenu;
 import com.vaadin.flow.component.grid.Grid;
 import com.vaadin.flow.component.grid.Grid.Column;
+import com.vaadin.flow.component.html.Span;
 import com.vaadin.flow.component.icon.VaadinIcon;
 import com.vaadin.flow.component.menubar.MenuBar;
 import com.vaadin.flow.component.menubar.MenuBarVariant;
@@ -65,6 +66,8 @@ class ColumnToggleHelper<T> implements Serializable {
 
   private Component icon;
 
+  private String toggleLabel;
+
   public void setColumnToggleVisible(boolean visible) {
     // https://cookbook.vaadin.com/grid-column-toggle
     if (visible) {
@@ -87,6 +90,13 @@ class ColumnToggleHelper<T> implements Serializable {
 
   public void setColumnToggleIcon(Component icon) {
     this.icon = Objects.requireNonNull(icon);
+    if (isColumnToggleVisible()) {
+      showColumnToggle();
+    }
+  }
+
+  public void setColumnToggleLabel(String label) {
+    this.toggleLabel = label;
     if (isColumnToggleVisible()) {
       showColumnToggle();
     }
@@ -133,6 +143,9 @@ class ColumnToggleHelper<T> implements Serializable {
     menuBar.getThemeNames().add(MenuBarVariant.LUMO_TERTIARY.getVariantName());
     menuBar.getThemeNames().add(MenuBarVariant.LUMO_TERTIARY_INLINE.getVariantName());
     MenuItem menuItem = menuBar.addItem(getColumnToggleIcon());
+    if (toggleLabel != null) {
+      menuItem.add(new Span(toggleLabel));
+    }
     SubMenu subMenu = menuItem.getSubMenu();
 
     for (Column<T> column : grid.getColumns()) {
