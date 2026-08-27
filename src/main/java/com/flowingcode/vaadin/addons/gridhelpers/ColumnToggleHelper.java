@@ -75,7 +75,7 @@ class ColumnToggleHelper<T> implements Serializable {
 
   private Component getColumnToggleIcon() {
     if (icon == null) {
-      icon = VaadinIcon.ELLIPSIS_DOTS_V.create();
+      icon = VaadinIcon.GRID_H.create();
     }
     return icon;
   }
