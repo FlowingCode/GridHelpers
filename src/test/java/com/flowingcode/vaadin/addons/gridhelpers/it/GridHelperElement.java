@@ -26,6 +26,7 @@ import com.vaadin.flow.component.menubar.testbench.MenuBarElement;
 import com.vaadin.testbench.ElementQuery;
 import com.vaadin.testbench.ElementQuery.AttributeMatch.Comparison;
 import com.vaadin.testbench.TestBenchElement;
+import java.time.Duration;
 import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
@@ -33,8 +34,10 @@ import java.util.NoSuchElementException;
 import java.util.Optional;
 import lombok.NonNull;
 import org.openqa.selenium.By;
+import org.openqa.selenium.StaleElementReferenceException;
 import org.openqa.selenium.TimeoutException;
 import org.openqa.selenium.WebElement;
+import org.openqa.selenium.support.ui.FluentWait;
 
 public class GridHelperElement extends MyGridElement {
 
@@ -122,18 +125,36 @@ public class GridHelperElement extends MyGridElement {
 
   public TestBenchElement getSelectionCheckbox(int rowIndex) {
     // assumes that Grid is in multi-selection mode
-    TestBenchElement cell = getSlottedCell(getRow(rowIndex));
-    List<WebElement> elements = cell.findElements(By.tagName("vaadin-checkbox"));
-    return (TestBenchElement) elements.stream().findFirst().orElse(null);
+    return getSlottedCellChild(rowIndex, "vaadin-checkbox");
   }
 
   public TestBenchElement getSelectionRadioButton(int rowIndex) {
     // assumes that Grid is in single-selection mode
-    TestBenchElement cell = getSlottedCell(getRow(rowIndex));
-    List<WebElement> elements = cell.findElements(By.tagName("vaadin-radio-button"));
-    return (TestBenchElement) elements.stream().findFirst().orElse(null);
+    return getSlottedCellChild(rowIndex, "vaadin-radio-button");
   }
 
+  /**
+   * Returns the first child with the given tag name in the first slotted cell of a row, or
+   * {@code null} if the cell has no such child.
+   *
+   * <p>
+   * Showing or hiding the selection column makes the grid re-render the column tree, which
+   * invalidates the row and its slots. The lookup is retried while that happens, so that a stale
+   * element or a cell whose slot is not rendered yet is not reported as an absent child.
+   */
+  private TestBenchElement getSlottedCellChild(int rowIndex, String tagName) {
+    return new FluentWait<>(getDriver())
+        .withTimeout(Duration.ofSeconds(2))
+        .pollingEvery(Duration.ofMillis(50))
+        .ignoring(org.openqa.selenium.NoSuchElementException.class,
+            StaleElementReferenceException.class)
+        .until(driver -> {
+          TestBenchElement cell = getSlottedCell(getRow(rowIndex));
+          return cell.findElements(By.tagName(tagName)).stream().findFirst()
+              .map(TestBenchElement.class::cast);
+        })
+        .orElse(null);
+  }
 
   private TestBenchElement getSlottedCell(WebElement e) {
     String slot = e.findElement(By.tagName("slot")).getAttribute("name");
