@@ -47,8 +47,6 @@ import java.util.Collection;
 import java.util.Objects;
 import lombok.AccessLevel;
 import lombok.Getter;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 @SuppressWarnings("serial")
 @JsModule("./fcGridHelper/connector.js")
@@ -70,8 +68,6 @@ import org.slf4j.LoggerFactory;
     themeFor = "vaadin-checkbox")
 @CssImport(value = "./fcGridHelper/styles.css")
 public final class GridHelper<T> implements Serializable {
-
-  private static final Logger logger = LoggerFactory.getLogger(GridHelper.class);
 
   private static final String ARROW_SELECTION_PROPERTY = "_fcghArrowSelection";
   private static final String ENHANCED_SELECTION_PROPERTY = "_fcghEnhancedSelection";
