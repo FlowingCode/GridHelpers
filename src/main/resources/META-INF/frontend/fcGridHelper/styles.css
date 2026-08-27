@@ -23,6 +23,8 @@ vaadin-menu-bar[theme~="gridHelperToggle"][slot] {
   right: 12px;
   display: flex;
   height: var(--_fc-grid-helper--header-row-height, unset);
+  --_fc-grid-helper-toggle--background: var(--fc-grid-helper-toggle--background,
+      var(--lumo-base-color, var(--vaadin-background-color, unset)));
 }
 
 [theme~="fcGh-dense"] > vaadin-menu-bar[theme~="gridHelperToggle"][slot] {
@@ -48,6 +50,11 @@ vaadin-menu-bar[theme~="gridHelperToggle"][slot] > vaadin-menu-bar-button vaadin
   --lumo-icon-size-m: var(--_fc-grid-helper-toggle--button-size);
   --vaadin-icon-size: var(--_fc-grid-helper-toggle--button-size);
   padding: 0;
+  background: var(--_fc-grid-helper-toggle--background);
+}
+
+[theme~="fcGh-dense"] > vaadin-menu-bar[theme~="gridHelperToggle"][slot] > vaadin-menu-bar-button {
+	background: var(--_fc-grid-helper-toggle--background);
 }
 
 vaadin-menu-bar[theme~="gridHelperToggle"][slot] > vaadin-menu-bar-button::before {
