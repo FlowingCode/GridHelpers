@@ -20,7 +20,7 @@ Several grid recipes for Vaadin 23+ (and 22), ready to use. DOES NOT require ext
 
 ## Online demo
 
-[Online demo here](http://addonsv23.flowingcode.com/grid-helpers)
+[Online demo here](https://addonsv25.flowingcode.com/grid-helpers)
 
 ## Download release
 
